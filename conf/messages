@@ -1,0 +1,28 @@
+# --- Constants
+danger=B??d
+warning=Ostrze?enie
+info=Informacja
+success=Sukces
+
+# --- Constraints
+constraint.required=Wymagane
+constraint.min=Minimalna warto??: {0}
+constraint.max=Maksymalna warto??: {0}
+constraint.minLength=Minimalna d?ugo??: {0}
+constraint.maxLength=Maksymalna d?ugo??: {0}
+constraint.email=E-mail
+
+# --- Formats
+format.date=Data (''{0}'')
+format.numeric=Liczba
+format.real=Rzeczywista
+format.dateFormat=dd.mm.yyyy
+
+# --- Errors
+error.invalid=Niepoprawny format
+error.invalid.java.util.Date=Niepoprawny format daty
+error.required=Pole jest wymagane
+error.number=Wymagana warto?? liczbowa
+error.minLength=Maksymalna d?ugo?? to {0}
+error.maxLength=Minimalna d?ugo?? to {0}
+error.email=Wymagany format meilowy
