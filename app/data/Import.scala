@@ -14,8 +14,8 @@ object Import {
     if (new File(path).exists()) {
       val data: Elem = XML.load(new java.io.InputStreamReader(new java.io.FileInputStream(path), "UTF-8"))
       for (d <- data \\ "root" \\ "SRBPOL") {
-        val polish = (d \\ "P").text
-        val serbian = (d \\ "S").text
+        val polish = (d \\ "P").text.replace("(", "[").replace(")", "]")
+        val serbian = (d \\ "S").text.replace("(", "[").replace(")", "]")
       }
     }
   }
