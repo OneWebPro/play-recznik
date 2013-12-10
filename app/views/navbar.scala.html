@@ -1,0 +1,7 @@
+@*@@author loki*@
+@(elements: menu.Menu, args: Map[Symbol, Any], name : String, brand: Option[String] = None, link: Html = Html("/"), position: menu.MenuPosition.Value = menu.MenuPosition.StaticTop,
+		role:String ="navigation" , inverse: Boolean = false, responsive: Boolean = true, usePackage: Boolean = true)(implicit request: RequestHeader,secure : menu.SecureService)
+    @m = @{
+        new menu.Nav(elements, args, name, brand, link, position, role, inverse, responsive, usePackage)(request,secure).apply
+    }
+    @m
