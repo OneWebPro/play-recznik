@@ -1,3 +1,9 @@
+
+# --- Permisions errors
+error.notLogged=Jeste? nie zalogowany
+error.logged=U?ytkownik jest ju? zalogowany
+error.permissions=Brak uprawnie?
+
 # --- Constants
 danger=B??d
 warning=Ostrze?enie
