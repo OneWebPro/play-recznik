@@ -9,8 +9,13 @@ import database.{Mapper, Entity}
  * @author loki
  */
 
-private[dao] trait DaoStructure extends DictionaryComponent{
-  val DictionaryTable = new DictionaryTable
+private[dao] trait DaoStructure extends
+PolishWordComponent with
+SerbianWordComponent with
+WordToWordComponent {
+  val PolishWordTable = new PolishWordTable
+  val SerbianWordTable = new SerbianWordTable
+  val WordToWordTable = new WordToWordTable
 }
 
 
@@ -66,11 +71,23 @@ private[dao] trait DAO extends DaoStructure {
  * Object contains all tables structures to create or remove database.
  */
 object DDL extends DaoStructure {
-  val ddl = DictionaryTable.ddl
+  val ddl = PolishWordTable.ddl ++
+            SerbianWordTable.ddl ++
+            WordToWordTable.ddl
 }
 
-object DictionaryTable extends DAO {
-  type Element = tables.Dictionary
-  val self = DictionaryTable
+object PolishWordTable extends DAO {
+  type Element = tables.PolishWord
+  val self = PolishWordTable
+}
+
+object SerbianWordTable extends DAO {
+  type Element = tables.SerbianWord
+  val self = SerbianWordTable
+}
+
+object WordToWordTable extends DAO {
+  type Element = tables.WordToWord
+  val self = WordToWordTable
 }
 
