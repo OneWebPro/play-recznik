@@ -1,3 +1,4 @@
+import _root_.data.Import
 import play.api._
 import play.api.Play.current
 import scala.slick.jdbc.meta.MTable
@@ -23,6 +24,10 @@ object Global extends GlobalSettings{
       implicit s: scala.slick.session.Session => {
         if (MTable.getTables().list().isEmpty) {
           ddl.create
+        }else{
+          if (dao.WordToWordTable.findAll().isEmpty) {
+            Import.importData("./translations.xml")
+          }
         }
       }
     }
