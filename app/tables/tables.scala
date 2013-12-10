@@ -59,7 +59,7 @@ trait SerbianWordComponent {
 
 }
 
-case class WordToWord(id: Option[Long], polish: Long, serbian: Long, active: Boolean = false) extends Entity[WordToWord] {
+case class WordToWord(id: Option[Long], serbian: Long, polish: Long, active: Boolean = false) extends Entity[WordToWord] {
   def withId(id: Long): WordToWord = copy(id = Some(id))
 }
 
@@ -69,15 +69,17 @@ trait WordToWordComponent {
   val WordToWordTable: WordToWordTable
 
   class WordToWordTable extends Mapper[WordToWord]("word_word") {
-    def polish_id = column[Long]("word_polish")
 
     def serbian_id = column[Long]("word_serbian")
 
-    def * = id.? ~ polish_id ~ serbian_id ~ active <>(WordToWord, WordToWord.unapply _)
+    def polish_id = column[Long]("word_polish")
+
+    def * = id.? ~ serbian_id ~ polish_id ~ active <>(WordToWord, WordToWord.unapply _)
+
+    def serbian_fk = foreignKey("serbian_fk", serbian_id, SerbianWordTable)(s => s.id)
 
     def polish_fk = foreignKey("polish_fk", polish_id, PolishWordTable)(p => p.id)
 
-    def serbian_fk = foreignKey("serbian_fk", serbian_id, SerbianWordTable)(s => s.id)
   }
 
 }

@@ -43,9 +43,13 @@ object Import {
         ))
         )
     })
-
+    //Nightmare construction ]:->
     daoElements.foreach(element => {
-
+      element._2.foreach(serbian => {
+        element._1.foreach(polish => {
+          WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, true))
+        })
+      })
     })
   }
 }
