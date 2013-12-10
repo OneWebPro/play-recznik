@@ -5,7 +5,7 @@ import play.api.mvc._
 import jsmessages.api.JsMessages
 import play.api.Play.current
 
-object Application extends Controller {
+object Application extends MainController {
 
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
