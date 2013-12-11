@@ -100,5 +100,10 @@ object SerbianWordTable extends DAO {
 object WordToWordTable extends DAO {
   type Element = tables.WordToWord
   val self = WordToWordTable
+
+  val findByParents = for {
+    (polish, serbian) <- Parameters[(Long, Long)]
+    wordToWord <- WordToWordTable if wordToWord.polish_id === polish && wordToWord.serbian_id === serbian
+  } yield wordToWord
 }
 

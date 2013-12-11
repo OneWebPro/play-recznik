@@ -1,7 +1,15 @@
 package shared
 
-case class AddPolish(parent: Long, word: String)
+import tables.{WordToWord, PolishWord, SerbianWord}
 
-case class AddSerbian(parent: Long, word: String)
+case class PolishTranslation(id: Option[Long], word: String)
 
-case class WordRespond(id: Long, word: String, added: Boolean = true)
+case class SerbianTranslation(id: Option[Long], word: String)
+
+case class Translation(polish: PolishTranslation, serbian: SerbianTranslation)
+
+case class WordRespond(polish:PolishWord,serbian:SerbianWord, relation:WordToWord)
+
+case class RemovePolishTranslation(id: Long)
+
+case class RemoveSerbianTranslation(id: Long)

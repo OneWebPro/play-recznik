@@ -31,13 +31,12 @@ object Import {
       }
       loadDb(elements)
     }
-    if(new File(data).exists()){
-//      importSql()
-    }
   }
 
   /**
-   * Method change list of string to objects and set it to database
+   * Method change list of string to objects and set it to database.
+   * We don't use insertAll or something like this because we need to keep
+   * same structure.
    * @param elements words from xml
    */
   private def loadDb(elements: Seq[(List[String], List[String])])(implicit session: scala.slick.session.Session) {
@@ -59,13 +58,5 @@ object Import {
         })
       })
     })
-  }
-
-  private def importSql()(implicit session: scala.slick.session.Session) {
-    val source = scala.io.Source.fromFile(data)
-    val sql = source.getLines().mkString("")
-    source.close()
-    Q.updateNA("SET GLOBAL max_allowed_packet=" + 2 * 1024 * 1024).execute()
-    Q.updateNA(sql).execute()
   }
 }
