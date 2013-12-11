@@ -79,11 +79,22 @@ object DDL extends DaoStructure {
 object PolishWordTable extends DAO {
   type Element = tables.PolishWord
   val self = PolishWordTable
+
+  val findByWord = for{
+    param <- Parameters[String]
+    word <- PolishWordTable if word.word === param
+  } yield word
+
 }
 
 object SerbianWordTable extends DAO {
   type Element = tables.SerbianWord
   val self = SerbianWordTable
+
+  val findByWord = for{
+    param <- Parameters[String]
+    word <- SerbianWordTable if word.word === param
+  } yield word
 }
 
 object WordToWordTable extends DAO {
