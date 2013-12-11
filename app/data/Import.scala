@@ -31,8 +31,8 @@ object Import {
       }
       loadDb(elements)
     }
-    else if (new File(data).exists()) {
-      //importSql()
+    if(new File(data).exists()){
+      importSql()
     }
   }
 
@@ -63,7 +63,7 @@ object Import {
 
   private def importSql()(implicit session: scala.slick.session.Session) {
     val source = scala.io.Source.fromFile(data)
-    val sql = source.mkString
+    val sql = source.getLines().mkString("")
     source.close()
     Q.updateNA("SET GLOBAL max_allowed_packet=" + 2 * 1024 * 1024).execute()
     Q.updateNA(sql).execute()

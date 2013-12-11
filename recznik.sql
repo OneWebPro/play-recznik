@@ -1,32 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Czas wygenerowania: 11 Gru 2013, 09:27
--- Wersja serwera: 5.5.31
--- Wersja PHP: 5.4.16
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Baza danych: `recznik`
---
-CREATE DATABASE IF NOT EXISTS `recznik` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `recznik`;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `polish`
---
 
 CREATE TABLE IF NOT EXISTS `polish` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -37,9 +8,6 @@ CREATE TABLE IF NOT EXISTS `polish` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21608 ;
 
---
--- Zrzut danych tabeli `polish`
---
 
 INSERT INTO `polish` (`id`, `first_letter`, `word`, `added`, `active`) VALUES
 (1, 'a', 'Afryka', 0, 1),
@@ -21663,11 +21631,6 @@ INSERT INTO `polish` (`id`, `first_letter`, `word`, `added`, `active`) VALUES
 (21606, 'ż', 'żuć', 0, 1),
 (21607, 'z', 'zajady', 0, 1);
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `serbian`
---
 
 CREATE TABLE IF NOT EXISTS `serbian` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -21678,9 +21641,6 @@ CREATE TABLE IF NOT EXISTS `serbian` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15143 ;
 
---
--- Zrzut danych tabeli `serbian`
---
 
 INSERT INTO `serbian` (`id`, `first_letter`, `word`, `added`, `active`) VALUES
 (1, 'a', 'Afrika', 0, 1),
@@ -36834,11 +36794,6 @@ INSERT INTO `serbian` (`id`, `first_letter`, `word`, `added`, `active`) VALUES
 (15141, 'ž', 'žvakati', 0, 1),
 (15142, 'ž', 'žvale', 0, 1);
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `word_word`
---
 
 CREATE TABLE IF NOT EXISTS `word_word` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -36850,9 +36805,6 @@ CREATE TABLE IF NOT EXISTS `word_word` (
   KEY `polish_fk` (`word_polish`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21826 ;
 
---
--- Zrzut danych tabeli `word_word`
---
 
 INSERT INTO `word_word` (`id`, `word_serbian`, `word_polish`, `active`) VALUES
 (1, 1, 1, 1),
@@ -58690,17 +58642,6 @@ INSERT INTO `word_word` (`id`, `word_serbian`, `word_polish`, `active`) VALUES
 (21824, 15141, 21606, 1),
 (21825, 15142, 21607, 1);
 
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `word_word`
---
 ALTER TABLE `word_word`
   ADD CONSTRAINT `polish_fk` FOREIGN KEY (`word_polish`) REFERENCES `polish` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `serbian_fk` FOREIGN KEY (`word_serbian`) REFERENCES `serbian` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
