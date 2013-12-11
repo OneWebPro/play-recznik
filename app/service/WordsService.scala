@@ -40,7 +40,7 @@ object WordsService extends ErrorService {
   private def getPolishWord(translation: PolishTranslation)(implicit session: scala.slick.session.Session): PolishWord = {
     translation.id match {
       case id: Long => {
-        PolishWordTable.findById(id) match {
+        PolishWordTable.findById(id).filter(_.active == true) match {
           case word: PolishWord => word
           case _ => throw new Exception("") //TODO
         }
@@ -74,7 +74,7 @@ object WordsService extends ErrorService {
   private def getSerbianWord(translation: SerbianTranslation)(implicit session: scala.slick.session.Session): SerbianWord = {
     translation.id match {
       case id: Long => {
-        SerbianWordTable.findById(id) match {
+        SerbianWordTable.findById(id).filter(_.active == true) match {
           case word: SerbianWord => word
           case _ => throw new Exception("") //TODO
         }
@@ -108,7 +108,7 @@ object WordsService extends ErrorService {
   def editPolishTranslation(translation: PolishTranslation): Either[ServiceError, PolishWord] = withError {
     implicit session =>
       translation.id match {
-        case id: Long => PolishWordTable.findById(id).filter(_.added == true) match {
+        case id: Long => PolishWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case word: Option[PolishWord] => {
             if (!translation.word.isEmpty) {
               PolishWordTable.update(word.get.copy(
@@ -133,7 +133,7 @@ object WordsService extends ErrorService {
   def editSerbianTranslation(translation: SerbianTranslation): Either[ServiceError, SerbianWord] = withError {
     implicit session =>
       translation.id match {
-        case id: Long => SerbianWordTable.findById(id).filter(_.added == true) match {
+        case id: Long => SerbianWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case word: Option[SerbianWord] => {
             if (!translation.word.isEmpty) {
               SerbianWordTable.update(word.get.copy(
@@ -157,7 +157,7 @@ object WordsService extends ErrorService {
    */
   def removePolishTranslation(element: RemovePolishTranslation): Either[ServiceError, PolishWord] = withError {
     implicit session =>
-      PolishWordTable.findById(element.id).filter(_.added == true) match {
+      PolishWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case word: Option[PolishWord] => PolishWordTable.update(word.get.copy(active = false))
         case _ => throw new Exception("") //TODO
       }
@@ -170,7 +170,7 @@ object WordsService extends ErrorService {
    */
   def removeSerbianTranslation(element: RemoveSerbianTranslation): Either[ServiceError, SerbianWord] = withError {
     implicit session =>
-      SerbianWordTable.findById(element.id).filter(_.added == true) match {
+      SerbianWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case word: Option[SerbianWord] => SerbianWordTable.update(word.get.copy(active = false))
         case _ => throw new Exception("") //TODO
       }

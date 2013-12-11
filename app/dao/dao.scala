@@ -1,4 +1,5 @@
 package dao
+
 import tables._
 import play.api.db.slick.Config.driver.simple._
 import org.joda.time.LocalDate
@@ -72,17 +73,22 @@ private[dao] trait DAO extends DaoStructure {
  */
 object DDL extends DaoStructure {
   val ddl = PolishWordTable.ddl ++
-            SerbianWordTable.ddl ++
-            WordToWordTable.ddl
+    SerbianWordTable.ddl ++
+    WordToWordTable.ddl
 }
 
 object PolishWordTable extends DAO {
   type Element = tables.PolishWord
   val self = PolishWordTable
 
-  val findByWord = for{
+  val findByWord = for {
     param <- Parameters[String]
-    word <- PolishWordTable if word.word === param
+    word <- PolishWordTable if word.word === param && word.active === true
+  } yield word
+
+  val findByLetter = for {
+    letter <- Parameters[String]
+    word <- PolishWordTable if word.first_letter === letter && word.active === true
   } yield word
 
 }
@@ -91,10 +97,16 @@ object SerbianWordTable extends DAO {
   type Element = tables.SerbianWord
   val self = SerbianWordTable
 
-  val findByWord = for{
+  val findByWord = for {
     param <- Parameters[String]
-    word <- SerbianWordTable if word.word === param
+    word <- SerbianWordTable if word.word === param && word.active === true
   } yield word
+
+  val findByLetter = for {
+    letter <- Parameters[String]
+    word <- SerbianWordTable if word.first_letter === letter && word.active === true
+  } yield word
+
 }
 
 object WordToWordTable extends DAO {
@@ -103,7 +115,19 @@ object WordToWordTable extends DAO {
 
   val findByParents = for {
     (polish, serbian) <- Parameters[(Long, Long)]
-    wordToWord <- WordToWordTable if wordToWord.polish_id === polish && wordToWord.serbian_id === serbian
+    wordToWord <- WordToWordTable if wordToWord.polish_id === polish && wordToWord.serbian_id === serbian && wordToWord.active === true
   } yield wordToWord
+
+  val findSerbianTranslations = for {
+    polish <- Parameters[Long]
+    wordToWord <- WordToWordTable if wordToWord.polish_id === polish
+    serbian <- SerbianWordTable if serbian.id === wordToWord.serbian_id
+  } yield serbian
+
+  val findPolishTranslations = for {
+    serbian <- Parameters[Long]
+    wordToWord <- WordToWordTable if wordToWord.serbian_id === serbian
+    polish <- PolishWordTable if polish.id === wordToWord.polish_id
+  } yield polish
 }
 
