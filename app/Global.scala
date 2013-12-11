@@ -24,6 +24,7 @@ object Global extends GlobalSettings{
       implicit s: scala.slick.session.Session => {
         if (MTable.getTables().list().isEmpty) {
           ddl.create
+          Import.importData("./translations.xml")
         }else{
           if (dao.WordToWordTable.findAll().isEmpty) {
             Import.importData("./translations.xml")
