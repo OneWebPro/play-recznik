@@ -32,7 +32,7 @@ object Import {
       loadDb(elements)
     }
     if(new File(data).exists()){
-      importSql()
+//      importSql()
     }
   }
 
