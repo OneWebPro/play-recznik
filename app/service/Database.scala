@@ -41,6 +41,22 @@ class Database extends Actor with ActorLogging {
     case params: RemoveSerbianTranslation => Future {
       WordsService.removeSerbianTranslation(params)
     } pipeTo sender
+    // # --- Find polish words start with letter
+    case params: PolishFirstLetter => Future {
+      TranslationService.getPolishByFirst(params)
+    } pipeTo sender
+    // # --- Find serbian words start with letter
+    case params: SerbianFirstLetter => Future {
+      TranslationService.getSerbianByFirst(params)
+    } pipeTo sender
+    // # --- Find serbian translations for polish words
+    case params: FindPolishTranslation => Future {
+      TranslationService.translatePolish(params)
+    } pipeTo sender
+    // # --- Find polish translations for serbian words
+    case params: FindSerbianTranslation => Future {
+      TranslationService.translateSerbian(params)
+    } pipeTo sender
     case _ => {}
   }
 
