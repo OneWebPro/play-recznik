@@ -13,13 +13,5 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests{
   import tables._
   import dao._
 
-  "User" should {
-    "be edited" in {
-      runSession {
-        implicit session =>
-          true mustEqual true
-      }
-    }
-  }
 
 }
