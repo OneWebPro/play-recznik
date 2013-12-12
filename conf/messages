@@ -1,21 +1,21 @@
 
 # --- Permisions errors
-error.notLogged=Jeste? nie zalogowany
-error.logged=U?ytkownik jest ju? zalogowany
-error.permissions=Brak uprawnie?
+error.notLogged=Jesteś nie zalogowany
+error.logged=Użytkownik jest już zalogowany
+error.permissions=Brak uprawnień
 
 # --- Constants
-danger=B??d
-warning=Ostrze?enie
+danger=Błąd
+warning=Ostrzeżenie
 info=Informacja
 success=Sukces
 
 # --- Constraints
 constraint.required=Wymagane
-constraint.min=Minimalna warto??: {0}
-constraint.max=Maksymalna warto??: {0}
-constraint.minLength=Minimalna d?ugo??: {0}
-constraint.maxLength=Maksymalna d?ugo??: {0}
+constraint.min=Minimalna wartość: {0}
+constraint.max=Maksymalna wartość: {0}
+constraint.minLength=Minimalna długość: {0}
+constraint.maxLength=Maksymalna długość: {0}
 constraint.email=E-mail
 
 # --- Formats
@@ -28,7 +28,7 @@ format.dateFormat=dd.mm.yyyy
 error.invalid=Niepoprawny format
 error.invalid.java.util.Date=Niepoprawny format daty
 error.required=Pole jest wymagane
-error.number=Wymagana warto?? liczbowa
-error.minLength=Maksymalna d?ugo?? to {0}
-error.maxLength=Minimalna d?ugo?? to {0}
+error.number=Wymagana wartość liczbowa
+error.minLength=Maksymalna długość to {0}
+error.maxLength=Minimalna długość to {0}
 error.email=Wymagany format meilowy

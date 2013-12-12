@@ -4,6 +4,7 @@ import database.{ServiceError, ErrorService}
 import shared._
 import dao._
 import tables._
+import play.api.i18n.Messages
 
 /**
  * @author loki
@@ -44,17 +45,17 @@ object TranslationService extends ErrorService {
         search.id match {
           case Some(id: Long) => PolishWordTable.findById(id).filter(_.active == true) match {
             case Some(word: PolishWord) => word
-            case None => throw new Exception("") //TODO
+            case None => throw new Exception(Messages("")) //TODO
           }
           case None => PolishWordTable.findByWord(search.word).firstOption match {
             case Some(word: PolishWord) => word
-            case None => throw new Exception("") //TODO
+            case None => throw new Exception(Messages("")) //TODO
           }
         }
       }
       val translations: List[SerbianWord] = WordToWordTable.findSerbianTranslations(polish.id.get).list
       if (translations.isEmpty) {
-        throw new Exception("") //TODO
+        throw new Exception(Messages("")) //TODO
       }
       translations
   }
@@ -70,17 +71,17 @@ object TranslationService extends ErrorService {
         search.id match {
           case Some(id: Long) => SerbianWordTable.findById(id).filter(_.active == true) match {
             case Some(word: SerbianWord) => word
-            case None => throw new Exception("") //TODO
+            case None => throw new Exception(Messages("")) //TODO
           }
           case None => SerbianWordTable.findByWord(search.word).firstOption match {
             case Some(word: SerbianWord) => word
-            case None => throw new Exception("") //TODO
+            case None => throw new Exception(Messages("")) //TODO
           }
         }
       }
       val translations: List[PolishWord] = WordToWordTable.findPolishTranslations(serbian.id.get).list
       if (translations.isEmpty) {
-        throw new Exception("") //TODO
+        throw new Exception(Messages("")) //TODO
       }
       translations
   }

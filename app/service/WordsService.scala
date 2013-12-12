@@ -4,6 +4,7 @@ import database.{ServiceError, ErrorService}
 import shared._
 import dao._
 import tables._
+import play.api.i18n.Messages
 
 /**
  * @author loki
@@ -23,7 +24,7 @@ object WordsService extends ErrorService {
       val polish: PolishWord = getPolishWord(translation.polish)
       val serbian: SerbianWord = getSerbianWord(translation.serbian)
       WordToWordTable.findByParents(polish.id.get, serbian.id.get).firstOption match {
-        case Some(_) => throw new Error("") //TODO
+        case Some(_) => throw new Error(Messages("")) //TODO
         case None => {
           val wordToWord = WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, active = true))
           WordRespond(polish, serbian, wordToWord)
@@ -42,7 +43,7 @@ object WordsService extends ErrorService {
       case Some(id: Long) => {
         PolishWordTable.findById(id).filter(_.active == true) match {
           case Some(word: PolishWord) => word
-          case None => throw new Exception("") //TODO
+          case None => throw new Exception(Messages("")) //TODO
         }
       }
       case None => {
@@ -57,7 +58,7 @@ object WordsService extends ErrorService {
                 active = true
               ))
             } else {
-              throw new Exception("") //TODO
+              throw new Exception(Messages("")) //TODO
             }
           }
         }
@@ -75,7 +76,7 @@ object WordsService extends ErrorService {
       case Some(id: Long) => {
         SerbianWordTable.findById(id).filter(_.active == true) match {
           case Some(word: SerbianWord) => word
-          case None => throw new Exception("") //TODO
+          case None => throw new Exception(Messages("")) //TODO
         }
       }
       case None => {
@@ -90,7 +91,7 @@ object WordsService extends ErrorService {
                 active = true
               ))
             } else {
-              throw new Exception("") //TODO
+              throw new Exception(Messages("")) //TODO
             }
           }
         }
@@ -111,12 +112,12 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               PolishWordTable.update(word.copy(word = translation.word))
             } else {
-              throw new Exception("") //TODO
+              throw new Exception(Messages("")) //TODO
             }
           }
-          case None => throw new Exception("") //TODO
+          case None => throw new Exception(Messages("")) //TODO
         }
-        case None => throw new Exception("") //TODO
+        case None => throw new Exception(Messages("")) //TODO
       }
   }
 
@@ -133,12 +134,12 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               SerbianWordTable.update(word.copy(word = translation.word))
             } else {
-              throw new Exception("") //TODO
+              throw new Exception(Messages("")) //TODO
             }
           }
-          case None => throw new Exception("") //TODO
+          case None => throw new Exception(Messages("")) //TODO
         }
-        case None => throw new Exception("") //TODO
+        case None => throw new Exception(Messages("")) //TODO
       }
   }
 
@@ -151,7 +152,7 @@ object WordsService extends ErrorService {
     implicit session =>
       PolishWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: PolishWord) => PolishWordTable.update(word.copy(active = false))
-        case None => throw new Exception("") //TODO
+        case None => throw new Exception(Messages("")) //TODO
       }
   }
 
@@ -164,7 +165,7 @@ object WordsService extends ErrorService {
     implicit session =>
       SerbianWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: SerbianWord) => SerbianWordTable.update(word.copy(active = false))
-        case None => throw new Exception("") //TODO
+        case None => throw new Exception(Messages("")) //TODO
       }
   }
 
