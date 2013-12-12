@@ -32,3 +32,11 @@ error.number=Wymagana wartość liczbowa
 error.minLength=Maksymalna długość to {0}
 error.maxLength=Minimalna długość to {0}
 error.email=Wymagany format meilowy
+
+# --- Service errors
+service.error.translationExists=Takie tłumaczenie już istnieje
+service.error.wordNotFound=Tłumaczenie o identyfikatrze {0} nie istenieje.
+service.error.wordNotFoundByWord=Tłumaczenie słowa {0} nie istenieje.
+service.error.emptyTranslation=Tłumaczenie nie może być puste.
+service.error.notAvailable=Tłumaczenie o identyfikatrze {0} jest nieaktywne lub ma zablokowane takie działanie.
+service.error.emptyTranslations=Nie znaleziono tłumaczeń
