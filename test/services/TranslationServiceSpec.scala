@@ -8,4 +8,8 @@ import org.specs2.mutable._
   */
 class TranslationServiceSpec extends Specification with GlobalDatabaseTests{
 
+  import shared._
+  import tables._
+  import dao._
+
  }

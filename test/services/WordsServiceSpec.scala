@@ -10,4 +10,8 @@ import services.GlobalDatabaseTests
  */
 class WordsServiceSpec extends Specification with GlobalDatabaseTests{
 
+  import shared._
+  import tables._
+  import dao._
+
 }
