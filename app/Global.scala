@@ -39,12 +39,12 @@ object Global extends GlobalSettings{
    * @param app play.api.Application
    */
   override def onStop(app: Application) {
-    /*DB.withSession {
+    DB.withSession {
       implicit s: scala.slick.session.Session =>
         if (!MTable.getTables().list().isEmpty && !Play.isDev) {
           ddl.drop
         }
-    }*/
+    }
   }
 
 }

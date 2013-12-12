@@ -4,8 +4,8 @@ import scala.xml._
 import java.io.File
 import dao._
 import tables._
-import scala.slick.jdbc.{GetResult, StaticQuery => Q}
-import Q.interpolation
+import play.api._
+import play.api.Play.current
 
 /**
  * @author loki
@@ -22,8 +22,15 @@ object Import {
    * @param path path of translations xml
    */
   def importData(path: String)(implicit session: scala.slick.session.Session) {
-    if (new File(path).exists() && !new File(data).exists()) {
-      val data: Elem = XML.load(new java.io.InputStreamReader(new java.io.FileInputStream(path), "UTF-8"))
+    val loadPath: String = {
+      if (Play.isDev || Play.isProd) {
+        path
+      } else {
+        "./test.xml"
+      }
+    }
+    if (new File(loadPath).exists() && !new File(data).exists()) {
+      val data: Elem = XML.load(new java.io.InputStreamReader(new java.io.FileInputStream(loadPath), "UTF-8"))
       val elements: Seq[(List[String], List[String])] = for (d <- data \\ "root" \\ "SRBPOL") yield {
         val polish: List[String] = (d \\ "P").text.replace("(", "[").replace(")", "]").split(", ").toList
         val serbian: List[String] = (d \\ "S").text.replace("(", "[").replace(")", "]").split(", ").toList
