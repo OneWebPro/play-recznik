@@ -47,13 +47,13 @@ object WordsService extends ErrorService {
         }
       }
       case None => {
-        PolishWordTable.findByWord(translation.word).firstOption match {
+        PolishWordTable.findByWord(translation.word.toLowerCase).firstOption match {
           case Some(word: PolishWord) => word
           case None => {
             if (!translation.word.isEmpty) {
               PolishWordTable.insert(PolishWord(
                 None,
-                translation.word,
+                translation.word.toLowerCase,
                 added = true,
                 active = true
               ))
@@ -80,13 +80,13 @@ object WordsService extends ErrorService {
         }
       }
       case None => {
-        SerbianWordTable.findByWord(translation.word).firstOption match {
+        SerbianWordTable.findByWord(translation.word.toLowerCase).firstOption match {
           case Some(word: SerbianWord) => word
           case None => {
             if (!translation.word.isEmpty) {
               SerbianWordTable.insert(SerbianWord(
                 None,
-                translation.word,
+                translation.word.toLowerCase,
                 added = true,
                 active = true
               ))
@@ -110,7 +110,7 @@ object WordsService extends ErrorService {
         case Some(id: Long) => PolishWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: PolishWord) => {
             if (!translation.word.isEmpty) {
-              PolishWordTable.update(word.copy(word = translation.word))
+              PolishWordTable.update(word.copy(word = translation.word.toLowerCase))
             } else {
               throw new Exception(Messages("service.error.emptyTranslation"))
             }
@@ -132,7 +132,7 @@ object WordsService extends ErrorService {
         case Some(id: Long) => SerbianWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: SerbianWord) => {
             if (!translation.word.isEmpty) {
-              SerbianWordTable.update(word.copy(word = translation.word))
+              SerbianWordTable.update(word.copy(word = translation.word.toLowerCase))
             } else {
               throw new Exception(Messages("service.error.emptyTranslation"))
             }

@@ -21,7 +21,7 @@ object TranslationService extends ErrorService {
    */
   def getPolishByFirst(letter: PolishFirstLetter): Either[ServiceError, List[PolishWord]] = withError {
     implicit session =>
-      PolishWordTable.findByLetter(ListService.getSort(letter.letter)).list
+      PolishWordTable.findByLetter(ListService.getSort(letter.letter.toLowerCase)).list
   }
 
   /**
@@ -31,7 +31,7 @@ object TranslationService extends ErrorService {
    */
   def getSerbianByFirst(letter: SerbianFirstLetter): Either[ServiceError, List[SerbianWord]] = withError {
     implicit session =>
-      SerbianWordTable.findByLetter(ListService.getSort(letter.letter)).list
+      SerbianWordTable.findByLetter(ListService.getSort(letter.letter.toLowerCase)).list
   }
 
   /**
@@ -47,7 +47,7 @@ object TranslationService extends ErrorService {
             case Some(word: PolishWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFound",id))
           }
-          case None => PolishWordTable.findByWord(search.word).firstOption match {
+          case None => PolishWordTable.findByWord(search.word.toLowerCase).firstOption match {
             case Some(word: PolishWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
           }
@@ -73,7 +73,7 @@ object TranslationService extends ErrorService {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFound",id))
           }
-          case None => SerbianWordTable.findByWord(search.word).firstOption match {
+          case None => SerbianWordTable.findByWord(search.word.toLowerCase).firstOption match {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
           }

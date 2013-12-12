@@ -37,9 +37,9 @@ object ListService extends ErrorService {
    */
    def getSort(sort:String) : String = {
     if(sort != "%"){
-      sort + "%"  // TODO: check if we should add % before sort string
+      sort.toLowerCase + "%"  // TODO: check if we should add % before sort string
     }else{
-      sort
+      sort.toLowerCase
     }
   }
 
