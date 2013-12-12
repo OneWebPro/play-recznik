@@ -32,7 +32,7 @@ object Import {
         path
       }
     }
-    if (new File(loadPath).exists() && (!new File(data).exists() && !Play.isTest)) {
+    if (new File(loadPath).exists() && (!new File(data).exists() || Play.isTest)) {
       val data: Elem = XML.load(new java.io.InputStreamReader(new java.io.FileInputStream(loadPath), "UTF-8"))
       val elements: Seq[(List[String], List[String])] = for (d <- data \\ "root" \\ "SRBPOL") yield {
         val polish: List[String] = (d \\ "P").text.replace("(", "[").replace(")", "]").split(", ").toList
