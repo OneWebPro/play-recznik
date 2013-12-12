@@ -44,19 +44,19 @@ object TranslationService extends ErrorService {
     implicit session =>
       val polish: PolishWord = {
         search.id match {
-          case id: Long => PolishWordTable.findById(id).filter(_.active == true) match {
+          case id: Option[Long] => PolishWordTable.findById(id.get).filter(_.active == true) match {
             case word: Option[PolishWord] => word.get
             case _ => throw new Exception("") //TODO
           }
           case _ => PolishWordTable.findByWord(search.word).firstOption match {
-            case word: PolishWord => word
+            case word: Option[PolishWord] => word.get
             case _ => throw new Exception("") //TODO
           }
         }
       }
       val translations: List[SerbianWord] = WordToWordTable.findSerbianTranslations(polish.id.get).list
       if (translations.isEmpty) {
-        case _ => throw new Exception("") //TODO
+        throw new Exception("") //TODO
       }
       translations
   }
@@ -70,19 +70,19 @@ object TranslationService extends ErrorService {
     implicit session =>
       val serbian: SerbianWord = {
         search.id match {
-          case id: Long => SerbianWordTable.findById(id).filter(_.active == true) match {
+          case id: Option[Long] => SerbianWordTable.findById(id.get).filter(_.active == true) match {
             case word: Option[SerbianWord] => word.get
             case _ => throw new Exception("") //TODO
           }
           case _ => SerbianWordTable.findByWord(search.word).firstOption match {
-            case word: SerbianWord => word
+            case word: Option[SerbianWord] => word.get
             case _ => throw new Exception("") //TODO
           }
         }
       }
       val translations: List[PolishWord] = WordToWordTable.findPolishTranslations(serbian.id.get).list
       if (translations.isEmpty) {
-        case _ => throw new Exception("") //TODO
+        throw new Exception("") //TODO
       }
       translations
   }

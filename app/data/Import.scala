@@ -54,7 +54,7 @@ object Import {
       (
         element._1.map(polish => {
           PolishWordTable.findByWord(polish).firstOption match {
-            case word: PolishWord => word
+            case word: Option[PolishWord] => word.get
             case _ => {
               PolishWordTable.insert(
                 PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
@@ -64,7 +64,7 @@ object Import {
         }),
         element._2.map(serbian => {
           SerbianWordTable.findByWord(serbian).firstOption match {
-            case word: SerbianWord => word
+            case word: Option[SerbianWord] => word.get
             case _ => {
               SerbianWordTable.insert(
                 SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)
