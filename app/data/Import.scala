@@ -15,11 +15,11 @@ import play.api.Play.current
  */
 object Import {
 
-  var path:String = "./translations.xml"
+  var path: String = "./translations.xml"
 
   var data: String = "./recznik.sql"
 
-  var test:String = "./test.xml"
+  var test: String = "./test.xml"
 
   /**
    * Method read data from database
@@ -53,9 +53,9 @@ object Import {
     val daoElements = elements.map(element => {
       (
         element._1.map(polish => {
-          PolishWordTable.findByWord(polish).firstOption.get match {
-            case word: PolishWord => word
-            case _ => {
+          PolishWordTable.findByWord(polish).firstOption match {
+            case Some(word: PolishWord) => word
+            case None => {
               PolishWordTable.insert(
                 PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
               )
@@ -63,9 +63,9 @@ object Import {
           }
         }),
         element._2.map(serbian => {
-          SerbianWordTable.findByWord(serbian).firstOption.get match {
-            case word: SerbianWord => word
-            case _ => {
+          SerbianWordTable.findByWord(serbian).firstOption match {
+            case Some(word: SerbianWord) => word
+            case None => {
               SerbianWordTable.insert(
                 SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)
               )

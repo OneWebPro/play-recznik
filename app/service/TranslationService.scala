@@ -43,14 +43,14 @@ object TranslationService extends ErrorService {
   def translatePolish(search: FindPolishTranslation): Either[ServiceError, List[SerbianWord]] = withError {
     implicit session =>
       val polish: PolishWord = {
-        search.id.get match {
-          case id: Long => PolishWordTable.findById(id).filter(_.active == true).get match {
-            case word: PolishWord => word
-            case _ => throw new Exception("") //TODO
+        search.id match {
+          case Some(id: Long) => PolishWordTable.findById(id).filter(_.active == true) match {
+            case Some(word: PolishWord) => word
+            case None => throw new Exception("") //TODO
           }
-          case _ => PolishWordTable.findByWord(search.word).firstOption.get match {
-            case word: PolishWord => word
-            case _ => throw new Exception("") //TODO
+          case None => PolishWordTable.findByWord(search.word).firstOption match {
+            case Some(word: PolishWord) => word
+            case None => throw new Exception("") //TODO
           }
         }
       }
@@ -69,14 +69,14 @@ object TranslationService extends ErrorService {
   def translateSerbian(search: FindSerbianTranslation): Either[ServiceError, List[PolishWord]] = withError {
     implicit session =>
       val serbian: SerbianWord = {
-        search.id.get match {
-          case id: Long => SerbianWordTable.findById(id).filter(_.active == true).get match {
-            case word: SerbianWord => word
-            case _ => throw new Exception("") //TODO
+        search.id match {
+          case Some(id: Long) => SerbianWordTable.findById(id).filter(_.active == true) match {
+            case Some(word: SerbianWord) => word
+            case None => throw new Exception("") //TODO
           }
-          case _ => SerbianWordTable.findByWord(search.word).firstOption.get match {
-            case word: SerbianWord => word
-            case _ => throw new Exception("") //TODO
+          case None => SerbianWordTable.findByWord(search.word).firstOption match {
+            case Some(word: SerbianWord) => word
+            case None => throw new Exception("") //TODO
           }
         }
       }
