@@ -43,13 +43,13 @@ object TranslationService extends ErrorService {
   def translatePolish(search: FindPolishTranslation): Either[ServiceError, List[SerbianWord]] = withError {
     implicit session =>
       val polish: PolishWord = {
-        search.id match {
-          case id: Option[Long] => PolishWordTable.findById(id.get).filter(_.active == true) match {
-            case word: Option[PolishWord] => word.get
+        search.id.get match {
+          case id: Long => PolishWordTable.findById(id).filter(_.active == true).get match {
+            case word: PolishWord => word
             case _ => throw new Exception("") //TODO
           }
-          case _ => PolishWordTable.findByWord(search.word).firstOption match {
-            case word: Option[PolishWord] => word.get
+          case _ => PolishWordTable.findByWord(search.word).firstOption.get match {
+            case word: PolishWord => word
             case _ => throw new Exception("") //TODO
           }
         }
@@ -69,13 +69,13 @@ object TranslationService extends ErrorService {
   def translateSerbian(search: FindSerbianTranslation): Either[ServiceError, List[PolishWord]] = withError {
     implicit session =>
       val serbian: SerbianWord = {
-        search.id match {
-          case id: Option[Long] => SerbianWordTable.findById(id.get).filter(_.active == true) match {
-            case word: Option[SerbianWord] => word.get
+        search.id.get match {
+          case id: Long => SerbianWordTable.findById(id).filter(_.active == true).get match {
+            case word: SerbianWord => word
             case _ => throw new Exception("") //TODO
           }
-          case _ => SerbianWordTable.findByWord(search.word).firstOption match {
-            case word: Option[SerbianWord] => word.get
+          case _ => SerbianWordTable.findByWord(search.word).firstOption.get match {
+            case word: SerbianWord => word
             case _ => throw new Exception("") //TODO
           }
         }

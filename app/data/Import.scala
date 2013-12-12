@@ -53,8 +53,8 @@ object Import {
     val daoElements = elements.map(element => {
       (
         element._1.map(polish => {
-          PolishWordTable.findByWord(polish).firstOption match {
-            case word: Option[PolishWord] => word.get
+          PolishWordTable.findByWord(polish).firstOption.get match {
+            case word: PolishWord => word
             case _ => {
               PolishWordTable.insert(
                 PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
@@ -63,8 +63,8 @@ object Import {
           }
         }),
         element._2.map(serbian => {
-          SerbianWordTable.findByWord(serbian).firstOption match {
-            case word: Option[SerbianWord] => word.get
+          SerbianWordTable.findByWord(serbian).firstOption.get match {
+            case word: SerbianWord => word
             case _ => {
               SerbianWordTable.insert(
                 SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)

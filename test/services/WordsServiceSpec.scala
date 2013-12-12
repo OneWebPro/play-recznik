@@ -19,6 +19,9 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests{
     "be initialized" in {
       runSession {
         implicit session =>
+          import play.api._
+          import play.api.Play.current
+          Play.isTest mustEqual true
           MTable.getTables().list().size mustNotEqual 0
           WordToWordTable.findAll().size mustNotEqual 0
           PolishWordTable.findAll().size mustNotEqual 0
