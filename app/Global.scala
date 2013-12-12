@@ -8,7 +8,7 @@ import play.api.db.slick.Config.driver.simple._
 /**
  * @author loki
  */
-object Global extends GlobalSettings{
+object Global extends GlobalSettings {
 
   /**
    * Database structure
@@ -23,11 +23,11 @@ object Global extends GlobalSettings{
     DB.withSession {
       implicit s: scala.slick.session.Session => {
         if (MTable.getTables().list().isEmpty) {
-//          ddl.create
-          Import.importData("./translations.xml")
-        }else{
+          ddl.create
+          Import.importData()
+        } else {
           if (dao.WordToWordTable.findAll().isEmpty) {
-            Import.importData("./translations.xml")
+            Import.importData()
           }
         }
       }
@@ -41,7 +41,7 @@ object Global extends GlobalSettings{
   override def onStop(app: Application) {
     DB.withSession {
       implicit s: scala.slick.session.Session =>
-        if (!MTable.getTables().list().isEmpty && !Play.isDev) {
+        if (!MTable.getTables().list().isEmpty && !Play.isDev && !Play.isProd) {
           ddl.drop
         }
     }

@@ -15,18 +15,21 @@ import play.api.Play.current
  */
 object Import {
 
+  var path:String = "./translations.xml"
+
   var data: String = "./recznik.sql"
+
+  var test:String = "./test.xml"
 
   /**
    * Method read data from database
-   * @param path path of translations xml
    */
-  def importData(path: String)(implicit session: scala.slick.session.Session) {
+  def importData()(implicit session: scala.slick.session.Session) {
     val loadPath: String = {
       if (Play.isDev || Play.isProd) {
         path
       } else {
-        "./test.xml"
+        test
       }
     }
     if (new File(loadPath).exists() && !new File(data).exists()) {
