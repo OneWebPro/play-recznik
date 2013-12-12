@@ -20,8 +20,7 @@ object TranslationService extends ErrorService {
    */
   def getPolishByFirst(letter: PolishFirstLetter): Either[ServiceError, List[PolishWord]] = withError {
     implicit session =>
-      val l = letter.letter.charAt(0).toString.toLowerCase
-      PolishWordTable.findByLetter(l).list
+      PolishWordTable.findByLetter(ListService.getSort(letter.letter)).list
   }
 
   /**
@@ -31,8 +30,7 @@ object TranslationService extends ErrorService {
    */
   def getSerbianByFirst(letter: SerbianFirstLetter): Either[ServiceError, List[SerbianWord]] = withError {
     implicit session =>
-      val l = letter.letter.charAt(0).toString.toLowerCase
-      SerbianWordTable.findByLetter(l).list
+      SerbianWordTable.findByLetter(ListService.getSort(letter.letter)).list
   }
 
   /**

@@ -35,7 +35,7 @@ object ListService extends ErrorService {
    * @param sort Sort type
    * @return
    */
-  private def getSort(sort:String) : String = {
+   def getSort(sort:String) : String = {
     if(sort != "%"){
       sort + "%"  // TODO: check if we should add % before sort string
     }else{

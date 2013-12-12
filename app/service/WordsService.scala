@@ -52,7 +52,6 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               PolishWordTable.insert(PolishWord(
                 None,
-                translation.word.charAt(0).toString.toLowerCase,
                 translation.word,
                 added = true,
                 active = true
@@ -86,7 +85,6 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               SerbianWordTable.insert(SerbianWord(
                 None,
-                translation.word.charAt(0).toString.toLowerCase,
                 translation.word,
                 added = true,
                 active = true
@@ -111,10 +109,7 @@ object WordsService extends ErrorService {
         case Some(id: Long) => PolishWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: PolishWord) => {
             if (!translation.word.isEmpty) {
-              PolishWordTable.update(word.copy(
-                first_letter = translation.word.charAt(0).toString.toLowerCase,
-                word = translation.word
-              ))
+              PolishWordTable.update(word.copy(word = translation.word))
             } else {
               throw new Exception("") //TODO
             }
@@ -136,10 +131,7 @@ object WordsService extends ErrorService {
         case Some(id: Long) => SerbianWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: SerbianWord) => {
             if (!translation.word.isEmpty) {
-              SerbianWordTable.update(word.copy(
-                first_letter = translation.word.charAt(0).toString.toLowerCase,
-                word = translation.word
-              ))
+              SerbianWordTable.update(word.copy(word = translation.word))
             } else {
               throw new Exception("") //TODO
             }

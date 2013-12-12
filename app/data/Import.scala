@@ -57,7 +57,7 @@ object Import {
             case Some(word: PolishWord) => word
             case None => {
               PolishWordTable.insert(
-                PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
+                PolishWord(None, polish, added = false, active = true)
               )
             }
           }
@@ -67,7 +67,7 @@ object Import {
             case Some(word: SerbianWord) => word
             case None => {
               SerbianWordTable.insert(
-                SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)
+                SerbianWord(None, serbian, added = false, active = true)
               )
             }
           }
@@ -78,7 +78,7 @@ object Import {
     daoElements.foreach(element => {
       element._2.foreach(serbian => {
         element._1.foreach(polish => {
-          WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, true))
+          WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, active = true))
         })
       })
     })

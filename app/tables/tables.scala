@@ -10,7 +10,7 @@ import database._
  * @author loki
  */
 
-case class PolishWord(id: Option[Long], first_letter: String, word: String, added: Boolean = false, active: Boolean = false) extends Entity[PolishWord] {
+case class PolishWord(id: Option[Long], word: String, added: Boolean = false, active: Boolean = false) extends Entity[PolishWord] {
   def withId(id: Long): PolishWord = copy(id = Some(id))
 }
 
@@ -21,20 +21,18 @@ trait PolishWordComponent {
   val PolishWordTable: PolishWordTable
 
   class PolishWordTable extends Mapper[PolishWord]("polish") {
-    def first_letter = column[String]("first_letter")
-
     def word = column[String]("word")
 
     def added = column[Boolean]("added")
 
-    def * = id.? ~ first_letter ~ word ~ added ~ active <>(PolishWord, PolishWord.unapply _)
+    def * = id.? ~ word ~ added ~ active <>(PolishWord, PolishWord.unapply _)
 
     def serbian_words = WordToWordTable.filter(_.polish_id === id).flatMap(_.serbian_fk)
   }
 
 }
 
-case class SerbianWord(id: Option[Long], first_letter: String, word: String, added: Boolean = false, active: Boolean = false) extends Entity[SerbianWord] {
+case class SerbianWord(id: Option[Long], word: String, added: Boolean = false, active: Boolean = false) extends Entity[SerbianWord] {
   def withId(id: Long): SerbianWord = copy(id = Some(id))
 }
 
@@ -45,13 +43,12 @@ trait SerbianWordComponent {
   val SerbianWordTable: SerbianWordTable
 
   class SerbianWordTable extends Mapper[SerbianWord]("serbian") {
-    def first_letter = column[String]("first_letter")
 
     def word = column[String]("word")
 
     def added = column[Boolean]("added")
 
-    def * = id.? ~ first_letter ~ word ~ added ~ active <>(SerbianWord, SerbianWord.unapply _)
+    def * = id.? ~ word ~ added ~ active <>(SerbianWord, SerbianWord.unapply _)
 
     def polish_words = WordToWordTable.filter(_.serbian_id === id).flatMap(_.polish_fk)
 

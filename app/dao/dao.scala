@@ -88,11 +88,11 @@ object PolishWordTable extends DAO {
 
   val findByLetter = for {
     letter <- Parameters[String]
-    word <- PolishWordTable if word.first_letter === letter && word.active === true
+    word <- PolishWordTable if (word.word like letter) && word.active === true
   } yield word
 
   def pagePolishList(page: shared.Page)(implicit s: scala.slick.session.Session): List[PolishWord] = (for {
-    word <- PolishWordTable if word.word like page.find
+    word <- PolishWordTable if (word.word like page.find) && word.active === true
   } yield word).drop(page.size * page.page).take(page.size).list
 }
 
@@ -107,11 +107,11 @@ object SerbianWordTable extends DAO {
 
   val findByLetter = for {
     letter <- Parameters[String]
-    word <- SerbianWordTable if word.first_letter === letter && word.active === true
+    word <- SerbianWordTable if (word.word like letter) && word.active === true
   } yield word
 
   def pageSerbianList(page: shared.Page)(implicit s: scala.slick.session.Session): List[SerbianWord] = (for {
-    word <- SerbianWordTable if word.word like page.find
+    word <- SerbianWordTable if (word.word like page.find) && word.active === true
   } yield word).drop(page.size * page.page).take(page.size).list
 
 
