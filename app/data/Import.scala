@@ -42,13 +42,27 @@ object Import {
   private def loadDb(elements: Seq[(List[String], List[String])])(implicit session: scala.slick.session.Session) {
     val daoElements = elements.map(element => {
       (
-        element._1.map(polish => PolishWordTable.insert(
-          PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
-        )),
-        element._2.map(serbian => SerbianWordTable.insert(
-          SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)
+        element._1.map(polish => {
+          PolishWordTable.findByWord(polish).firstOption match {
+            case word: PolishWord => word
+            case _ => {
+              PolishWordTable.insert(
+                PolishWord(None, polish.charAt(0).toString.toLowerCase, polish, false, true)
+              )
+            }
+          }
+        }),
+        element._2.map(serbian => {
+          SerbianWordTable.findByWord(serbian).firstOption match {
+            case word: SerbianWord => word
+            case _ => {
+              SerbianWordTable.insert(
+                SerbianWord(None, serbian.charAt(0).toString.toLowerCase, serbian, false, true)
+              )
+            }
+          }
+        }
         ))
-        )
     })
     //Nightmare construction ]:->
     daoElements.foreach(element => {
