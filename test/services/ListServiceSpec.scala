@@ -24,7 +24,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val translations = TranslationService.getPolishByFirst(PolishFirstLetter(letter)).right.get
           val pages: Int = Math.round(translations.size / 10)
           val lastPage: Int = translations.size % 10
-          val result = for (page <- 1 to pages) yield {
+          val result = for (page <- 0 to pages) yield {
             !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
               ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
@@ -48,7 +48,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val translations = TranslationService.getPolishByFirst(PolishFirstLetter(letter)).right.get
           val pages: Int = Math.round(translations.size / 10)
           val lastPage: Int = translations.size % 10
-          val result = for (page <- 1 to pages) yield {
+          val result = for (page <- 0 to pages) yield {
             !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
               ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
               if (page < pages) {
@@ -68,8 +68,8 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
       runSession {
         implicit session =>
           val letter: String = "Afryka"
-          ListService.findPolish(SortPolishList(1, PAGE_SIZE, letter)).isLeft mustEqual false
-          val translations = ListService.findPolish(SortPolishList(1, PAGE_SIZE, letter)).right.get.map(word => word.word)
+          ListService.findPolish(SortPolishList(0, PAGE_SIZE, letter)).isLeft mustEqual false
+          val translations = ListService.findPolish(SortPolishList(0, PAGE_SIZE, letter)).right.get.map(word => word.word)
           translations must containAllOf(List(letter.toLowerCase))
       }
     }
@@ -86,7 +86,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val translations = TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).right.get
           val pages: Int = Math.round(translations.size / 10)
           val lastPage: Int = translations.size % 10
-          val result = for (page <- 1 to pages) yield {
+          val result = for (page <- 0 to pages) yield {
             !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
               ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
@@ -110,7 +110,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val translations = TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).right.get
           val pages: Int = Math.round(translations.size / 10)
           val lastPage: Int = translations.size % 10
-          val result = for (page <- 1 to pages) yield {
+          val result = for (page <- 0 to pages) yield {
             !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
               ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
               if (page < pages) {
@@ -130,8 +130,8 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
       runSession {
         implicit session =>
           val letter: String = "Afrika"
-          ListService.findSerbian(SortSerbianList(1, PAGE_SIZE, letter)).isLeft mustEqual false
-          val translations = ListService.findSerbian(SortSerbianList(1, PAGE_SIZE, letter)).right.get.map(word => word.word)
+          ListService.findSerbian(SortSerbianList(0, PAGE_SIZE, letter)).isLeft mustEqual false
+          val translations = ListService.findSerbian(SortSerbianList(0, PAGE_SIZE, letter)).right.get.map(word => word.word)
           translations must containAllOf(List(letter.toLowerCase))
       }
     }
