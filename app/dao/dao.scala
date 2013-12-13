@@ -81,16 +81,26 @@ object PolishWordTable extends DAO {
   type Element = tables.PolishWord
   val self = PolishWordTable
 
+  /**
+   * Searching polish translations using word comparison
+   */
   val findByWord = for {
     param <- Parameters[String]
     word <- PolishWordTable if word.word === param && word.active === true
   } yield word
 
+  /**
+   * Searching polish translations using word like comparison
+   */
   val findByLetter = for {
     letter <- Parameters[String]
     word <- PolishWordTable if (word.word like letter) && word.active === true
   } yield word
 
+  /**
+   * Searching polish translations using word like comparison and paging it
+   * @return
+   */
   def pagePolishList(page: shared.Page)(implicit s: scala.slick.session.Session): List[PolishWord] = (for {
     word <- PolishWordTable if (word.word like page.find) && word.active === true
   } yield word).drop(page.size * page.page).take(page.size).list
@@ -100,16 +110,26 @@ object SerbianWordTable extends DAO {
   type Element = tables.SerbianWord
   val self = SerbianWordTable
 
+  /**
+   * Searching serbian translations using word comparison
+   */
   val findByWord = for {
     param <- Parameters[String]
     word <- SerbianWordTable if word.word === param && word.active === true
   } yield word
 
+  /**
+   * Searching serbian translations using word like comparison
+   */
   val findByLetter = for {
     letter <- Parameters[String]
     word <- SerbianWordTable if (word.word like letter) && word.active === true
   } yield word
 
+  /**
+   * Searching serbian translations using word like comparison and paging it
+   * @return
+   */
   def pageSerbianList(page: shared.Page)(implicit s: scala.slick.session.Session): List[SerbianWord] = (for {
     word <- SerbianWordTable if (word.word like page.find) && word.active === true
   } yield word).drop(page.size * page.page).take(page.size).list
@@ -121,17 +141,26 @@ object WordToWordTable extends DAO {
   type Element = tables.WordToWord
   val self = WordToWordTable
 
+  /**
+   * Search words relations
+   */
   val findByParents = for {
     (polish, serbian) <- Parameters[(Long, Long)]
     wordToWord <- WordToWordTable if wordToWord.polish_id === polish && wordToWord.serbian_id === serbian && wordToWord.active === true
   } yield wordToWord
 
+  /**
+   * Search serbian translations for polish word
+   */
   val findSerbianTranslations = for {
     polish <- Parameters[Long]
     wordToWord <- WordToWordTable if wordToWord.polish_id === polish
     serbian <- SerbianWordTable if serbian.id === wordToWord.serbian_id
   } yield serbian
 
+  /**
+   * Search polish translation for serbian word
+   */
   val findPolishTranslations = for {
     serbian <- Parameters[Long]
     wordToWord <- WordToWordTable if wordToWord.serbian_id === serbian
