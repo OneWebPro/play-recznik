@@ -32,10 +32,10 @@ case class FindSerbianTranslation(id: Option[Long], word: String)
 
 /* # List service  # */
 
-case class SortPolishList(page: Int, size: Int, find: String = "%")
+case class SortPolishList(page: Int = 0, size: Int, find: String = "%")
 
-case class SortSerbianList(page: Int, size: Int, find: String = "%")
+case class SortSerbianList(page: Int = 0, size: Int, find: String = "%")
 
-case class Page(page: Int, size: Int, find: String)
+case class Page(page: Int = 0, size: Int, find: String)
 
 /* \# List service  # */
