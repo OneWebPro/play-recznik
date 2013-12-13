@@ -3,13 +3,20 @@
         if(play.Play.isProd) ".min" else ""
     }
 <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <!--<![endif]-->
 <html>
     <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>@title</title>
         @*CSS*@
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main" + minified + ".css")">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body>
+    <body ng-cloak class="ng-cloak">
         <div class="container">
             @content
         </div>

@@ -1,8 +1,7 @@
 require
-  baseUrl: "javascripts"
-  shim:
-    "angular/angular.min.js":
-      deps: []
+  shim: {
+    "angular/angular.min":
+      "deps": []
     "angular/angular-animate.min":
       "deps": ["angular/angular.min"]
     "angular/angular-mocks":
@@ -11,4 +10,14 @@ require
       "deps": ["angular/angular.min"]
     "app":
       "deps": ["angular/angular-animate.min", "angular/angular-mocks", "angular/angular-route.min"]
-      require["bootstrap"]
+    "routes":
+      "deps": ["app"]
+    ###"backend/gitHubBackend": {
+      "deps": ["app"]
+    },###
+  }
+  ["require",
+   "angular/angular.min"
+   "routes",
+  ], (require) ->
+  require ['bootstrap']
