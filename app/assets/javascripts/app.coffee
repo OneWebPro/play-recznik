@@ -1,1 +1,1 @@
-angular.module 'app', ["ngAnimate","ngMockE2E","ngRoute"]
+angular.module('app', ["ngAnimate","ngRoute"]).constant("apiUrl", "http://localhost:9000\:9000")

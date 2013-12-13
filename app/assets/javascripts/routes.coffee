@@ -1,7 +1,9 @@
 class Route
-  constructor: ($routeProvider) ->
+  constructor: ($routeProvider,$locationProvider) ->
     $routeProvider
+    .when "/main",
+        templateUrl: 'view/body'
     .otherwise
         redirectTo: '/main'
 
-angular.module('app').config ['$routeProvider', Route]
+angular.module('app').config ['$routeProvider','$locationProvider', Route]
