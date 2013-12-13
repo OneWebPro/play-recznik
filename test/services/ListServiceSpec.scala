@@ -10,8 +10,6 @@ import service.{TranslationService, ListService}
 class ListServiceSpec extends Specification with GlobalDatabaseTests {
 
   import shared._
-  import tables._
-  import dao._
 
   val PAGE_SIZE: Int = 10
 

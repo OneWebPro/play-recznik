@@ -11,7 +11,6 @@ import service.WordsService
 class WordsServiceSpec extends Specification with GlobalDatabaseTests {
 
   import shared._
-  import tables._
   import dao._
 
   "WordsService.addTranslation" should {
