@@ -9,8 +9,6 @@ import org.specs2.mutable._
 class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
 
   import shared._
-  import tables._
-  import dao._
   import service.TranslationService
 
 
@@ -80,7 +78,8 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: String = "Afrika"
           TranslationService.translatePolish(FindPolishTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          translation.head.word mustEqual find.toLowerCase
+          val translations = translation.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
       }
     }
   }
@@ -95,7 +94,8 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getPolishByFirst(PolishFirstLetter(search)).right.get
           TranslationService.translatePolish(FindPolishTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          translation.head.word mustEqual find.toLowerCase
+          val translations = translation.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
       }
     }
   }
@@ -129,7 +129,6 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
       }
     }
   }
-
 
   /* --- Serbian ---*/
 
@@ -199,7 +198,8 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: String = "Afryka"
           TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          translation.head.word mustEqual find.toLowerCase
+          val translations = translation.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
       }
     }
   }
@@ -214,7 +214,8 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getSerbianByFirst(SerbianFirstLetter(search)).right.get
           TranslationService.translateSerbian(FindSerbianTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          translation.head.word mustEqual find.toLowerCase
+          val translations = translation.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
       }
     }
   }
