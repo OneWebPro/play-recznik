@@ -36,7 +36,7 @@ private[dao] trait DAO extends DaoStructure {
   val self: Mapper[Element]
 
   /**
-   * Insert entity element to database and return it. If element hase id defined nothing will happen.
+   * Insert entity element to database and return it. If element had id defined nothing will happen.
    * @return
    */
   def insert(element: Element)(implicit session: Session): Element = self.insert(element)
