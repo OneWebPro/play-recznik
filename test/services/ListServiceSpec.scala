@@ -2,6 +2,7 @@ package test.services
 
 import org.specs2.mutable._
 import service.{TranslationService, ListService}
+import dao.{SerbianWordTable, PolishWordTable}
 
 
 /**
@@ -12,6 +13,30 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
   import shared._
 
   val PAGE_SIZE: Int = 10
+
+  "ListService.findPolish" should {
+    "find all words" in {
+      runSession {
+        implicit session =>
+          val letter: String = ""
+          TranslationService.getPolishByFirst(PolishFirstLetter(letter)).isLeft mustEqual false
+          val translations = PolishWordTable.findAll()
+          val pages: Int = Math.round(translations.size / 10)
+          val lastPage: Int = translations.size % 10
+          val result = for (page <- 0 to pages) yield {
+            !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              if (page < pages) {
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+              } else {
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+              }
+            }
+          }
+          result.forall(element => element) mustEqual true
+      }
+    }
+  }
 
   "ListService.findPolish" should {
     "find words started with a" in {
@@ -74,6 +99,30 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
   }
 
   /* --- Serbian ---*/
+
+  "ListService.findSerbian" should {
+    "find all words" in {
+      runSession {
+        implicit session =>
+          val letter: String = ""
+          TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).isLeft mustEqual false
+          val translations = SerbianWordTable.findAll()
+          val pages: Int = Math.round(translations.size / 10)
+          val lastPage: Int = translations.size % 10
+          val result = for (page <- 0 to pages) yield {
+            !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              if (page < pages) {
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+              } else {
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+              }
+            }
+          }
+          result.forall(element => element) mustEqual true
+      }
+    }
+  }
 
   "ListService.findSerbian" should {
     "find words started with a" in {
