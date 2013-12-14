@@ -1,9 +1,15 @@
 <ng:include src="'view/letters'"></ng:include>
-<div class="row">
-    <div class="col-lg-5">
-        <ng:include src="'view/recznik'"></ng:include>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#serbski" data-toggle="tab">Srpski</a></li>
+    <li><a href="#polski" data-toggle="tab">Polski</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="serbski">
+        <hr />
+        <ng:include src="'view/serbian-body'"></ng:include>
     </div>
-    <div class="col-lg-7">
-        <ng:include src="'view/list'"></ng:include>
+    <div class="tab-pane" id="polski">
+        <hr />
+        <ng:include src="'view/polish-body'"></ng:include>
     </div>
 </div>
