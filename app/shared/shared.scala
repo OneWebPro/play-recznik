@@ -38,4 +38,6 @@ case class SortSerbianList(page: Int = 0, size: Int, find: String = "%")
 
 case class Page(page: Int = 0, size: Int, find: String)
 
+case class ResultPage[A](page: Int = 0, elements: List[A], pages: Int)
+
 /* \# List service  # */

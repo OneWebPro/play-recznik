@@ -15,9 +15,14 @@ object ListService extends ErrorService {
    * @param page Polish page request
    * @return
    */
-  def findPolish(page : SortPolishList) : Either[ServiceError, List[PolishWord]] = withError {
+  def findPolish(page: SortPolishList): Either[ServiceError, ResultPage[PolishWord]] = withError {
     implicit session =>
-    PolishWordTable.pagePolishList(Page(page.page,page.size,getSort(page.find)))
+      val search = getSort(page.find)
+      ResultPage(
+        page.page,
+        PolishWordTable.pagePolishList(Page(page.page, page.size, search)),
+        Math.round(PolishWordTable.findByLetter(search).list.length / page.size)
+      )
   }
 
   /**
@@ -25,9 +30,14 @@ object ListService extends ErrorService {
    * @param page Serbian page request
    * @return
    */
-  def findSerbian(page: SortSerbianList): Either[ServiceError, List[SerbianWord]] = withError {
+  def findSerbian(page: SortSerbianList): Either[ServiceError, ResultPage[SerbianWord]] = withError {
     implicit session =>
-      SerbianWordTable.pageSerbianList(Page(page.page, page.size, getSort(page.find)))
+      val search = getSort(page.find)
+      ResultPage(
+        page.page,
+        SerbianWordTable.pageSerbianList(Page(page.page, page.size, search)),
+        Math.round(SerbianWordTable.findByLetter(search).list.length / page.size)
+      )
   }
 
   /**
@@ -35,10 +45,10 @@ object ListService extends ErrorService {
    * @param sort Sort type
    * @return
    */
-   def getSort(sort:String) : String = {
-    if(sort != "%"){
+  def getSort(sort: String): String = {
+    if (sort != "%") {
       sort.toLowerCase + "%"
-    }else{
+    } else {
       sort.toLowerCase
     }
   }

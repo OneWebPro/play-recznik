@@ -6,7 +6,7 @@ class Controller
     scope = $scope
     scope.polish_hints = []
     scope.polishService = polishService
-    scope.$watch 'polish_text' , @update
+    scope.$watch 'polish_text' , debounce(@update,500)
     scope.$watch 'polish_hints' , (value) ->
       if(value? and value.length == 1)
         scope.polish_hints = []

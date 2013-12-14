@@ -25,11 +25,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -49,11 +50,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -73,11 +75,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
               if (page < pages) {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findPolish(SortPolishList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -92,7 +95,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
         implicit session =>
           val letter: String = "Afryka"
           ListService.findPolish(SortPolishList(0, PAGE_SIZE, letter)).isLeft mustEqual false
-          val translations = ListService.findPolish(SortPolishList(0, PAGE_SIZE, letter)).right.get.map(word => word.word)
+          val translations = ListService.findPolish(SortPolishList(0, PAGE_SIZE, letter)).right.get.elements.map(word => word.word)
           translations must containAllOf(List(letter.toLowerCase))
       }
     }
@@ -111,11 +114,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -135,11 +139,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter) == 0) && {
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter) == 0) && {
               if (page < pages) {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -159,11 +164,12 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
           val lastPage: Int = translations.size % 10
           val result = for (page <- 0 to pages) yield {
             !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
-              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.indexOf(letter.toLowerCase) == 0) && {
               if (page < pages) {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == PAGE_SIZE
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
               } else {
-                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.size == lastPage
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
               }
             }
           }
@@ -178,7 +184,7 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
         implicit session =>
           val letter: String = "Afrika"
           ListService.findSerbian(SortSerbianList(0, PAGE_SIZE, letter)).isLeft mustEqual false
-          val translations = ListService.findSerbian(SortSerbianList(0, PAGE_SIZE, letter)).right.get.map(word => word.word)
+          val translations = ListService.findSerbian(SortSerbianList(0, PAGE_SIZE, letter)).right.get.elements.map(word => word.word)
           translations must containAllOf(List(letter.toLowerCase))
       }
     }
