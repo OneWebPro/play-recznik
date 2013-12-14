@@ -3,17 +3,17 @@
 # ~~~~
 
 # Home page
-GET        /                                   controllers.Application.index
-GET        /messages.js                        controllers.Application.jsMessages
+GET         /                              controllers.Application.index
+GET         /messages.js                   controllers.Application.jsMessages
 
 # Serbian
-GET        /api/serbian/find/:word             controllers.Serbian.find(word:String)
-GET        /api/serbian/translate/:word        controllers.Serbian.translate(word:String)
+POST        /api/serbian/find             controllers.Serbian.find
+POST        /api/serbian/translate        controllers.Serbian.translate
 
 #Polish
-GET        /api/polish/find/:word              controllers.Polish.find(word:String)
-GET        /api/polish/translate/:word         controllers.Polish.translate(word:String)
+POST        /api/polish/find               controllers.Polish.find
+POST        /api/polish/translate          controllers.Polish.translate
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                       controllers.Assets.at(path="/public", file)
-GET        /view/:name                         controllers.Application.view(name:String)
+GET         /assets/*file                  controllers.Assets.at(path="/public", file)
+GET         /view/:name                    controllers.Application.view(name:String)

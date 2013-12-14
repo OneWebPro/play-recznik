@@ -4,12 +4,12 @@ class Service
   constructor: (@$http) ->
 
   typing: (word) ->
-    @$http.get("#{urlBase}/find/#{word}")
+    @$http.post("#{urlBase}/find", {word: word})
     .then (results) ->
         results.data
 
   translate: (word) ->
-    @$http.get("#{urlBase}/translate/#{word}")
+    @$http.post("#{urlBase}/translate", {word: word})
     .then (results) ->
         results.data
 

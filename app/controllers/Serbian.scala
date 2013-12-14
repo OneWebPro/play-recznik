@@ -3,36 +3,57 @@ package controllers
 import play.api._
 import play.api.mvc._
 import akka.pattern.ask
-import shared.{FindSerbianTranslation, SortSerbianList, SerbianFirstLetter}
+import shared.{RequestWord, FindSerbianTranslation, SortSerbianList, SerbianFirstLetter}
 import database.ServiceError
 import tables.{SerbianWord, PolishWord}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import Polish.polishWord
+import scala.concurrent.Future
+
 /**
  * @author loki
  */
-object Serbian extends MainController{
+object Serbian extends MainController {
 
-  implicit val serbianWord: Format[SerbianWord] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "word").format[String] and
-      (JsPath \ "added").format[Boolean] and
-      (JsPath \ "active").format[Boolean]
-    )(SerbianWord.apply, unlift(SerbianWord.unapply))
+  implicit val wordFormat = Json.format[RequestWord]
+  implicit val polishFormat = Json.format[PolishWord]
+  implicit val serbianFormat = Json.format[SerbianWord]
 
-  def find(word: String) = Action.async {
-    globalActor.ask(SerbianFirstLetter(word)).mapTo[Either[ServiceError, List[SerbianWord]]].map({
-      case Left(ko) => NotFound
-      case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
-    })
+  def find = Action.async(parse.json) {
+    implicit request =>
+      val json = request.body
+      json.validate[RequestWord].fold(
+        valid = {
+          form =>
+            globalActor.ask(SerbianFirstLetter(form.word)).mapTo[Either[ServiceError, List[SerbianWord]]].map({
+              case Left(ko) => NotFound
+              case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
+            })
+        },
+        invalid = {
+          errors =>
+            Future.successful(NotFound)
+        }
+      )
   }
 
-  def translate(word: String) = Action.async {
-    globalActor.ask(FindSerbianTranslation(None,word)).mapTo[Either[ServiceError, List[PolishWord]]].map({
-      case Left(ko) => NotFound
-      case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
-    })
+  def translate = Action.async(parse.json) {
+
+    implicit request =>
+      val json = request.body
+      json.validate[RequestWord].fold(
+        valid = {
+          form =>
+            globalActor.ask(FindSerbianTranslation(form.id, form.word)).mapTo[Either[ServiceError, List[PolishWord]]].map({
+              case Left(ko) => NotFound
+              case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
+            })
+        },
+        invalid = {
+          errors =>
+            Future.successful(NotFound)
+        }
+      )
   }
 
 
