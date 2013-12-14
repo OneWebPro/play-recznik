@@ -10,6 +10,16 @@
                 </li>
             </ul>
         </div>
-        <button type="submit" class="btn btn-default">Prevodi</button>
+        <button ng-click="translateSerbian()" type="submit" class="btn btn-default">Prevodi</button>
     </form>
+    <div ng-hide="!serbian_results.length" class="results">
+        <hr />
+        <ul>
+            <li ng-repeat="result in serbian_results track by result.id">
+                <blockquote>
+                <p class="text-info">{{result.word}}</p>
+                </blockquote>
+            </li>
+        </ul>
+    </div>
 </div>

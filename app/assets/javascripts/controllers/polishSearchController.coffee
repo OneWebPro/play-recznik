@@ -13,6 +13,12 @@ class Controller
     scope.changePolish = (word) ->
       scope.polish_text = word
       scope.polish_hints = []
+    scope.translatePolish = ->
+      if(scope.polish_text?.length)
+        scope.polishService.translate(scope.polish_text).then (results) =>
+          scope.polish_results = results
+      else
+        scope.polish_results = []
 
   update: (value) ->
     scope.polish_hints = []
