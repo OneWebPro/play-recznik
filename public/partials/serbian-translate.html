@@ -1,7 +1,14 @@
-<div class="well">
+<div class="well"  ng-controller="SerbianSearchController">
     <form role="form">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Upiši reč...">
+            <input autocomplete="off" type="text" ng-model="serbian_text" class="form-control" id="serbian-translate" placeholder="Upiši reč...">
+        </div>
+        <div ng-hide="!serbian_hints.length" class="hints">
+            <ul>
+                <li ng-repeat="hint in serbian_hints track by hint.id">
+                    <div ng-click="changeSerbian(hint.word)" class="word">{{hint.word}}</div>
+                </li>
+            </ul>
         </div>
         <button type="submit" class="btn btn-default">Prevodi</button>
     </form>
