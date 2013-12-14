@@ -1,5 +1,9 @@
 require
   shim: {
+    "jquery-1.9.0.min.js":
+      "deps": []
+    "bootstrap.js":
+      "deps" :["jquery-1.9.0.min.js"]
     "angular/angular.min":
       "deps": []
     "angular/angular-animate.min":
@@ -16,6 +20,8 @@ require
   }
   ["require",
    "angular/angular.min",
+  "jquery-1.9.0.min",
+  "bootstrap"
    "routes",
-  ], (require,angular) ->
-  require ['bootstrap']
+  ], (require,angular,$) ->
+  require ['app-bootstrap']
