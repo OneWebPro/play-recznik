@@ -1,4 +1,4 @@
-class Controller
+class PolishSortController
 
   scope = undefined
 
@@ -41,4 +41,4 @@ class Controller
       ""
 
 
-angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', Controller]
+angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', PolishSortController]

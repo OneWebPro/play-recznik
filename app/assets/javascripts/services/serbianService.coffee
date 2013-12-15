@@ -1,4 +1,4 @@
-class Service
+class SerbianService
   urlBase = '/api/serbian'
 
   constructor: (@$http) ->
@@ -18,4 +18,4 @@ class Service
     .then (results) ->
         results.data
 
-angular.module('app').service 'serbianService', ['$http', Service]
+angular.module('app').service 'serbianService', ['$http', SerbianService]

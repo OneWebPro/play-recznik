@@ -31,7 +31,6 @@ require
   }
   ["require"
    "angular/angular.min"
-   "jquery-1.9.0.min"
    "bootstrap"
    "jqueryEvents"
    "controllers/serbianSearchController"

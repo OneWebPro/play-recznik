@@ -1,4 +1,4 @@
-class Controller
+class PolishSearchController
 
   scope = undefined
 
@@ -23,13 +23,14 @@ class Controller
 
   update: (value) ->
     scope.polish_hints = []
+    scope.$apply()
     if(value?.length)
       scope.polishService.typing(scope.polish_text).then (results) =>
-        if(results[0]? and results[0].word.toLowerCase() != scope.polish_text.toLowerCase())
+        if(results.length != 0 and results[0]? and results[0].word.toLowerCase() != scope.polish_text.toLowerCase())
           scope.polish_hints = results
         else
           scope.polish_hints = []
 
 
 
-angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', Controller]
+angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', PolishSearchController]
