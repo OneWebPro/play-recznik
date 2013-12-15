@@ -9,7 +9,7 @@ class Controller
     scope.serbianService = serbianService
     scope.$watch 'serbian_text', debounce(@update, 500)
     scope.$watch 'serbian_hints', (value) ->
-      if(value? and value.length == 1)
+      if(value? and value.length == 1 and value[0].toLowerCase == scope.serbian_text)
         scope.serbian_hints = []
     scope.changeSerbian = (word) ->
       scope.serbian_hints = []
