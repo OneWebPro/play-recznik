@@ -4,6 +4,8 @@ require
       "deps": []
     "bootstrap.js":
       "deps" :["jquery-1.9.0.min"]
+    "jqueryEvents":
+      "deps" :["jquery-1.9.0.min"]
     "angular/angular.min":
       "deps": []
     "angular/angular-animate.min":
@@ -29,6 +31,7 @@ require
    "angular/angular.min"
    "jquery-1.9.0.min"
    "bootstrap"
+   "jqueryEvents"
    "controllers/serbianSearchController"
    "controllers/serbianSortController"
    "services/serbianService"
