@@ -51,4 +51,4 @@ case class ResultPage[A](page: Int = 0, elements: List[A], pages: Int)
 
 /* Controllers */
 
-case class RequestWord(id:Option[Long],word:String)
+case class RequestWord(id: Option[Long], word: Option[String])

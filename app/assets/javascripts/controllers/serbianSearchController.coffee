@@ -7,8 +7,8 @@ class Controller
     scope.serbian_hints = []
     scope.serbian_word = {}
     scope.serbianService = serbianService
-    scope.$watch 'serbian_text' , debounce(@update,500)
-    scope.$watch 'serbian_hints' , (value) ->
+    scope.$watch 'serbian_text', debounce(@update, 500)
+    scope.$watch 'serbian_hints', (value) ->
       if(value? and value.length == 1)
         scope.serbian_hints = []
     scope.changeSerbian = (word) ->
@@ -20,6 +20,9 @@ class Controller
           scope.serbian_results = results
       else
         scope.serbian_results = []
+    scope.$on 'translateSerbian' , (event, word) ->
+      scope.serbian_text = word.word
+      scope.translateSerbian()
 
   update: (value) ->
     scope.serbian_hints = []
@@ -28,4 +31,5 @@ class Controller
         scope.serbian_hints = results
 
 
-angular.module('app').controller 'SerbianSearchController', ['$scope','serbianService', Controller]
+
+angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', Controller]

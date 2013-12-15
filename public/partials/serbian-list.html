@@ -1,13 +1,34 @@
-<div class="well">
-    <input type="text" placeholder="Upiši reč...">
+<div ng-controller="SerbianSortController as controller">
+    <ul class="pagination">
+        <li ng-click="controller.changeGridSize(10)"><span class="link">10</span></li>
+        <li ng-click="controller.changeGridSize(15)"><span class="link">15</span></li>
+        <li ng-click="controller.changeGridSize(50)"><span class="link">50</span></li>
+    </ul>
+    <div class="well">
+        <input ng-model="serbian_sort" value="" type="text" placeholder="Upiši reč...">
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Recz</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="result in serbian_search.results track by result.id">
+            <td>
+                <span ng-click="controller.translateWord(result)" class="link">{{result.word}}</span>
+            </td>
+            <td>
+                #
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="pager">
+        <li ng-hide="serbian_search.page == 0" ng-click="controller.prevPage()"><span class="link">Previous</span></li>
+        <li> {{serbian_search.page + 1}}/ {{serbian_search.pages - 1}}</li>
+        <li ng-hide="serbian_search.page == serbian_search.pages - 1" ng-click="controller.nextPage()"><span class="link">Next</span>
+        </li>
+    </ul>
 </div>
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th>Recz</th>
-        <th>#</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>

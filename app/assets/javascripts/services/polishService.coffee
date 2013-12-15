@@ -13,4 +13,9 @@ class Service
     .then (results) ->
         results.data
 
+  filter: (word, page, pageSize) ->
+    @$http.post("#{urlBase}/sort/#{pageSize}/#{page}", {word: word})
+    .then (results) ->
+        results.data
+
 angular.module('app').service 'polishService', ['$http', Service]

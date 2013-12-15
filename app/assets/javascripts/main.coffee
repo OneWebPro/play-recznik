@@ -18,6 +18,8 @@ require
       "deps": ["app"]
     "controllers/serbianSearchController":
       "deps" : ["app"]
+    "controllers/serbianSortController":
+      "deps" : ["app"]
     "services/polishService":
       "deps": ["app"]
     "controllers/polishSearchController":
@@ -28,6 +30,7 @@ require
    "jquery-1.9.0.min"
    "bootstrap"
    "controllers/serbianSearchController"
+   "controllers/serbianSortController"
    "services/serbianService"
    "controllers/polishSearchController"
    "services/polishService"
