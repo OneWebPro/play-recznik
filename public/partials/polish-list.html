@@ -1,6 +1,11 @@
-<div>
+<div ng-controller="PolishSortController as controller">
+    <ul class="pagination">
+        <li ng-class="controller.getClass(10)" ng-click="controller.changeGridSize(10)"><span class="link">10</span></li>
+        <li ng-class="controller.getClass(15)" ng-click="controller.changeGridSize(15)"><span class="link">15</span></li>
+        <li ng-class="controller.getClass(50)" ng-click="controller.changeGridSize(50)"><span class="link">50</span></li>
+    </ul>
     <div class="well">
-        <input ng-model="polish_sort" type="text" placeholder="Wpisz słowo...">
+        <input ng-model="polish_sort" value="" type="text" placeholder="Wpisz słowo...">
     </div>
     <table class="table table-hover">
         <thead>
@@ -10,6 +15,20 @@
         </tr>
         </thead>
         <tbody>
+        <tr ng-repeat="result in polish_search.results track by result.id">
+            <td>
+                <span ng-click="controller.translateWord(result)" class="link">{{result.word}}</span>
+            </td>
+            <td>
+                #
+            </td>
+        </tr>
         </tbody>
     </table>
+    <ul class="pager">
+        <li ng-hide="polish_search.page == 0" ng-click="controller.prevPage()"><span class="link">Previous</span></li>
+        <li>{{polish_search.page + 1}} / {{polish_search.pages - 1}}</li>
+        <li ng-hide="polish_search.page == polish_search.pages - 1" ng-click="controller.nextPage()"><span class="link">Next</span>
+        </li>
+    </ul>
 </div>

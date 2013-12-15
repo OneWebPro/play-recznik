@@ -26,6 +26,8 @@ require
       "deps": ["app"]
     "controllers/polishSearchController":
       "deps" : ["app"]
+    "controllers/polishSortController":
+      "deps" : ["app"]
   }
   ["require"
    "angular/angular.min"
@@ -36,6 +38,7 @@ require
    "controllers/serbianSortController"
    "services/serbianService"
    "controllers/polishSearchController"
+   "controllers/polishSortController"
    "services/polishService"
    "routes"
   ], (require,angular) ->
