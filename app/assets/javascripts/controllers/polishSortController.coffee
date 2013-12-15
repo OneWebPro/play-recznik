@@ -1,9 +1,10 @@
 class PolishSortController
 
   scope = undefined
-
-  constructor: ($scope, polishService) ->
+  rootScope = undefined
+  constructor: ($scope, polishService,$rootScope) ->
     scope = $scope
+    rootScope = $rootScope
     scope.polish_search = {
       page: 0,
       pages: 0,
@@ -32,7 +33,7 @@ class PolishSortController
     @search('page')
 
   translateWord: (word) ->
-    scope.$emit('translatePolish', word)
+    rootScope.$emit('translatePolish', word)
 
   getClass : (size) ->
     if(size == scope.polish_girdSize)
@@ -41,4 +42,4 @@ class PolishSortController
       ""
 
 
-angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', PolishSortController]
+angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]

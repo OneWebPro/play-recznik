@@ -1,9 +1,11 @@
 class SerbianSortController
 
   scope = undefined
+  rootScope = undefined
 
-  constructor: ($scope, serbianService) ->
+  constructor: ($scope, serbianService,$rootScope) ->
     scope = $scope
+    rootScope = $rootScope
     scope.serbian_search = {
       page: 0,
       pages: 0,
@@ -32,7 +34,7 @@ class SerbianSortController
     @search('page')
 
   translateWord: (word) ->
-    scope.$emit('translateSerbian', word)
+    rootScope.$emit('translateSerbian', word)
 
   getClass : (size) ->
     if(size == scope.serbian_girdSize)
@@ -41,4 +43,4 @@ class SerbianSortController
       ""
 
 
-angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', SerbianSortController]
+angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]

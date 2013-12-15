@@ -2,7 +2,7 @@ class PolishSearchController
 
   scope = undefined
 
-  constructor: ($scope, polishService) ->
+  constructor: ($scope, polishService,$rootScope) ->
     scope = $scope
     scope.polish_hints = []
     scope.polish_word = {}
@@ -17,7 +17,7 @@ class PolishSearchController
           scope.polish_results = results
       else
         scope.polish_results = []
-    scope.$on 'translatePolish' , (event, word) ->
+    $rootScope.$on 'translatePolish' , (event, word) ->
       scope.polish_text = word.word
       scope.translatePolish()
 
@@ -33,4 +33,4 @@ class PolishSearchController
 
 
 
-angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', PolishSearchController]
+angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', '$rootScope', PolishSearchController]

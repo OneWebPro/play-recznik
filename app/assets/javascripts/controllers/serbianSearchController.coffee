@@ -2,7 +2,7 @@ class SerbianSearchController
 
   scope = undefined
 
-  constructor: ($scope, serbianService) ->
+  constructor: ($scope, serbianService,$rootScope) ->
     scope = $scope
     scope.serbian_hints = []
     scope.serbian_word = {}
@@ -17,7 +17,7 @@ class SerbianSearchController
           scope.serbian_results = results
       else
         scope.serbian_results = []
-    scope.$on 'translateSerbian' , (event, word) ->
+    $rootScope.$on 'translateSerbian' , (event, word) ->
       scope.serbian_text = word.word
       scope.translateSerbian()
 
@@ -33,4 +33,4 @@ class SerbianSearchController
 
 
 
-angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', SerbianSearchController]
+angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', '$rootScope', SerbianSearchController]
