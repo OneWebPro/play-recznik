@@ -26,9 +26,9 @@
         </tbody>
     </table>
     <ul class="pager">
-        <li ng-hide="serbian_search.page == 0" ng-click="controller.prevPage()"><span class="link">Previous</span></li>
-        <li> {{serbian_search.page + 1}}/ {{serbian_search.pages - 1}}</li>
-        <li ng-hide="serbian_search.page == serbian_search.pages - 1" ng-click="controller.nextPage()"><span class="link">Next</span>
+        <li ng-hide="serbian_search.page == 0" ng-click="controller.prevPage()"><span class="link"> << </span></li>
+        <li> {{serbian_search.page + 1}} / {{serbian_search.pages - 1}}</li>
+        <li ng-hide="serbian_search.page == serbian_search.pages - 1" ng-click="controller.nextPage()"><span class="link"> >> </span>
         </li>
     </ul>
 </div>
