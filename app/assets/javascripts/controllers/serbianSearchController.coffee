@@ -8,9 +8,6 @@ class Controller
     scope.serbian_word = {}
     scope.serbianService = serbianService
     scope.$watch 'serbian_text', debounce(@update, 500)
-    scope.$watch 'serbian_hints', (value) ->
-      if(value? and value.length == 1 and value[0].toLowerCase == scope.serbian_text)
-        scope.serbian_hints = []
     scope.changeSerbian = (word) ->
       scope.serbian_hints = []
       scope.serbian_text = word
@@ -28,7 +25,10 @@ class Controller
     scope.serbian_hints = []
     if(value?.length)
       scope.serbianService.typing(scope.serbian_text).then (results) =>
-        scope.serbian_hints = results
+        if(results[0]? and results[0].word.toLowerCase() != scope.serbian_text.toLowerCase())
+          scope.serbian_hints = results
+        else
+          scope.serbian_hints = []
 
 
 
