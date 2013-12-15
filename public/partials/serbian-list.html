@@ -1,8 +1,8 @@
 <div ng-controller="SerbianSortController as controller">
     <ul class="pagination">
-        <li ng-click="controller.changeGridSize(10)"><span class="link">10</span></li>
-        <li ng-click="controller.changeGridSize(15)"><span class="link">15</span></li>
-        <li ng-click="controller.changeGridSize(50)"><span class="link">50</span></li>
+        <li ng-class="controller.getClass(10)" ng-click="controller.changeGridSize(10)"><span class="link">10</span></li>
+        <li ng-class="controller.getClass(15)" ng-click="controller.changeGridSize(15)"><span class="link">15</span></li>
+        <li ng-class="controller.getClass(50)" ng-click="controller.changeGridSize(50)"><span class="link">50</span></li>
     </ul>
     <div class="well">
         <input ng-model="serbian_sort" value="" type="text" placeholder="Upiši reč...">

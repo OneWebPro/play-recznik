@@ -34,5 +34,11 @@ class Controller
   translateWord: (word) ->
     scope.$emit('translateSerbian', word)
 
+  getClass : (size) ->
+    if(size == scope.serbian_girdSize)
+      "disabled"
+    else
+      ""
+
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', Controller]
