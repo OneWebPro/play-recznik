@@ -42,5 +42,29 @@ class PolishService
         )
       )
 
+  edit: (word) ->
+    @$http.post("#{urlBase}/save", {id:word.id,word:word.word}).then(
+      (
+        (results) ->
+          rootScope.$emit("EDITED_POLISH_TRANSLATION", results.data)
+          results.data
+      ),(
+        (error) ->
+          rootScope.$emit("ERROR",error.data)
+      )
+    )
+
+  remove: (id) ->
+    @$http.get("#{urlBase}/remove/#{id}").then(
+      (
+        (results) ->
+          rootScope.$emit("REMOVED_POLISH_TRANSLATION", results.data)
+          results.data
+      ), (
+        (error) ->
+          rootScope.$emit("ERROR", error.data)
+      )
+    )
+
 
 angular.module('app').service 'polishService', ['$http','$rootScope', PolishService]
