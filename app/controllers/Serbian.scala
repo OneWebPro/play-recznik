@@ -34,7 +34,7 @@ object Serbian extends MainController {
         valid = {
           form =>
             globalActor.ask(SerbianFirstLetter(form.word.getOrElse(""))).mapTo[Either[ServiceError, List[SerbianWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
             })
         },
@@ -53,7 +53,7 @@ object Serbian extends MainController {
         valid = {
           form =>
             globalActor.ask(FindSerbianTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError, List[PolishWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
             })
         },
@@ -72,7 +72,7 @@ object Serbian extends MainController {
         valid = {
           form =>
             globalActor.ask(SortSerbianList(page, size, form.word.getOrElse("%"))).mapTo[Either[ServiceError, ResultPage[SerbianWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(
                 Json.obj(
                   "results" -> JsArray(ok.elements.map(word => Json.toJson(word))),
@@ -87,6 +87,35 @@ object Serbian extends MainController {
             Future.successful(NotFound)
         }
       )
+  }
+
+  def save = Action.async(parse.json) {
+    implicit request =>
+      val json = request.body
+      json.validate[RequestWord].fold(
+        valid = {
+          form =>
+            globalActor.ask(
+              SerbianTranslation(form.id, form.word.getOrElse(""))
+            ).mapTo[Either[ServiceError, SerbianWord]].map({
+              case Left(ko) => NotFound(ko.error)
+              case Right(ok) => Ok(Json.toJson(ok))
+            })
+        },
+        invalid = {
+          errors =>
+            Future.successful(NotFound)
+        }
+      )
+  }
+
+  def remove(id: Long) = Action.async(parse.json) {
+    implicit request =>
+      val json = request.body
+      globalActor.ask(RemoveSerbianTranslation(id)).mapTo[Either[ServiceError, SerbianWord]].map({
+        case Left(ko) => NotFound(ko.error)
+        case Right(ok) => Ok(Json.toJson(ok))
+      })
   }
 
 }

@@ -6,19 +6,23 @@
 GET         /                                    controllers.Application.index
 GET         /messages.js                         controllers.Application.jsMessages
 POST        /api/add                             controllers.Application.addTranslation
-POST        /error                               controllers.Application.error
 
 
 # Serbian
 POST        /api/serbian/find                    controllers.Serbian.find
 POST        /api/serbian/translate               controllers.Serbian.translate
+POST        /api/serbian/save                    controllers.Serbian.save
 POST        /api/serbian/sort/:size/:page        controllers.Serbian.sort(page:Int,size:Int)
+GET         /api/serbian/remove/:id              controllers.Serbian.remove(id:Long)
+
 
 
 #Polish
 POST        /api/polish/find                     controllers.Polish.find
 POST        /api/polish/translate                controllers.Polish.translate
+POST        /api/polish/save                     controllers.Polish.save
 POST        /api/polish/sort/:size/:page         controllers.Polish.sort(page:Int,size:Int)
+GET         /api/polish/remove/:id               controllers.Polish.remove(id:Long)
 
 
 

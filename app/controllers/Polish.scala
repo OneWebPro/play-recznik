@@ -34,7 +34,7 @@ object Polish extends MainController {
         valid = {
           form =>
             globalActor.ask(PolishFirstLetter(form.word.getOrElse(""))).mapTo[Either[ServiceError, List[PolishWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
             })
         },
@@ -52,7 +52,7 @@ object Polish extends MainController {
         valid = {
           form =>
             globalActor.ask(FindPolishTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError, List[SerbianWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
             })
         },
@@ -70,7 +70,7 @@ object Polish extends MainController {
         valid = {
           form =>
             globalActor.ask(SortPolishList(page, size, form.word.getOrElse("%"))).mapTo[Either[ServiceError, ResultPage[PolishWord]]].map({
-              case Left(ko) => NotFound
+              case Left(ko) => NotFound(ko.error)
               case Right(ok) => Ok(
                 Json.obj(
                   "results" -> JsArray(ok.elements.map(word => Json.toJson(word))),
@@ -86,4 +86,34 @@ object Polish extends MainController {
         }
       )
   }
+
+  def save = Action.async(parse.json) {
+    implicit request =>
+      val json = request.body
+      json.validate[RequestWord].fold(
+        valid = {
+          form =>
+            globalActor.ask(
+              PolishTranslation(form.id,form.word.getOrElse(""))
+            ).mapTo[Either[ServiceError,PolishWord]].map({
+              case Left(ko) => NotFound(ko.error)
+              case Right(ok) => Ok(Json.toJson(ok))
+            })
+        },
+        invalid = {
+          errors =>
+            Future.successful(NotFound)
+        }
+      )
+  }
+
+  def remove(id: Long) = Action.async(parse.json) {
+    implicit request =>
+      val json = request.body
+      globalActor.ask(RemovePolishTranslation(id)).mapTo[Either[ServiceError, PolishWord]].map({
+        case Left(ko) => NotFound(ko.error)
+        case Right(ok) => Ok(Json.toJson(ok))
+      })
+  }
+
 }
