@@ -23,6 +23,7 @@ class PolishSearchController
     $rootScope.$on 'translatePolish' , (event, word) ->
       scope.polish_text = word.word
       scope.translatePolish()
+      $('html, body').animate({scrollTop: 0}, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       if(scope.polish_text?.length and scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
         if(!self.wordExists(word.serbian))
