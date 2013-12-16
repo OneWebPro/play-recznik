@@ -38,6 +38,12 @@ class PolishSearchController
         return true
     false
 
+  findById: (id) ->
+    for w in scope.polish_results
+      if(w.id == id)
+        return w
+    null
+
   update: (value) ->
     scope.polish_hints = []
     scope.$apply()

@@ -38,6 +38,12 @@ class SerbianSearchController
         return true
     false
 
+  findById: (id) ->
+    for w in scope.serbian_results
+      if(w.id == id)
+        return w
+    null
+
   update: (value) ->
     scope.serbian_hints = []
     scope.$apply()
