@@ -16,6 +16,9 @@ class SerbianSortController
     scope.$watch 'serbian_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
+
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
 
   search: (value) ->
     if(value != "page")
@@ -45,6 +48,9 @@ class SerbianSortController
       ""
 
   save:(word) ->
+    scope.serbianService.save(word)
+
   remove:(id) ->
+    scope.serbianService.remove(id)
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]

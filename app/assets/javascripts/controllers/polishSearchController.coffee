@@ -31,6 +31,13 @@ class PolishSearchController
       if(scope.polish_text?.length and scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
         if(!self.wordExists(word.serbian))
           scope.polish_results.push word.serbian
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
+
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
+
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
+
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
 
   wordExists : (word) ->
     for w in scope.polish_results
@@ -55,10 +62,10 @@ class PolishSearchController
           scope.polish_hints = []
 
   save:(word) ->
-    false
+    scope.polishService.save(word)
 
   remove:(id) ->
-    false
+    scope.polishService.remove(id)
 
   addElement: ->
     if(@element?.length and searched?.length)

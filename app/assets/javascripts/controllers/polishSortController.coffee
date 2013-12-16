@@ -15,6 +15,9 @@ class PolishSortController
     scope.$watch 'polish_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
+
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
 
   search: (value) ->
     if(value != "page")
@@ -44,7 +47,10 @@ class PolishSortController
       ""
 
   save:(word) ->
+    scope.polishService.save(word)
+
   remove:(id) ->
+    scope.polishService.remove(id)
 
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]
