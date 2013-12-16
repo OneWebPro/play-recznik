@@ -5,6 +5,7 @@
 # Home page
 GET         /                                    controllers.Application.index
 GET         /messages.js                         controllers.Application.jsMessages
+POST        /api/add                             controllers.Application.addTranslation
 
 # Serbian
 POST        /api/serbian/find                    controllers.Serbian.find

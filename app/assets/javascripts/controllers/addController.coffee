@@ -7,6 +7,7 @@ class AddController
     scope = $scope
     rootScope = $rootScope
     scope.service = service
+    console.log(service)
     scope.polish_hintsAdd = []
     scope.serbian_hintsAdd = []
     scope.$watch 'polish_add', debounce(@updatePolish, 500)
@@ -42,6 +43,7 @@ class AddController
   save: ->
     if(scope.polish_add?.length and scope.serbian_add?.length)
       scope.service.addTranslation(scope.polish_add, scope.serbian_add).then (results) =>
-        ""
+        rootScope.$emit("ADDED_TRANSLATION", results)
+        $("#addModal").modal("hide")
 
 angular.module('app').controller 'AddController', ['$scope', 'addService', '$rootScope', AddController]

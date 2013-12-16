@@ -1,14 +1,14 @@
 class AddService
+  urlBase = '/api'
 
   constructor: (@$http, @polishService, @serbianService) ->
 
-  typingPolish = (word) ->
-    @polishService.typing(word)
-
-  typingSerbian = (word) ->
-    @serbianService.typing(word)
-
-#  addTranslation = (polish,serbian) ->
+  addTranslation: (polish,serbian) ->
+    @$http.post("#{urlBase}/add", {
+      polish : {word:polish},
+      serbian:{word:serbian}
+    }).then (results) ->
+        results.data
 
 
 angular.module('app').service 'addService', ['$http' , 'polishService' , 'serbianService', AddService]
