@@ -108,8 +108,6 @@ object Polish extends MainController {
   }
 
   def remove(id: Long) = Action.async(parse.json) {
-    implicit request =>
-      val json = request.body
       globalActor.ask(RemovePolishTranslation(id)).mapTo[Either[ServiceError, PolishWord]].map({
         case Left(ko) => NotFound(ko.error)
         case Right(ok) => Ok(Json.toJson(ok))
