@@ -57,6 +57,8 @@ class SerbianSearchController
   addElement: ->
     if(@element?.length and searched?.length)
       scope.addService.addTranslation(@element, searched)
+      @add = false
+      @element = ""
 
 
 angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', '$rootScope','addService', SerbianSearchController]
