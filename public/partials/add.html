@@ -9,23 +9,23 @@
             <div class="modal-body">
                 <ng:include src="'view/letters'"></ng:include>
                 <div class="form-group">
-                    <label for="polishWord">Polskie słowo</label>
-                    <input type="text" ng-model="polish_add" class="form-control" id="polishWord" placeholder="Polskie słowo">
-                    <div ng-hide="!polish_hintsAdd.length" class="hints">
-                        <ul>
-                            <li ng-repeat="hint in polish_hintsAdd track by hint.id">
-                                <div ng-click="controller.changePolish(hint.word)" class="word">{{hint.word}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="serbianWord">Serbskie słowo</label>
                     <input type="text" ng-model="serbian_add" class="form-control" id="serbianWord" placeholder="Serbskie słowo">
                     <div ng-hide="!serbian_hintsAdd.length" class="hints">
                         <ul>
                             <li ng-repeat="hint in serbian_hintsAdd track by hint.id">
                                 <div ng-click="controller.changeSerbian(hint.word)" class="word">{{hint.word}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="polishWord">Polskie słowo</label>
+                    <input type="text" ng-model="polish_add" class="form-control" id="polishWord" placeholder="Polskie słowo">
+                    <div ng-hide="!polish_hintsAdd.length" class="hints">
+                        <ul>
+                            <li ng-repeat="hint in polish_hintsAdd track by hint.id">
+                                <div ng-click="controller.changePolish(hint.word)" class="word">{{hint.word}}</div>
                             </li>
                         </ul>
                     </div>

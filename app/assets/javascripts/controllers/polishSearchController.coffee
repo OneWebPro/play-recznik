@@ -1,10 +1,13 @@
 class PolishSearchController
 
   scope = undefined
+  self = undefined
 
   constructor: ($scope, polishService,$rootScope) ->
     scope = $scope
+    self = @
     scope.polish_hints = []
+    scope.polish_results = []
     scope.polish_word = {}
     scope.polishService = polishService
     scope.$watch 'polish_text', debounce(@update, 500)
@@ -21,9 +24,15 @@ class PolishSearchController
       scope.polish_text = word.word
       scope.translatePolish()
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      if(scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
-        scope.polish_results push word.
-        scope.$apply()
+      if(scope.polish_text?.length and scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
+        if(!self.wordExists(word.serbian))
+          scope.polish_results.push word.serbian
+
+  wordExists : (word) ->
+    for w in scope.polish_results
+      if(w.id == word.id)
+        return true
+    false
 
   update: (value) ->
     scope.polish_hints = []
