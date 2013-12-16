@@ -2,14 +2,16 @@ class PolishSearchController
 
   scope = undefined
   self = undefined
+  searched = undefined
 
-  constructor: ($scope, polishService,$rootScope) ->
+  constructor: ($scope, polishService,$rootScope,addService) ->
     scope = $scope
     self = @
     scope.polish_hints = []
     scope.polish_results = []
     scope.polish_word = {}
     scope.polishService = polishService
+    scope.addService = addService
     scope.$watch 'polish_text', debounce(@update, 500)
     scope.changePolish = (word) ->
       scope.polish_hints = []
@@ -18,6 +20,7 @@ class PolishSearchController
       if(scope.polish_text?.length)
         scope.polishService.translate(scope.polish_text).then (results) =>
           scope.polish_results = results
+          searched = scope.polish_text
       else
         scope.polish_results = []
     $rootScope.$on 'TRANSLATE_POLISH' , (event, word) ->
@@ -52,7 +55,7 @@ class PolishSearchController
     false
 
   addElement: ->
-    if(@element?.length)
-      false
+    if(@element?.length and searched?.length)
+      scope.addService.addTranslation(searched,@element)
 
-angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', '$rootScope', PolishSearchController]
+angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', '$rootScope','addService', PolishSearchController]

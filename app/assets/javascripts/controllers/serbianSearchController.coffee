@@ -2,14 +2,16 @@ class SerbianSearchController
 
   scope = undefined
   self = undefined
+  searched = undefined
 
-  constructor: ($scope, serbianService,$rootScope) ->
+  constructor: ($scope, serbianService,$rootScope,addService) ->
     self = @
     scope = $scope
     scope.serbian_hints = []
     scope.serbian_results = []
     scope.serbian_word = {}
     scope.serbianService = serbianService
+    scope.addService = addService
     scope.$watch 'serbian_text', debounce(@update, 500)
     scope.changeSerbian = (word) ->
       scope.serbian_hints = []
@@ -18,6 +20,7 @@ class SerbianSearchController
       if(scope.serbian_text?.length)
         scope.serbianService.translate(scope.serbian_text).then (results) =>
           scope.serbian_results = results
+          searched = scope.serbian_text
       else
         scope.serbian_results = []
     $rootScope.$on 'TRANSLATE_SERBIAN' , (event, word) ->
@@ -52,8 +55,8 @@ class SerbianSearchController
     false
 
   addElement: ->
-    if(@element?.length)
-      false
+    if(@element?.length and searched?.length)
+      scope.addService.addTranslation(@element, searched)
 
 
-angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', '$rootScope', SerbianSearchController]
+angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', '$rootScope','addService', SerbianSearchController]
