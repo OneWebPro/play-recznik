@@ -35,7 +35,7 @@ class PolishSortController
     @search('page')
 
   translateWord: (word) ->
-    rootScope.$emit('translatePolish', word)
+    rootScope.$emit('TRANSLATE_POLISH', word)
 
   getClass : (size) ->
     if(size == scope.polish_girdSize)

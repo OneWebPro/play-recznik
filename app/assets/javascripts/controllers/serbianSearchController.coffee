@@ -20,7 +20,7 @@ class SerbianSearchController
           scope.serbian_results = results
       else
         scope.serbian_results = []
-    $rootScope.$on 'translateSerbian' , (event, word) ->
+    $rootScope.$on 'TRANSLATE_SERBIAN' , (event, word) ->
       scope.serbian_text = word.word
       scope.translateSerbian()
       $('html, body').animate({scrollTop: 0}, 500)

@@ -36,7 +36,7 @@ class SerbianSortController
     @search('page')
 
   translateWord: (word) ->
-    rootScope.$emit('translateSerbian', word)
+    rootScope.$emit('TRANSLATE_SERBIAN', word)
 
   getClass : (size) ->
     if(size == scope.serbian_girdSize)

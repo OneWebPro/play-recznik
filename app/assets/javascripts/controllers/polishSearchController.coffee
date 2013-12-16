@@ -20,7 +20,7 @@ class PolishSearchController
           scope.polish_results = results
       else
         scope.polish_results = []
-    $rootScope.$on 'translatePolish' , (event, word) ->
+    $rootScope.$on 'TRANSLATE_POLISH' , (event, word) ->
       scope.polish_text = word.word
       scope.translatePolish()
       $('html, body').animate({scrollTop: 0}, 500)
