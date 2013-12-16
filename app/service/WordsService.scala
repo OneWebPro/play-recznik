@@ -24,7 +24,7 @@ object WordsService extends ErrorService {
       val polish: PolishWord = getPolishWord(translation.polish)
       val serbian: SerbianWord = getSerbianWord(translation.serbian)
       WordToWordTable.findByParents(polish.id.get, serbian.id.get).firstOption match {
-        case Some(_) => throw new Error(Messages("service.error.translationExists"))
+        case Some(_) => throw new Exception(Messages("service.error.translationExists"))
         case None => {
           val wordToWord = WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, active = true))
           WordRespond(polish, serbian, wordToWord)

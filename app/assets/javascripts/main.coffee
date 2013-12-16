@@ -4,6 +4,8 @@ require
       "deps": []
     "bootstrap":
       "deps" :["jquery-1.9.0.min"]
+    "growl":
+      "deps": ["jquery-1.9.0.min", "bootstrap"]
     "jqueryEvents":
       "deps" :["jquery-1.9.0.min"]
     "angular/angular":
@@ -35,12 +37,17 @@ require
       "deps": ["app"]
     "controllers/addController":
       "deps": ["app"]
+    ### --- Others --- ###
+    "controllers/siteController":
+      "deps": ["app"]
   }
   ["require"
    "angular/angular"
    "jquery-1.9.0.min"
    "bootstrap"
+   "growl"
    "jqueryEvents"
+   "controllers/siteController"
    "controllers/serbianSearchController"
    "controllers/serbianSortController"
    "services/serbianService"

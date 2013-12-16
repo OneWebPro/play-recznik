@@ -45,6 +45,15 @@ class SerbianSearchController
         else
           scope.serbian_hints = []
 
+  save:(word) ->
+    false
+
+  remove:(id) ->
+    false
+
+  addElement: ->
+    if(@element?.length)
+      false
 
 
 angular.module('app').controller 'SerbianSearchController', ['$scope', 'serbianService', '$rootScope', SerbianSearchController]

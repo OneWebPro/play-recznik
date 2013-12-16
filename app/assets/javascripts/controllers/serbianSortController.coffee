@@ -44,5 +44,7 @@ class SerbianSortController
     else
       ""
 
+  save:(word) ->
+  remove:(id) ->
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]

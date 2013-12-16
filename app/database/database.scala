@@ -24,7 +24,7 @@ trait ErrorService {
 			try {
 				Right(block(s))
 			} catch {
-				case ex: Exception => Left(ServiceError(ex.getStackTrace.map((element) => element.getFileName + ": " + element.getLineNumber + "=> " + element.getMethodName + " [" + ex.getMessage + "] \n").mkString(" ")))
+        case ex: Exception => Left(ServiceError(ex.getMessage))
 			}
 	}
 

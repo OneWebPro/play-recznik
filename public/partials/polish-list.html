@@ -30,18 +30,18 @@
                 <div ng-if="result.added">
                     <div class="btn-toolbar" role="toolbar">
                         <div ng-if="!result.edit"  class="btn-group" >
-                            <button ng-click="result.edit = true" class="btn btn-default" type="button">
+                            <button ng-click="result.edit = true" class="btn btn-info btn-sm" type="button">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
-                            <button ng-click="controller.remove(result.id)" class="btn btn-default" type="button">
+                            <button ng-click="controller.remove(result.id)" class="btn btn-danger btn-sm" type="button">
                                 <span class="glyphicon glyphicon-remove-sign"></span>
                             </button>
                         </div>
-                        <div ng-if="result.edit === true">
-                            <button ng-click="controller.save(result)" class="btn btn-default" type="button">
+                        <div ng-if="result.edit === true" class="btn-group">
+                            <button ng-click="controller.save(result)" class="btn btn-success btn-sm" type="button">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
-                            <button ng-click="result.edit = false" class="btn btn-default" type="button">
+                            <button ng-click="result.edit = false" class="btn btn-info btn-sm" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
@@ -53,8 +53,8 @@
     </table>
     <ul class="pager">
         <li ng-hide="polish_search.page == 0" ng-click="controller.prevPage()"><span class="link"> << </span></li>
-        <li>{{polish_search.page + 1}} / {{polish_search.pages - 1}}</li>
-        <li ng-hide="polish_search.page == polish_search.pages - 1" ng-click="controller.nextPage()"><span class="link"> >> </span>
+        <li ng-if="polish_search.pages > 0">{{polish_search.page + 1}} / {{polish_search.pages - 1}}</li>
+        <li ng-if="polish_search.pages > 0" ng-hide="polish_search.page == polish_search.pages - 1" ng-click="controller.nextPage()"><span class="link"> >> </span>
         </li>
     </ul>
 </div>

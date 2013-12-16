@@ -43,5 +43,8 @@ class PolishSortController
     else
       ""
 
+  save:(word) ->
+  remove:(id) ->
+
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]

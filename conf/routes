@@ -6,6 +6,8 @@
 GET         /                                    controllers.Application.index
 GET         /messages.js                         controllers.Application.jsMessages
 POST        /api/add                             controllers.Application.addTranslation
+POST        /error                               controllers.Application.error
+
 
 # Serbian
 POST        /api/serbian/find                    controllers.Serbian.find

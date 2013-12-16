@@ -70,4 +70,9 @@ object Application extends MainController {
         }
       )
   }
+
+
+  def error = Action {
+    NotFound("xxx")
+  }
 }

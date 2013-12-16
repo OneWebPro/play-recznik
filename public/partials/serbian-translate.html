@@ -1,4 +1,4 @@
-<div class="well"  ng-controller="SerbianSearchController">
+<div class="well"  ng-controller="SerbianSearchController as controller">
     <form role="form">
         <div class="form-group">
             <input autocomplete="off" type="text" ng-model="serbian_text" class="form-control" id="serbian-translate" placeholder="Upiši reč...">
@@ -11,13 +11,51 @@
             </ul>
         </div>
         <button ng-click="translateSerbian()" type="submit" class="btn btn-default">Prevodi</button>
+        <button ng-if="serbian_results.length " ng-hide="controller.add" ng-click="controller.add = true" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
     </form>
     <div ng-hide="!serbian_results.length" class="results">
+        <hr ng-hide="!controller.add" />
+        <div ng-hide="!controller.add" class="btn-toolbar edit-word"  role="toolbar">
+            <div class="btn-group">
+                <button ng-click="controller.addElement()" class="btn btn-success btn-sm" type="button">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+                <button ng-click="controller.add = false" class="btn btn-info btn-sm" type="button">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </div>
+        <div ng-hide="!controller.add">
+            <input ng-hide="!controller.add" type="text" ng-model="controller.element">
+        </div>
         <hr />
         <ul>
             <li ng-repeat="result in serbian_results track by result.id">
                 <blockquote>
-                <p class="text-info">{{result.word}}</p>
+                        <div ng-if="result.added" class="btn-toolbar edit-word" role="toolbar">
+                            <div class="btn-group">
+                                <button ng-if="!result.edit" ng-click="result.edit = true" class="btn btn-info btn-sm"
+                                        type="button">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button ng-if="!result.edit" ng-click="controller.remove(result.id)" class="btn btn-danger btn-sm"
+                                        type="button">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                                <button ng-if="result.edit" ng-click="controller.save(result)" class="btn btn-success btn-sm"
+                                        type="button">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <button ng-if="result.edit" ng-click="result.edit = false" class="btn btn-info btn-sm"
+                                        type="button">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <p ng-hide="result.edit" class="text-info">{{result.word}}</p>
+                        <input ng-hide="!result.edit" type="text" ng-model="result.word">
                 </blockquote>
             </li>
         </ul>

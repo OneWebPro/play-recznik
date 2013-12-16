@@ -45,6 +45,14 @@ class PolishSearchController
         else
           scope.polish_hints = []
 
+  save:(word) ->
+    false
 
+  remove:(id) ->
+    false
+
+  addElement: ->
+    if(@element?.length)
+      false
 
 angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', '$rootScope', PolishSearchController]
