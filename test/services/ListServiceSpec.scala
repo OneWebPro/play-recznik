@@ -179,6 +179,31 @@ class ListServiceSpec extends Specification with GlobalDatabaseTests {
   }
 
   "ListService.findSerbian" should {
+    "find words started with č" in {
+      runSession {
+        implicit session =>
+          val letter: String = "č"
+          TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).isLeft mustEqual false
+          val translations = TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).right.get
+          val pages: Int = Math.round(translations.size / 10)
+          val lastPage: Int = translations.size % 10
+          val result = for (page <- 0 to pages) yield {
+            !ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).isLeft &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.pages == pages &&
+              ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.forall(word => word.word.charAt(0).toString.toLowerCase == letter.toLowerCase) && {
+              if (page < pages) {
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == PAGE_SIZE
+              } else {
+                ListService.findSerbian(SortSerbianList(page, PAGE_SIZE, letter)).right.get.elements.size == lastPage
+              }
+            }
+          }
+          result.forall(element => element) mustEqual true
+      }
+    }
+  }
+
+  "ListService.findSerbian" should {
     "find one word Afrika" in {
       runSession {
         implicit session =>
