@@ -45,5 +45,7 @@ class AddController
       scope.service.addTranslation(scope.polish_add, scope.serbian_add).then (results) =>
         rootScope.$emit("ADDED_TRANSLATION", results)
         $("#addModal").modal("hide")
+        scope.polish_add = ""
+        scope.serbian_add = ""
 
 angular.module('app').controller 'AddController', ['$scope', 'addService', '$rootScope', AddController]
