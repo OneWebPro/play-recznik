@@ -32,12 +32,13 @@ class PolishSearchController
         if(!self.wordExists(word.serbian))
           scope.polish_results.push word.serbian
     $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
-
+      # TODO: check if translated word is edited word. If is, change it value
     $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
-
+      # TODO: check if translated word is remove word. If is, remove it and translations.
     $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
-
+      # TODO: check edited word is one of translations and if is, change it.
     $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
+      # TODO: check edited word is one of translations and if is, remove it.
 
   wordExists : (word) ->
     for w in scope.polish_results

@@ -16,8 +16,9 @@ class PolishSortController
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
     $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
-
+      # TODO : Check if element is on the list and change it
     $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
+      # TODO : Check if element is on the list and remove it
 
   search: (value) ->
     if(value != "page")
