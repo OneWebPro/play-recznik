@@ -21,6 +21,11 @@
         <div class="container">
             @content
         </div>
+        <div class="back-to-top">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </button>
+        </div>
         @*Scripts*@
         <script type="text/javascript" src="@routes.Application.jsMessages()"></script>
         <script type="text/javascript">function debounce(fn, delay) {var timer = null;return function () {var context = this, args = arguments;clearTimeout(timer);timer = setTimeout(function () {fn.apply(context, args);}, delay);};}</script>
