@@ -17,10 +17,36 @@
         <tbody>
         <tr ng-repeat="result in polish_search.results track by result.id">
             <td>
-                <span ng-click="controller.translateWord(result)" class="link">{{result.word}}</span>
+                <span class="link">
+                    <div ng-click="controller.translateWord(result)" ng-if="!result.edit">
+                        {{result.word}}
+                    </div>
+                    <div ng-if="result.edit === true">
+                        <input type="text" ng-model="result.word">
+                    </div>
+                </span>
             </td>
             <td>
-                #
+                <div ng-if="result.added">
+                    <div class="btn-toolbar" role="toolbar">
+                        <div ng-if="!result.edit"  class="btn-group" >
+                            <button ng-click="result.edit = true" class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button ng-click="controller.remove(result.id)" class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
+                        </div>
+                        <div ng-if="result.edit === true">
+                            <button ng-click="controller.save(result)" class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                            <button ng-click="result.edit = false" class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
