@@ -21,8 +21,9 @@ class PolishSearchController
       scope.polish_text = word.word
       scope.translatePolish()
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      if(scope.polish_text == word.polish.word)
-        scope.polish_results push word.serbian
+      if(scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
+        scope.polish_results push word.
+        scope.$apply()
 
   update: (value) ->
     scope.polish_hints = []

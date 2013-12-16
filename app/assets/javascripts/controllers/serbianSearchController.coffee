@@ -21,8 +21,9 @@ class SerbianSearchController
       scope.serbian_text = word.word
       scope.translateSerbian()
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      if(scope.serbian_text == word.serbian.word)
+      if(scope.serbian_text.toLowerCase == word.serbian.word.toLowerCase)
         scope.serbian_results push word.polish
+        scope.$apply()
 
   update: (value) ->
     scope.serbian_hints = []
