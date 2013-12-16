@@ -32,7 +32,7 @@
         </div>
         <hr />
         <ul>
-            <li ng-repeat="result in serbian_results track by result.id">
+            <li ng-repeat="result in serbian_results track by result.id | filter:{ active : true }">
                 <blockquote>
                         <div ng-if="result.added" class="btn-toolbar edit-word" role="toolbar">
                             <div class="btn-group">
