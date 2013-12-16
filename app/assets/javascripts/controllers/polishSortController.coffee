@@ -13,6 +13,8 @@ class PolishSortController
     scope.polish_girdSize = 10
     scope.polishService = polishService
     scope.$watch 'polish_sort', debounce(@search, 500)
+    $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
+      @search('')
 
   search: (value) ->
     if(value != "page")

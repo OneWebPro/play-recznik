@@ -14,6 +14,8 @@ class SerbianSortController
     scope.serbian_girdSize = 10
     scope.serbianService = serbianService
     scope.$watch 'serbian_sort', debounce(@search, 500)
+    $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
+      @search('')
 
   search: (value) ->
     if(value != "page")
