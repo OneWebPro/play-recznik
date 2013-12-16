@@ -7,8 +7,10 @@ class AddService
     @$http.post("#{urlBase}/add", {
       polish : {word:polish},
       serbian:{word:serbian}
-    }).then (results) ->
+    }).then (
+      (results) ->
         results.data
+    )
 
 
 angular.module('app').service 'addService', ['$http' , 'polishService' , 'serbianService', AddService]
