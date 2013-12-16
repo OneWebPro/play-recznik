@@ -7,7 +7,6 @@ class AddController
     scope = $scope
     rootScope = $rootScope
     scope.service = service
-    console.log(service)
     scope.polish_hintsAdd = []
     scope.serbian_hintsAdd = []
     scope.$watch 'polish_add', debounce(@updatePolish, 500)
