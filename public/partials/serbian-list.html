@@ -15,8 +15,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="result in serbian_search.results track by result.id | filter:{ active : true }">
-            <td>
+        <tr ng-repeat="result in serbian_search.results track by result.id">
+            <td ng-if="result.active">
                 <span class="link">
                     <div ng-click="controller.translateWord(result)" ng-if="!result.edit">
                         {{result.word}}
@@ -26,7 +26,7 @@
                     </div>
                 </span>
             </td>
-            <td>
+            <td ng-if="result.active">
                 <div ng-if="result.added">
                     <div class="btn-toolbar" role="toolbar">
                         <div ng-if="!result.edit"  class="btn-group" >
