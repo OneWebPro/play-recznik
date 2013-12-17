@@ -65,8 +65,10 @@ class PolishSortController
     @search('')
 
   remove:(id) ->
-    scope.polishService.remove(id)
-    @search('')
+    bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
+      if(result)
+        scope.polishService.remove(id)
+        @search('')
 
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]

@@ -4,6 +4,8 @@ require
       "deps": []
     "bootstrap":
       "deps" :["jquery-1.9.0.min"]
+    "bootbox.min" :
+      "deps": ["jquery-1.9.0.min", "bootstrap"]
     "growl":
       "deps": ["jquery-1.9.0.min", "bootstrap"]
     "jqueryEvents":
@@ -45,6 +47,7 @@ require
    "angular/angular"
    "jquery-1.9.0.min"
    "bootstrap"
+   "bootbox.min"
    "growl"
    "jqueryEvents"
    "controllers/siteController"

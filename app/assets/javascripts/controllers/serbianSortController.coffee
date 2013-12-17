@@ -66,7 +66,9 @@ class SerbianSortController
     @search('')
 
   remove:(id) ->
-    scope.serbianService.remove(id)
-    @search('')
+   bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
+     if(result)
+       scope.serbianService.remove(id)
+       @search('')
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]

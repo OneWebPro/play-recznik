@@ -77,7 +77,9 @@ class PolishSearchController
     word.edit = false
 
   remove: (id) ->
-    scope.serbianService.remove(id)
+    bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
+      if(result)
+        scope.serbianService.remove(id)
 
   addElement: ->
     if(@element?.length and searched?)
