@@ -74,6 +74,7 @@ class SerbianSearchController
 
   save: (word) ->
     scope.polishService.edit(word)
+    word.edit = false
 
   remove: (id) ->
     scope.polishService.remove(id)

@@ -61,9 +61,12 @@ class PolishSortController
 
   save:(word) ->
     scope.polishService.edit(word)
+    word.edit = false
+    @search('')
 
   remove:(id) ->
     scope.polishService.remove(id)
+    @search('')
 
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]

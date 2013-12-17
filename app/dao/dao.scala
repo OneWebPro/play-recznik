@@ -155,7 +155,7 @@ object WordToWordTable extends DAO {
   val findSerbianTranslations = for {
     polish <- Parameters[Long]
     wordToWord <- WordToWordTable if wordToWord.polish_id === polish
-    serbian <- SerbianWordTable if serbian.id === wordToWord.serbian_id
+    serbian <- SerbianWordTable if serbian.id === wordToWord.serbian_id && serbian.active === true
   } yield serbian
 
   /**
@@ -164,7 +164,7 @@ object WordToWordTable extends DAO {
   val findPolishTranslations = for {
     serbian <- Parameters[Long]
     wordToWord <- WordToWordTable if wordToWord.serbian_id === serbian
-    polish <- PolishWordTable if polish.id === wordToWord.polish_id
+    polish <- PolishWordTable if polish.id === wordToWord.polish_id && polish.active === true
   } yield polish
 }
 

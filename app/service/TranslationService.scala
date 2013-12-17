@@ -47,7 +47,7 @@ object TranslationService extends ErrorService {
             case Some(word: PolishWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFound",id))
           }
-          case None => PolishWordTable.findByWord(search.word.toLowerCase).firstOption match {
+          case None => PolishWordTable.findByWord(search.word.toLowerCase).firstOption.filter(_.active == true) match {
             case Some(word: PolishWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
           }
@@ -73,7 +73,7 @@ object TranslationService extends ErrorService {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFound",id))
           }
-          case None => SerbianWordTable.findByWord(search.word.toLowerCase).firstOption match {
+          case None => SerbianWordTable.findByWord(search.word.toLowerCase).firstOption.filter(_.active == true) match {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
           }

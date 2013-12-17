@@ -1,2 +1,2 @@
-angular.element(window.document).ready ->
-  angular.bootstrap window.document, ['app']
+  angular.element(window.document).ready ->
+    angular.bootstrap window.document, ['app']

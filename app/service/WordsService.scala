@@ -47,7 +47,7 @@ object WordsService extends ErrorService {
         }
       }
       case None => {
-        PolishWordTable.findByWord(translation.word.toLowerCase).firstOption match {
+        PolishWordTable.findByWord(translation.word.toLowerCase).firstOption.filter(_.active == true) match {
           case Some(word: PolishWord) => word
           case None => {
             if (!translation.word.isEmpty) {
@@ -80,7 +80,7 @@ object WordsService extends ErrorService {
         }
       }
       case None => {
-        SerbianWordTable.findByWord(translation.word.toLowerCase).firstOption match {
+        SerbianWordTable.findByWord(translation.word.toLowerCase).firstOption.filter(_.active == true) match {
           case Some(word: SerbianWord) => word
           case None => {
             if (!translation.word.isEmpty) {
