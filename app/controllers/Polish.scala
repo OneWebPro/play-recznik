@@ -51,9 +51,14 @@ object Polish extends MainController {
       json.validate[RequestWord].fold(
         valid = {
           form =>
-            globalActor.ask(FindPolishTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError, List[SerbianWord]]].map({
+            globalActor.ask(FindPolishTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError, (List[SerbianWord], PolishWord)]].map({
               case Left(ko) => NotFound(ko.error)
-              case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
+              case Right(ok) => Ok(
+                Json.obj(
+                  "word" -> Json.toJson(ok._2),
+                  "list" -> JsArray(ok._1.map(word => Json.toJson(word)))
+                )
+              )
             })
         },
         invalid = {

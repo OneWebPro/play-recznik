@@ -46,15 +46,19 @@ object Serbian extends MainController {
   }
 
   def translate = Action.async(parse.json) {
-
     implicit request =>
       val json = request.body
       json.validate[RequestWord].fold(
         valid = {
           form =>
-            globalActor.ask(FindSerbianTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError, List[PolishWord]]].map({
+            globalActor.ask(FindSerbianTranslation(form.id, form.word.getOrElse(""))).mapTo[Either[ServiceError,  (List[PolishWord], SerbianWord)]].map({
               case Left(ko) => NotFound(ko.error)
-              case Right(ok) => Ok(JsArray(ok.map(word => Json.toJson(word))))
+              case Right(ok) => Ok(
+                Json.obj(
+                  "word" -> Json.toJson(ok._2),
+                  "list" -> JsArray(ok._1.map(word => Json.toJson(word)))
+                )
+              )
             })
         },
         invalid = {

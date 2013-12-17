@@ -20,8 +20,8 @@ class PolishSearchController
     scope.translatePolish = ->
       if(scope.polish_text?.length)
         scope.polishService.translate(scope.polish_text).then (results) =>
-          scope.polish_results = results
-          searched = scope.polish_text
+          scope.polish_results = results.list
+          searched = results.word
       else
         scope.polish_results = []
     $rootScope.$on 'TRANSLATE_POLISH', (event, word) ->
@@ -32,16 +32,20 @@ class PolishSearchController
       if(scope.polish_text?.length and scope.polish_text.toLowerCase()== word.polish.word.toLowerCase())
         if(!self.wordExists(word.serbian))
           scope.polish_results.push word.serbian
-    $rootScope.$on 'EDITED_POLISH_TRANSLATION', (event, word,editWord) ->
-      if((scope.polish_text?.length and word.word.toLowerCase() == editWord.polish_text.toLowerCase()) or (searched?.length and editWord.word.toLowerCase() == searched))
-        scope.polish_text = word.word.toLowerCase()
-    $rootScope.$on 'REMOVED_POLISH_TRANSLATION', (event, word,editId) ->
-        # TODO
-    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION', (event, word, editWord) ->
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION', (event, word) ->
+      if(searched? and searched.id == word.id)
+        scope.polish_text = word.word
+        searched = word
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION', (event, word) ->
+      if(searched? and searched.id == word.id)
+        scope.polish_text = ""
+        scope.polish_hints = []
+        scope.polish_results = []
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION', (event, word) ->
       result = self.findById(word.id, scope.polish_results)
       if(result?)
         result.word = word.word
-    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION', (event, word,editId) ->
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION', (event, word) ->
       result = self.findById(word.id, scope.polish_results)
       if(result?)
         result.active = false
@@ -75,8 +79,8 @@ class PolishSearchController
     scope.serbianService.remove(id)
 
   addElement: ->
-    if(@element?.length and searched?.length)
-      scope.addService.addTranslation(searched, @element)
+    if(@element?.length and searched?)
+      scope.addService.addTranslation(searched.word, @element)
       @add = false
       @element = ""
 

@@ -39,7 +39,7 @@ object TranslationService extends ErrorService {
    * @param search Polish search request
    * @return
    */
-  def translatePolish(search: FindPolishTranslation): Either[ServiceError, List[SerbianWord]] = withError {
+  def translatePolish(search: FindPolishTranslation): Either[ServiceError, (List[SerbianWord], PolishWord)] = withError {
     implicit session =>
       val polish: PolishWord = {
         search.id match {
@@ -57,7 +57,7 @@ object TranslationService extends ErrorService {
       if (translations.isEmpty) {
         throw new Exception(Messages("service.error.emptyTranslations"))
       }
-      translations
+      (translations, polish)
   }
 
   /**
@@ -65,7 +65,7 @@ object TranslationService extends ErrorService {
    * @param search Serbian search request
    * @return
    */
-  def translateSerbian(search: FindSerbianTranslation): Either[ServiceError, List[PolishWord]] = withError {
+  def translateSerbian(search: FindSerbianTranslation): Either[ServiceError, (List[PolishWord], SerbianWord)] = withError {
     implicit session =>
       val serbian: SerbianWord = {
         search.id match {
@@ -83,6 +83,6 @@ object TranslationService extends ErrorService {
       if (translations.isEmpty) {
         throw new Exception(Messages("service.error.emptyTranslations"))
       }
-      translations
+      (translations, serbian)
   }
 }

@@ -18,11 +18,11 @@ class SerbianSortController
     scope.$watch 'serbian_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
-    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word,editWord) ->
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
       find = self.findById(word.id,scope.serbian_search)
       if(find?)
         find.word = word.word
-    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word,removeId) ->
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
       find = self.findById(word.id,scope.serbian_search)
       if(find?)
         find.active = false

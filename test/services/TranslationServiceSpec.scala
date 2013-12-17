@@ -78,7 +78,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: String = "Afrika"
           TranslationService.translatePolish(FindPolishTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          val translations = translation.map( word => word.word)
+          val translations = translation._1.map( word => word.word)
           translations must containAllOf(List(find.toLowerCase))
       }
     }
@@ -94,7 +94,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getPolishByFirst(PolishFirstLetter(search)).right.get
           TranslationService.translatePolish(FindPolishTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          val translations = translation.map( word => word.word)
+          val translations = translation._1.map( word => word.word)
           translations must containAllOf(List(find.toLowerCase))
       }
     }
@@ -108,7 +108,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: List[String] = List("estrgon", "kozlac")
           TranslationService.translatePolish(FindPolishTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          val words: List[String] = translation.map( serbianWord => serbianWord.word)
+          val words: List[String] = translation._1.map( serbianWord => serbianWord.word)
           words must containAllOf(find)
       }
     }
@@ -124,7 +124,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getPolishByFirst(PolishFirstLetter(search)).right.get
           TranslationService.translatePolish(FindPolishTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translatePolish(FindPolishTranslation(None,search)).right.get
-          val words: List[String] = translation.map( serbianWord => serbianWord.word)
+          val words: List[String] = translation._1.map( serbianWord => serbianWord.word)
           words must containAllOf(find)
       }
     }
@@ -198,7 +198,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: String = "Afryka"
           TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          val translations = translation.map( word => word.word)
+          val translations = translation._1.map( word => word.word)
           translations must containAllOf(List(find.toLowerCase))
       }
     }
@@ -214,7 +214,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getSerbianByFirst(SerbianFirstLetter(search)).right.get
           TranslationService.translateSerbian(FindSerbianTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          val translations = translation.map( word => word.word)
+          val translations = translation._1.map( word => word.word)
           translations must containAllOf(List(find.toLowerCase))
       }
     }
@@ -228,7 +228,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val find: List[String] = List("kałamarz", "wkład do drukarki")
           TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          val words: List[String] = translation.map( serbianWord => serbianWord.word)
+          val words: List[String] = translation._1.map( serbianWord => serbianWord.word)
           words must containAllOf(find)
       }
     }
@@ -244,7 +244,7 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
           val word = TranslationService.getSerbianByFirst(SerbianFirstLetter(search)).right.get
           TranslationService.translateSerbian(FindSerbianTranslation(word.head.id, "")).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
-          val words: List[String] = translation.map( serbianWord => serbianWord.word)
+          val words: List[String] = translation._1.map( serbianWord => serbianWord.word)
           words must containAllOf(find)
       }
     }

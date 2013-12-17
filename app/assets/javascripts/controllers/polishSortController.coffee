@@ -17,11 +17,11 @@ class PolishSortController
     scope.$watch 'polish_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
-    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word,editWord) ->
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
       find = self.findById(word.id, scope.polish_search)
       if(find?)
         find.word = word.word
-    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word,removeId) ->
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
       find = self.findById(word.id, scope.polish_search)
       if(find?)
         find.active = false
