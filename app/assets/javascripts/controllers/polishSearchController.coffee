@@ -4,7 +4,7 @@ class PolishSearchController
   self = undefined
   searched = undefined
 
-  constructor: ($scope, polishService,$rootScope,addService) ->
+  constructor: ($scope, polishService, $rootScope, addService, serbianService) ->
     scope = $scope
     self = @
     scope.polish_hints = []
@@ -12,6 +12,7 @@ class PolishSearchController
     scope.polish_word = {}
     scope.polishService = polishService
     scope.addService = addService
+    scope.serbianService = serbianService
     scope.$watch 'polish_text', debounce(@update, 500)
     scope.changePolish = (word) ->
       scope.polish_hints = []
@@ -23,31 +24,36 @@ class PolishSearchController
           searched = scope.polish_text
       else
         scope.polish_results = []
-    $rootScope.$on 'TRANSLATE_POLISH' , (event, word) ->
+    $rootScope.$on 'TRANSLATE_POLISH', (event, word) ->
       scope.polish_text = word.word
       scope.translatePolish()
       $('html, body').animate({scrollTop: 0}, 500)
-    $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      if(scope.polish_text?.length and scope.polish_text.toLowerCase == word.polish.word.toLowerCase)
+    $rootScope.$on 'ADDED_TRANSLATION', (event, word) ->
+      if(scope.polish_text?.length and scope.polish_text.toLowerCase()== word.polish.word.toLowerCase())
         if(!self.wordExists(word.serbian))
           scope.polish_results.push word.serbian
-    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
-      # TODO: check if translated word is edited word. If is, change it value
-    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
-      # TODO: check if translated word is remove word. If is, remove it and translations.
-    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
-      # TODO: check edited word is one of translations and if is, change it.
-    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
-      # TODO: check edited word is one of translations and if is, remove it.
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION', (event, word,editWord) ->
+      if((scope.polish_text?.length and word.word.toLowerCase() == editWord.polish_text.toLowerCase()) or (searched?.length and editWord.word.toLowerCase() == searched))
+        scope.polish_text = word.word.toLowerCase()
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION', (event, word,editId) ->
+        # TODO
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION', (event, word, editWord) ->
+      result = self.findById(word.id, scope.polish_results)
+      if(result?)
+        result.word = word.word
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION', (event, word,editId) ->
+      result = self.findById(word.id, scope.polish_results)
+      if(result?)
+        result.active = false
 
-  wordExists : (word) ->
+  wordExists: (word) ->
     for w in scope.polish_results
       if(w.id == word.id)
         return true
     false
 
-  findById: (id) ->
-    for w in scope.polish_results
+  findById: (id, list) ->
+    for w in list
       if(w.id == id)
         return w
     null
@@ -62,16 +68,17 @@ class PolishSearchController
         else
           scope.polish_hints = []
 
-  save:(word) ->
-    scope.polishService.save(word)
+  save: (word) ->
+    scope.serbianService.edit(word)
 
-  remove:(id) ->
-    scope.polishService.remove(id)
+  remove: (id) ->
+    scope.serbianService.remove(id)
 
   addElement: ->
     if(@element?.length and searched?.length)
-      scope.addService.addTranslation(searched,@element)
+      scope.addService.addTranslation(searched, @element)
       @add = false
       @element = ""
 
-angular.module('app').controller 'PolishSearchController', ['$scope', 'polishService', '$rootScope','addService', PolishSearchController]
+angular.module('app').controller 'PolishSearchController',
+  ['$scope', 'polishService', '$rootScope', 'addService', 'serbianService' , PolishSearchController]

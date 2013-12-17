@@ -109,7 +109,7 @@ object Serbian extends MainController {
       )
   }
 
-  def remove(id: Long) = Action.async(parse.json) {
+  def remove(id: Long) = Action.async {
     implicit request =>
       globalActor.ask(RemoveSerbianTranslation(id)).mapTo[Either[ServiceError, SerbianWord]].map({
         case Left(ko) => NotFound(ko.error)

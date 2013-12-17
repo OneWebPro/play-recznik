@@ -46,7 +46,7 @@ class PolishService
     @$http.post("#{urlBase}/save", {id:word.id,word:word.word}).then(
       (
         (results) ->
-          rootScope.$emit("EDITED_POLISH_TRANSLATION", results.data)
+          rootScope.$emit("EDITED_POLISH_TRANSLATION", results.data, word)
           results.data
       ),(
         (error) ->
@@ -58,7 +58,7 @@ class PolishService
     @$http.get("#{urlBase}/remove/#{id}").then(
       (
         (results) ->
-          rootScope.$emit("REMOVED_POLISH_TRANSLATION", results.data)
+          rootScope.$emit("REMOVED_POLISH_TRANSLATION", results.data,id)
           results.data
       ), (
         (error) ->

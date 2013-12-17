@@ -2,9 +2,11 @@ class PolishSortController
 
   scope = undefined
   rootScope = undefined
+  self = undefined
   constructor: ($scope, polishService,$rootScope) ->
     scope = $scope
     rootScope = $rootScope
+    self = @
     scope.polish_search = {
       page: 0,
       pages: 0,
@@ -15,10 +17,20 @@ class PolishSortController
     scope.$watch 'polish_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
-    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
-      # TODO : Check if element is on the list and change it
-    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
-      # TODO : Check if element is on the list and remove it
+    $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word,editWord) ->
+      find = self.findById(word.id, scope.polish_search)
+      if(find?)
+        find.word = word.word
+    $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word,removeId) ->
+      find = self.findById(word.id, scope.polish_search)
+      if(find?)
+        find.active = false
+
+  findById: (id,list) ->
+    for w in list
+      if(w.id == id)
+        return w
+    null
 
   search: (value) ->
     if(value != "page")
@@ -48,7 +60,7 @@ class PolishSortController
       ""
 
   save:(word) ->
-    scope.polishService.save(word)
+    scope.polishService.edit(word)
 
   remove:(id) ->
     scope.polishService.remove(id)

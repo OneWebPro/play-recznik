@@ -2,10 +2,12 @@ class SerbianSortController
 
   scope = undefined
   rootScope = undefined
+  self = undefined
 
   constructor: ($scope, serbianService,$rootScope) ->
     scope = $scope
     rootScope = $rootScope
+    self = @
     scope.serbian_search = {
       page: 0,
       pages: 0,
@@ -16,10 +18,21 @@ class SerbianSortController
     scope.$watch 'serbian_sort', debounce(@search, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       @search('')
-    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
-      # TODO : Check if element is on the list and change it
-    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
-      # TODO : Check if element is on the list and remove it
+    $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word,editWord) ->
+      find = self.findById(word.id,scope.serbian_search)
+      if(find?)
+        find.word = word.word
+    $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word,removeId) ->
+      find = self.findById(word.id,scope.serbian_search)
+      if(find?)
+        find.active = false
+
+  findById: (id,list) ->
+    for w in list
+      if(w.id == id)
+        return w
+    null
+
   search: (value) ->
     if(value != "page")
       scope.serbian_search.page = 0
@@ -48,7 +61,7 @@ class SerbianSortController
       ""
 
   save:(word) ->
-    scope.serbianService.save(word)
+    scope.serbianService.edit(word)
 
   remove:(id) ->
     scope.serbianService.remove(id)

@@ -46,8 +46,7 @@ class SerbianService
     @$http.post("#{urlBase}/save", {id: word.id, word: word.word}).then(
       (
         (results) ->
-          rootScope.$emit("EDITED_SERBIAN_TRANSLATION", results.data)
-          results.data
+          rootScope.$emit("EDITED_SERBIAN_TRANSLATION", results.data,word)
       ), (
         (error) ->
           rootScope.$emit("ERROR", error.data)
@@ -58,8 +57,7 @@ class SerbianService
     @$http.get("#{urlBase}/remove/#{id}").then(
       (
         (results) ->
-          rootScope.$emit("REMOVED_SERBIAN_TRANSLATION", results.data)
-          results.data
+          rootScope.$emit("REMOVED_SERBIAN_TRANSLATION", results.data,id)
       ),(
         (error) ->
           rootScope.$emit("ERROR",error.data)
