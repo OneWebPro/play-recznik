@@ -152,7 +152,7 @@ object WordsService extends ErrorService {
     implicit session =>
       PolishWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: PolishWord) => {
-          val translations = WordToWordTable.findPolishTranslations(word.id.get).list()
+          val translations = WordToWordTable.findSerbianTranslations(word.id.get).list()
           for (translation <- translations) {
             WordToWordTable.update(WordToWordTable.findByParents(word.id.get, translation.id.get).first().copy(active = false))
           }
@@ -171,9 +171,9 @@ object WordsService extends ErrorService {
     implicit session =>
       SerbianWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: SerbianWord) => {
-          val translations = WordToWordTable.findSerbianTranslations(word.id.get).list
+          val translations = WordToWordTable.findPolishTranslations(word.id.get).list
           for (translation <- translations) {
-            WordToWordTable.update(WordToWordTable.findByParents(translation.id.get, word.id.get).first().copy(active = false))
+            WordToWordTable.update(WordToWordTable.findByParents(translation.id.get,word.id.get).first().copy(active = false))
           }
           SerbianWordTable.update(word.copy(active = false))
         }
