@@ -20,16 +20,18 @@ require
       "deps": ["angular/angular","angular/angular-animate", "angular/angular-route"]
     "routes":
       "deps": ["app"]
+    "services/languageService":
+      "deps": []
     ### --- Serbian --- ###
     "services/serbianService":
-      "deps": ["app"]
+      "deps": ["app", "services/languageService"]
     "controllers/serbianSearchController":
       "deps" : ["app"]
     "controllers/serbianSortController":
       "deps" : ["app"]
     ### --- Polish --- ###
     "services/polishService":
-      "deps": ["app"]
+      "deps": ["app", "services/languageService"]
     "controllers/polishSearchController":
       "deps" : ["app"]
     "controllers/polishSortController":
@@ -49,6 +51,7 @@ require
    "bootbox.min"
    "growl"
    "jqueryEvents"
+   "services/languageService"
    "controllers/siteController"
    "controllers/serbianSearchController"
    "controllers/serbianSortController"

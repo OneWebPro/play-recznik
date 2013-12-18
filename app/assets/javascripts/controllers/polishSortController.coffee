@@ -3,6 +3,7 @@ class PolishSortController
   scope = undefined
   rootScope = undefined
   self = undefined
+
   constructor: ($scope, polishService,$rootScope) ->
     scope = $scope
     rootScope = $rootScope
@@ -69,6 +70,5 @@ class PolishSortController
       if(result)
         scope.polishService.remove(id)
         @search('')
-
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]
