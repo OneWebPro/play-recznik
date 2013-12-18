@@ -1,4 +1,4 @@
-package test.services
+package services
 
 import org.specs2.mutable._
 import service.{TranslationService, ListService}

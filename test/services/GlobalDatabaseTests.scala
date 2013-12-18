@@ -1,4 +1,4 @@
-package test.services
+package services
 
 import shared._
 import org.specs2.mutable._
@@ -9,6 +9,7 @@ import scala.slick.jdbc.meta.MTable
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import scala.slick.session.Session
+import org.specs2.execute.AsResult
 
 
 trait GlobalDatabaseTests {
@@ -27,5 +28,12 @@ trait GlobalDatabaseTests {
 			t
 		}
 	}
+
+  abstract class WithApp extends WithApplication(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+    override def around[T: AsResult](t: => T): org.specs2.execute.Result = super.around {
+      t
+    }
+  }
+
 
 }
