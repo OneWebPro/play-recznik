@@ -2,7 +2,6 @@ package controllers
 
 import play.api.mvc._
 import play.api.Play.current
-import flash.FlashWrapper._
 import play.api.i18n.Messages
 import global.GlobalController
 import akka.actor.Props
@@ -48,34 +47,26 @@ trait MainController extends GlobalController {
 	 * @param request play.api.mvc.RequestHeader
 	 * @return
 	 */
-	def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index).flashing(
-		rw(request).danger(Messages("error.notLogged"))
-	)
+	def onUnauthorized(request: RequestHeader) = BadRequest(Messages("error.notLogged"))
 
 	/**
 	 * Redirect to index and show flash message
 	 * @param request play.api.mvc.RequestHeader
 	 * @return
 	 */
-	def notOnUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index).flashing(
-		rw(request).danger(Messages("error.logged"))
-	)
+	def notOnUnauthorized(request: RequestHeader) = BadRequest(Messages("error.logged"))
 
 	/**
 	 * Redirect to index and show flash message
 	 * @param request play.api.mvc.RequestHeader
 	 * @return
 	 */
-	def notPermissions(request: RequestHeader) = Results.Redirect(routes.Application.index).flashing(
-		rw(request).danger(Messages("error.permissions"))
-	)
+	def notPermissions(request: RequestHeader) = BadRequest(Messages("error.permissions"))
 
 	/**
 	 * Bad request action
 	 * @param request play.api.mvc.RequestHeader
 	 * @return
 	 */
-	def badRequest(request: RequestHeader): SimpleResult = Results.Redirect(routes.Application.index).flashing(
-		rw(request).danger(Messages("error.permissions"))
-	)
+	def badRequest(request: RequestHeader): SimpleResult = BadRequest(Messages("error.permissions"))
 }

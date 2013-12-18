@@ -5,7 +5,6 @@ import concurrent.ExecutionContext
 import akka.util.Timeout
 import concurrent.duration.`package`._
 import play.api.mvc._
-import menu.SecureService
 import play.libs.Akka
 import secure.Secure
 import akka.actor.ActorRef
@@ -37,11 +36,6 @@ trait GlobalController extends Controller with Secure {
 	 * Actor timeout for request
 	 */
 	implicit val timeout: Timeout = 10 seconds
-
-	/**
-	 * Security service for menu
-	 */
-	implicit val securityService: SecureService = SecureService
 
 }
 

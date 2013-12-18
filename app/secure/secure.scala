@@ -235,9 +235,16 @@ class NotAuthAjax(implicit secure: Secure) extends NotAuth {
 
 
 /**
+ * Secure trait to check if menu is enabled
+ */
+trait SecureService {
+  def userIsLogged()(implicit request: RequestHeader): Boolean
+}
+
+/**
  * Secure service
  */
-object SecureService extends menu.SecureService with SecureInfo {
+object SecureService extends SecureService with SecureInfo {
 
 	/**
 	 * Check if user is logged
