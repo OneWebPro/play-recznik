@@ -65,10 +65,10 @@ class SerbianSortController
     word.edit = false
     @search('')
 
-  remove:(id) ->
+  remove:(word) ->
    bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
      if(result)
-       scope.serbianService.remove(id)
+       scope.serbianService.remove(word.id)
        @search('')
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]
