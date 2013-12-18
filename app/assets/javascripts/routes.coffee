@@ -3,8 +3,6 @@ class Route
     $routeProvider
     .when "/main",
         templateUrl: 'view/body'
-    .when "/login",
-        templateUrl: 'view/login'
     .otherwise
         redirectTo: '/main'
 

@@ -2,12 +2,13 @@ package controllers
 
 import play.api.mvc._
 import play.api.Play.current
-import play.api.i18n.Messages
-import global.GlobalController
 import akka.actor.Props
-import play.api.libs.concurrent.Akka
 import service.Database
-import database.ServiceError
+import org.joda.time.DateTime
+import scala.concurrent.ExecutionContext
+import play.api.libs.concurrent.Akka
+import akka.util.Timeout
+import concurrent.duration.`package`._
 
 
 /**
@@ -17,56 +18,26 @@ import database.ServiceError
 /**
  * Global controller configuration for default package controllers
  */
-trait MainController extends GlobalController {
-
-
-	type UserType = None.type
-
-	/**
-	 * User request to get user from database or cache
-	 * @return
-	 */
-	def getUserInfo: (RequestHeader) => Either[ServiceError, MainController#UserType] = info
+trait MainController extends Controller{
 
   /**
-   * Cheat for compilation issue
-   * @param request play.api.mvc.RequestHeader
-   * @return
+   * Time
    */
-  def info(request: RequestHeader): Either[ServiceError, UserType] = {
-    Right(None)
-  }
+  implicit val time = () => new DateTime()
+
+  /**
+   * Actor context
+   */
+  implicit val executionContext: ExecutionContext = Akka.system.dispatcher
+
+  /**
+   * Actor timeout for request
+   */
+  implicit val timeout: Timeout = 10 seconds
 
 	/**
 	 * Global database actor
 	 */
 	lazy val globalActor = Akka.system.actorOf(Props[Database])
 
-	/**
-	 * Redirect to index and show flash message
-	 * @param request play.api.mvc.RequestHeader
-	 * @return
-	 */
-	def onUnauthorized(request: RequestHeader) = BadRequest(Messages("error.notLogged"))
-
-	/**
-	 * Redirect to index and show flash message
-	 * @param request play.api.mvc.RequestHeader
-	 * @return
-	 */
-	def notOnUnauthorized(request: RequestHeader) = BadRequest(Messages("error.logged"))
-
-	/**
-	 * Redirect to index and show flash message
-	 * @param request play.api.mvc.RequestHeader
-	 * @return
-	 */
-	def notPermissions(request: RequestHeader) = BadRequest(Messages("error.permissions"))
-
-	/**
-	 * Bad request action
-	 * @param request play.api.mvc.RequestHeader
-	 * @return
-	 */
-	def badRequest(request: RequestHeader): SimpleResult = BadRequest(Messages("error.permissions"))
 }
