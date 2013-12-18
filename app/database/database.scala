@@ -183,6 +183,47 @@ abstract class Mapper[T <: Entity[T]](table: String) extends Table[T](None, tabl
 			entity
 		}
 	}
+}
 
+/**
+ * DAO trait is trait that help implements all default methods from database.Mapper
+ */
+trait DatabaseDAO[Element <: Entity[Element]] {
+  /**
+   * Element of DAO
+   */
+  val self: Mapper[Element]
+
+  /**
+   * Insert entity element to database and return it. If element had id defined nothing will happen.
+   * @return
+   */
+  def insert(element: Element)(implicit session: Session): Element = self.insert(element)
+
+  /**
+   * Method update entity if hase id
+   * @return
+   */
+  def update(element: Element)(implicit session: Session): Element = self.update(element)
+
+  /**
+   * Update & Insert. If hase defined id it will updated if not it will be inserted.
+   * @return
+   */
+  def upinsert(element: Element)(implicit session: Session): Element = self.upinsert(element)
+
+  /**
+   * Searching element using id field. Return Option element
+   * @param id Long
+   * @return
+   */
+  def findById(id: Long)(implicit session: Session): Option[Element] = self.findById(id)
+
+  /**
+   * Use findAllQuery. Default is searching if filed approved is true
+   * @param active Boolean
+   * @return
+   */
+  def findAll(active: Boolean = true)(implicit session: Session): List[Element] = self.findAll(active)
 }
 

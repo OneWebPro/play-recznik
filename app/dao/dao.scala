@@ -2,9 +2,7 @@ package dao
 
 import tables._
 import play.api.db.slick.Config.driver.simple._
-import org.joda.time.LocalDate
-import com.github.tototoshi.slick.JodaSupport._
-import database.{Mapper, Entity}
+import database.{Entity, DatabaseDAO}
 
 /**
  * @author loki
@@ -19,49 +17,6 @@ WordToWordComponent {
   val WordToWordTable = new WordToWordTable
 }
 
-
-/**
- * DAO trait is trait that help implements all default methods from database.Mapper
- */
-private[dao] trait DAO[ Element <: Entity[Element]] extends DaoStructure {
-  /**
-   * Element of DAO
-   */
-  val self: Mapper[Element]
-
-  /**
-   * Insert entity element to database and return it. If element had id defined nothing will happen.
-   * @return
-   */
-  def insert(element: Element)(implicit session: Session): Element = self.insert(element)
-
-  /**
-   * Method update entity if hase id
-   * @return
-   */
-  def update(element: Element)(implicit session: Session): Element = self.update(element)
-
-  /**
-   * Update & Insert. If hase defined id it will updated if not it will be inserted.
-   * @return
-   */
-  def upinsert(element: Element)(implicit session: Session): Element = self.upinsert(element)
-
-  /**
-   * Searching element using id field. Return Option element
-   * @param id Long
-   * @return
-   */
-  def findById(id: Long)(implicit session: Session): Option[Element] = self.findById(id)
-
-  /**
-   * Use findAllQuery. Default is searching if filed approved is true
-   * @param active Boolean
-   * @return
-   */
-  def findAll(active: Boolean = true)(implicit session: Session): List[Element] = self.findAll(active)
-}
-
 /**
  * Object contains all tables structures to create or remove database.
  */
@@ -71,7 +26,10 @@ object DDL extends DaoStructure {
     WordToWordTable.ddl
 }
 
+private[dao] trait DAO[Element <: Entity[Element]] extends DatabaseDAO[Element] with DaoStructure
+
 object PolishWordTable extends DAO[tables.PolishWord] {
+
   val self = PolishWordTable
 
   /**
@@ -79,7 +37,7 @@ object PolishWordTable extends DAO[tables.PolishWord] {
    */
   val findByWord = for {
     param <- Parameters[String]
-    word <- PolishWordTable if word.word === param && word.active === true
+    word <- self if word.word === param && word.active === true
   } yield word
 
   /**

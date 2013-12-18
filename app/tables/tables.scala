@@ -10,48 +10,50 @@ import database._
  * @author loki
  */
 
-case class PolishWord(id: Option[Long], word: String, added: Boolean = false, active: Boolean = false) extends Entity[PolishWord] {
+trait Word[T <: Entity[T]] extends Entity[T] {
+
+  val id: Option[Long]
+
+  val word: String
+
+  val added: Boolean = false
+
+  val active: Boolean = false
+}
+
+
+case class PolishWord(override val id: Option[Long], override val word: String, override val added: Boolean = false, override val active: Boolean = false) extends Word[PolishWord] {
   def withId(id: Long): PolishWord = copy(id = Some(id))
+}
+
+
+case class SerbianWord(override val id: Option[Long], override val word: String, override val added: Boolean = false, override val active: Boolean = false) extends Word[SerbianWord] {
+  def withId(id: Long): SerbianWord = copy(id = Some(id))
+}
+
+abstract class WordTable[T <: Word[T]](tableName: String) extends Mapper[T](tableName) {
+
+  def word = column[String]("word")
+
+  def added = column[Boolean]("added")
 }
 
 trait PolishWordComponent {
 
-  self: WordToWordComponent =>
-
   val PolishWordTable: PolishWordTable
 
-  class PolishWordTable extends Mapper[PolishWord]("polish") {
-    def word = column[String]("word")
-
-    def added = column[Boolean]("added")
-
+  class PolishWordTable extends WordTable[PolishWord]("polish") {
     def * = id.? ~ word ~ added ~ active <>(PolishWord, PolishWord.unapply _)
-
-    def serbian_words = WordToWordTable.filter(_.polish_id === id).flatMap(_.serbian_fk)
   }
 
 }
 
-case class SerbianWord(id: Option[Long], word: String, added: Boolean = false, active: Boolean = false) extends Entity[SerbianWord] {
-  def withId(id: Long): SerbianWord = copy(id = Some(id))
-}
-
 trait SerbianWordComponent {
-
-  self: WordToWordComponent =>
 
   val SerbianWordTable: SerbianWordTable
 
-  class SerbianWordTable extends Mapper[SerbianWord]("serbian") {
-
-    def word = column[String]("word")
-
-    def added = column[Boolean]("added")
-
+  class SerbianWordTable extends WordTable[SerbianWord]("serbian") {
     def * = id.? ~ word ~ added ~ active <>(SerbianWord, SerbianWord.unapply _)
-
-    def polish_words = WordToWordTable.filter(_.serbian_id === id).flatMap(_.polish_fk)
-
   }
 
 }
