@@ -18,8 +18,6 @@ import play.api.libs.functional.syntax._
 @RunWith(classOf[JUnitRunner])
 class ApplicationSpec extends Specification with GlobalDatabaseTests{
 
-  val headers = FakeHeaders(Seq(HeaderNames.CONTENT_TYPE -> Seq("application/json")))
-
   "Application" should {
 
     "send 404 on a bad request" in new WithApp {
