@@ -1,5 +1,10 @@
 class PolishService
+
   urlBase = '/api/polish'
+
+  config = {headers:{
+    'Content-Type': 'application/json; charset=utf-8',
+  }};
 
   rootScope = undefined
 
@@ -55,7 +60,7 @@ class PolishService
     )
 
   remove: (id) ->
-    @$http.get("#{urlBase}/remove/#{id}").then(
+    @$http.post("#{urlBase}/remove/#{id}",config).then(
       (
         (results) ->
           rootScope.$emit("REMOVED_POLISH_TRANSLATION", results.data)

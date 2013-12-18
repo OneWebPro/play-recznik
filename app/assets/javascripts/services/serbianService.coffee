@@ -1,6 +1,10 @@
 class SerbianService
   urlBase = '/api/serbian'
 
+  config = {headers:{
+    'Content-Type': 'application/json; charset=utf-8',
+  }};
+
   rootScope = undefined
 
   constructor: (@$http,$rootScope) ->
@@ -54,7 +58,7 @@ class SerbianService
     )
 
   remove: (id) ->
-    @$http.get("#{urlBase}/remove/#{id}").then(
+    @$http.post("#{urlBase}/remove/#{id}",config).then(
       (
         (results) ->
           rootScope.$emit("REMOVED_SERBIAN_TRANSLATION", results.data)

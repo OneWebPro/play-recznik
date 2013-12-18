@@ -13,7 +13,7 @@ POST        /api/serbian/find                    controllers.Serbian.find
 POST        /api/serbian/translate               controllers.Serbian.translate
 POST        /api/serbian/save                    controllers.Serbian.save
 POST        /api/serbian/sort/:size/:page        controllers.Serbian.sort(page:Int,size:Int)
-GET         /api/serbian/remove/:id              controllers.Serbian.remove(id:Long)
+POST        /api/serbian/remove/:id              controllers.Serbian.remove(id:Long)
 
 
 
@@ -22,7 +22,7 @@ POST        /api/polish/find                     controllers.Polish.find
 POST        /api/polish/translate                controllers.Polish.translate
 POST        /api/polish/save                     controllers.Polish.save
 POST        /api/polish/sort/:size/:page         controllers.Polish.sort(page:Int,size:Int)
-GET         /api/polish/remove/:id               controllers.Polish.remove(id:Long)
+POST        /api/polish/remove/:id               controllers.Polish.remove(id:Long)
 
 
 

@@ -68,12 +68,12 @@ class ApplicationSpec extends Specification with GlobalDatabaseTests{
         POST -> "/api/serbian/translate",
         POST -> "/api/serbian/save",
         POST -> "/api/serbian/sort/10/0",
-        GET -> "/api/serbian/remove/0",
+        POST -> "/api/serbian/remove/0",
         POST -> "/api/polish/find",
         POST -> "/api/polish/translate",
         POST -> "/api/polish/save",
         POST -> "/api/polish/sort/10/0",
-        GET -> "/api/polish/remove/0",
+        POST -> "/api/polish/remove/0",
         POST -> "/api/add"
       )
       for ((method, uri) <- routes) {
