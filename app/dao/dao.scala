@@ -23,13 +23,7 @@ WordToWordComponent {
 /**
  * DAO trait is trait that help implements all default methods from database.Mapper
  */
-private[dao] trait DAO extends DaoStructure {
-
-  /**
-   * Type element of DAO
-   */
-  type Element <: Entity[Element]
-
+private[dao] trait DAO[ Element <: Entity[Element]] extends DaoStructure {
   /**
    * Element of DAO
    */
@@ -77,8 +71,7 @@ object DDL extends DaoStructure {
     WordToWordTable.ddl
 }
 
-object PolishWordTable extends DAO {
-  type Element = tables.PolishWord
+object PolishWordTable extends DAO[tables.PolishWord] {
   val self = PolishWordTable
 
   /**
@@ -106,8 +99,7 @@ object PolishWordTable extends DAO {
   } yield word).drop(page.size * page.page).take(page.size).list
 }
 
-object SerbianWordTable extends DAO {
-  type Element = tables.SerbianWord
+object SerbianWordTable extends DAO[tables.SerbianWord] {
   val self = SerbianWordTable
 
   /**
@@ -137,8 +129,7 @@ object SerbianWordTable extends DAO {
 
 }
 
-object WordToWordTable extends DAO {
-  type Element = tables.WordToWord
+object WordToWordTable extends DAO[tables.WordToWord] {
   val self = WordToWordTable
 
   /**
