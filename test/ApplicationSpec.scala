@@ -92,19 +92,6 @@ class ApplicationSpec extends Specification with GlobalDatabaseTests{
       header(play.mvc.Http.HeaderNames.CONTENT_TYPE,polishList) must equalTo(restHeader)
     }
 
-/*    "serbian and polish list request" in new WithApp {
-      val serbianList = route(FakeRequest(POST, "/api/serbian/find").withJsonBody(Json.obj(
-      "word" -> "a"
-      ))).get
-      status(serbianList) must equalTo(OK)
-      header(play.mvc.Http.HeaderNames.CONTENT_TYPE,serbianList) must equalTo(restHeader)
-      val polishList = route(FakeRequest(POST, "/api/polish/find").withJsonBody(Json.obj(
-        "word" -> "a"
-      ))).get
-      status(polishList) must equalTo(OK)
-      header(play.mvc.Http.HeaderNames.CONTENT_TYPE,polishList) must equalTo(restHeader)
-    }*/
-
 
     }
 }
