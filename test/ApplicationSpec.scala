@@ -4,8 +4,12 @@ import org.junit.runner._
 
 import play.api.test._
 import play.api.test.Helpers._
+import play.api.mvc._
+import play.api.mvc.Results._
+import play.mvc.Http.HeaderNames
 import services.GlobalDatabaseTests
-
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 /**
  * Add your spec here.
  * You can mock out a whole application including requests, plugins etc.
@@ -13,6 +17,8 @@ import services.GlobalDatabaseTests
  */
 @RunWith(classOf[JUnitRunner])
 class ApplicationSpec extends Specification with GlobalDatabaseTests{
+
+  val headers = FakeHeaders(Seq(HeaderNames.CONTENT_TYPE -> Seq("application/json")))
 
   "Application" should {
 
@@ -26,11 +32,19 @@ class ApplicationSpec extends Specification with GlobalDatabaseTests{
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
       val content = contentAsString(home)
+
       content must contain("rečnik | słownik")
       content must contain("ng-controller=\"SiteController\"")
       content must contain("<link rel=\"stylesheet\" href=\"/assets/stylesheets/main.css\">")
       content must contain("<script type=\"text/javascript\" src=\"/messages.js\"></script>")
       content must contain("<script type=\"text/javascript\" data-main=\"/assets/javascripts/main\" src=\"/assets/javascripts/require.js\"></script>")
     }
-  }
+
+    "serbian list empty request" in new WithApp {
+      val list = route(FakeRequest(POST, "/api/serbian/find").withJsonBody(Json.obj())).get
+      status(list) must equalTo(OK)
+    }
+
+
+    }
 }
