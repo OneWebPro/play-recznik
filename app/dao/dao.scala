@@ -2,7 +2,7 @@ package dao
 
 import tables._
 import play.api.db.slick.Config.driver.simple._
-import database.{Entity, DatabaseDAO}
+import database.{DatabaseDAO, Entity}
 
 /**
  * @author loki
@@ -37,7 +37,7 @@ object PolishWordTable extends DAO[tables.PolishWord] {
    */
   val findByWord = for {
     param <- Parameters[String]
-    word <- self if word.word === param && word.active === true
+    word <- PolishWordTable if word.word === param && word.active === true
   } yield word
 
   /**
