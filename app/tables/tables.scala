@@ -32,9 +32,7 @@ case class SerbianWord(override val id: Option[Long], override val word: String,
 }
 
 abstract class WordTable[T <: Word[T]](tableName: String) extends Mapper[T](tableName) {
-
   def word = column[String]("word")
-
   def added = column[Boolean]("added")
 }
 

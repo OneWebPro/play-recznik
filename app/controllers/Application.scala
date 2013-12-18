@@ -4,33 +4,17 @@ import play.api._
 import play.api.mvc._
 import jsmessages.api.JsMessages
 import play.api.Play.current
-import shared.{WordRespond, SerbianTranslation, PolishTranslation}
 import scala.concurrent.Future
 import akka.pattern.ask
 import database.ServiceError
-import tables.{WordToWord, SerbianWord, PolishWord}
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import json.JsonCodecs._
+import shared.WordRespond
 
 object Application extends MainController {
 
-  implicit val polishTranslationFormat = Json.format[PolishTranslation]
-  implicit val serbianTranslationFormat = Json.format[SerbianTranslation]
-  implicit val translationFormat: Format[shared.Translation] = (
-    (JsPath \ "polish").format[PolishTranslation] and
-      (JsPath \ "serbian").format[SerbianTranslation]
-    )(shared.Translation.apply, unlift(shared.Translation.unapply))
-  implicit val polishFormat = Json.format[PolishWord]
-  implicit val serbianFormat = Json.format[SerbianWord]
-  implicit val wordToWordFormat = Json.format[WordToWord]
-  implicit val wordRespondFormat: Format[WordRespond] = (
-    (JsPath \ "polish").format[PolishWord] and
-      (JsPath \ "serbian").format[SerbianWord] and
-      (JsPath \ "relation").format[WordToWord]
-    )(WordRespond.apply, unlift(WordRespond.unapply))
-
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index())
   }
 
   /**

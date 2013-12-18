@@ -4,10 +4,7 @@ import play.api._
 import play.api.mvc._
 import akka.pattern.ask
 import shared._
-import database.ServiceError
-import tables.{SerbianWord, PolishWord}
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
 import scala.concurrent.Future
 import tables.PolishWord
 import shared.PolishFirstLetter
@@ -17,15 +14,13 @@ import shared.RequestWord
 import shared.FindPolishTranslation
 import database.ServiceError
 import shared.SortPolishList
+import json.JsonCodecs._
 
 /**
  * @author loki
  */
 object Polish extends MainController {
 
-  implicit val wordFormat = Json.format[RequestWord]
-  implicit val polishFormat = Json.format[PolishWord]
-  implicit val serbianFormat = Json.format[SerbianWord]
 
   def find = Action.async(parse.json) {
     implicit request =>
