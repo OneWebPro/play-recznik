@@ -25,6 +25,12 @@ class ApplicationSpec extends Specification with GlobalDatabaseTests{
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
+      val content = contentAsString(home)
+      content must contain("rečnik | słownik")
+      content must contain("ng-controller=\"SiteController\"")
+      content must contain("<link rel=\"stylesheet\" href=\"/assets/stylesheets/main.css\">")
+      content must contain("<script type=\"text/javascript\" src=\"/messages.js\"></script>")
+      content must contain("<script type=\"text/javascript\" data-main=\"/assets/javascripts/main\" src=\"/assets/javascripts/require.js\"></script>")
     }
   }
 }
