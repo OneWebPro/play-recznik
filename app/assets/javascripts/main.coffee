@@ -46,6 +46,7 @@ require
       "deps": ["app"]
   }
   ["require"
+   'angular/angular'
    "jquery-1.9.0.min"
    "bootstrap"
    "bootbox.min"
@@ -62,5 +63,5 @@ require
    "controllers/addController"
    "services/addService"
    "routes"
-  ], (require) ->
-  require ['angular/angular','app-bootstrap']
+  ], (require,angular) ->
+  require ['app-bootstrap']
