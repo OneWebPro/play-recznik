@@ -32,11 +32,11 @@ object ListService extends ErrorService {
    */
   def findSerbian(page: SortSerbianList): Either[ServiceError, ResultPage[SerbianWord]] = withError {
     implicit session =>
-      val search = getSort(page.find)
+      val search = getSort(TranslationService.translate(page.find))
       ResultPage(
         page.page,
         SerbianWordTable.pageSerbianList(Page(page.page, page.size, search)),
-        Math.round(SerbianWordTable.findByLetter(TranslationService.translate(search)).list.length / page.size)
+        Math.round(SerbianWordTable.findByLetter(search).list.length / page.size)
       )
   }
 
