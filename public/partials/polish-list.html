@@ -53,7 +53,7 @@
     </table>
     <ul class="pager">
         <li ng-hide="polish_search.page == 0" ng-click="controller.prevPage()"><span class="link"> << </span></li>
-        <li ng-if="polish_search.pages > 0">{{polish_search.page + 1}} / {{polish_search.pages - 1}}</li>
+        <li ng-if="polish_search.pages > 0">{{polish_search.page + 1}} / {{polish_search.pages}}</li>
         <li ng-if="polish_search.pages > 0" ng-hide="polish_search.page == polish_search.pages - 1" ng-click="controller.nextPage()"><span class="link"> >> </span>
         </li>
     </ul>
