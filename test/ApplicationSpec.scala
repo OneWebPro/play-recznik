@@ -46,7 +46,6 @@ class ApplicationSpec extends Specification with GlobalDatabaseTests{
         "body",
         "letters",
         "lettersAffix",
-        "login",
         "menu",
         "polish-body",
         "polish-list",

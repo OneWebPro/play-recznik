@@ -36,7 +36,7 @@ object ListService extends ErrorService {
       ResultPage(
         page.page,
         SerbianWordTable.pageSerbianList(Page(page.page, page.size, search)),
-        Math.round(SerbianWordTable.findByLetter(search).list.length / page.size)
+        Math.round(SerbianWordTable.findByLetter(TranslationService.translate(search)).list.length / page.size)
       )
   }
 

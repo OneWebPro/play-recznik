@@ -14,6 +14,19 @@ import play.api.i18n.Messages
  */
 object TranslationService extends ErrorService {
 
+  val translateLetters: Map[String, String] = Map(
+    "љ" -> "lj", "њ" -> "nj", "џ" -> "dž",
+    "а" -> "a", "б" -> "b", "в" -> "v",
+    "г" -> "g", "д" -> "d", "ђ" -> "đ",
+    "е" -> "e", "ж" -> "ž", "з" -> "z",
+    "и" -> "i", "ј" -> "j", "к" -> "k",
+    "л" -> "l", "м" -> "m", "н" -> "n",
+    "о" -> "o", "п" -> "p", "р" -> "r",
+    "с" -> "s", "т" -> "t", "ћ" -> "ć",
+    "у" -> "u", "ф" -> "f", "х" -> "h",
+    "ц" -> "c", "ч" -> "č", "ш" -> "š"
+  )
+
   /**
    * Return all polish words started with @letter
    * @param letter Polish letter request
@@ -31,7 +44,7 @@ object TranslationService extends ErrorService {
    */
   def getSerbianByFirst(letter: SerbianFirstLetter): Either[ServiceError, List[SerbianWord]] = withError {
     implicit session =>
-      SerbianWordTable.findByLetter(ListService.getSort(letter.letter.toLowerCase)).list
+      SerbianWordTable.findByLetter(ListService.getSort(translate(letter.letter))).list
   }
 
   /**
@@ -73,7 +86,7 @@ object TranslationService extends ErrorService {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFound",id))
           }
-          case None => SerbianWordTable.findByWord(search.word.toLowerCase).firstOption.filter(_.active == true) match {
+          case None => SerbianWordTable.findByWord(translate(search.word)).firstOption.filter(_.active == true) match {
             case Some(word: SerbianWord) => word
             case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
           }
@@ -85,4 +98,15 @@ object TranslationService extends ErrorService {
       }
       (translations, serbian)
   }
+
+  /**
+   * Translate word from cyrillic to latin
+   * @return
+   */
+  def translate(word: String): String = {
+    translateLetters.foldLeft(word.toLowerCase) {
+      case (w, (cyrillic, latin)) => w.replace(cyrillic.toLowerCase, latin.toLowerCase)
+    }
+  }
+
 }

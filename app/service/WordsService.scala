@@ -80,13 +80,13 @@ object WordsService extends ErrorService {
         }
       }
       case None => {
-        SerbianWordTable.findByWord(translation.word.toLowerCase).firstOption.filter(_.active == true) match {
+        SerbianWordTable.findByWord(TranslationService.translate(translation.word)).firstOption.filter(_.active == true) match {
           case Some(word: SerbianWord) => word
           case None => {
             if (!translation.word.isEmpty) {
               SerbianWordTable.insert(SerbianWord(
                 None,
-                translation.word.toLowerCase,
+                TranslationService.translate(translation.word),
                 added = true,
                 active = true
               ))
@@ -132,7 +132,7 @@ object WordsService extends ErrorService {
         case Some(id: Long) => SerbianWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: SerbianWord) => {
             if (!translation.word.isEmpty) {
-              SerbianWordTable.update(word.copy(word = translation.word.toLowerCase))
+              SerbianWordTable.update(word.copy(word = TranslationService.translate(translation.word)))
             } else {
               throw new Exception(Messages("service.error.emptyTranslation"))
             }

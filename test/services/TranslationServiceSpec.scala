@@ -148,6 +148,21 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
   }
 
   "TranslationService.getSerbianByFirst" should {
+    "have words on letter а" in {
+      runSession {
+        implicit session =>
+          val letter: String = "а"
+          TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).isLeft mustEqual false
+          val translations = TranslationService.getSerbianByFirst(SerbianFirstLetter(letter)).right.get
+          val result = for (translation <- translations) yield {
+            translation.word.charAt(0).toString equals "a"
+          }
+          result.forall(element => element) mustEqual true
+      }
+    }
+  }
+
+  "TranslationService.getSerbianByFirst" should {
     "don't have words on letter x" in {
       runSession {
         implicit session =>
@@ -196,6 +211,48 @@ class TranslationServiceSpec extends Specification with GlobalDatabaseTests {
         implicit session =>
           val search: String = "Afrika"
           val find: String = "Afryka"
+          TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
+          val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
+          val translations = translation._1.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
+      }
+    }
+  }
+
+  "TranslationService.translateSerbian" should {
+    "translate word Албанија (Albanija) to Albania by word" in {
+      runSession {
+        implicit session =>
+          val search: String = "Албанија"
+          val find: String = "Albania"
+          TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
+          val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
+          val translations = translation._1.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
+      }
+    }
+  }
+
+  "TranslationService.translateSerbian" should {
+    "translate word Балтичко море (Baltičko more) to Morze Bałtyckie by word" in {
+      runSession {
+        implicit session =>
+          val search: String = "Балтичко море"
+          val find: String = "Morze Bałtyckie"
+          TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
+          val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
+          val translations = translation._1.map( word => word.word)
+          translations must containAllOf(List(find.toLowerCase))
+      }
+    }
+  }
+
+  "TranslationService.translateSerbian" should {
+    "translate word џеп (džep) to kieszeń by word" in {
+      runSession {
+        implicit session =>
+          val search: String = "џеп"
+          val find: String = "kieszeń"
           TranslationService.translateSerbian(FindSerbianTranslation(None,search)).isLeft mustEqual false
           val translation = TranslationService.translateSerbian(FindSerbianTranslation(None,search)).right.get
           val translations = translation._1.map( word => word.word)
