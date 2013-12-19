@@ -19,13 +19,15 @@ class SerbianSortController
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       self.searchWord('')
     $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
-      find = self.findById(word.id,scope.serbian_search)
+      find = self.findById(word.id,scope.serbian_search.results)
       if(find?)
         find.word = word.word
+      self.searchWord('')
     $rootScope.$on 'REMOVED_SERBIAN_TRANSLATION',(event, word) ->
-      find = self.findById(word.id,scope.serbian_search)
+      find = self.findById(word.id,scope.serbian_search.results)
       if(find?)
         find.active = false
+      self.searchWord('')
 
   findById: (id,list) ->
     for w in list
@@ -71,6 +73,9 @@ class SerbianSortController
     bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
       if(result)
         scope.serbianService.remove(id)
+        find = self.findById(id,scope.serbian_search)
+        if(find?)
+          find.active = false
         self.searchWord('')
     false
 

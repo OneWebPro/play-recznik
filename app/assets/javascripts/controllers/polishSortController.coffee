@@ -19,13 +19,15 @@ class PolishSortController
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
       self.searchWord('')
     $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
-      find = self.findById(word.id, scope.polish_search)
+      find = self.findById(word.id, scope.polish_search.results)
       if(find?)
         find.word = word.word
+      self.searchWord('')
     $rootScope.$on 'REMOVED_POLISH_TRANSLATION',(event, word) ->
-      find = self.findById(word.id, scope.polish_search)
+      find = self.findById(word.id, scope.polish_search.results)
       if(find?)
         find.active = false
+      self.searchWord('')
 
   findById: (id,list) ->
     for w in list
@@ -71,6 +73,9 @@ class PolishSortController
     bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
       if(result)
         scope.polishService.remove(id)
+        find = self.findById(id,scope.polish_search.results)
+        if(find?)
+          find.active = false
         self.searchWord('')
     false
 
