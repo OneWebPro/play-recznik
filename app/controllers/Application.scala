@@ -48,8 +48,4 @@ object Application extends MainController {
         }
       )
   }
-
-  def cyrillic(text: String) = Action {
-    Ok(Json.toJson(TranslationService.translate(text))).as("application/json; charset=utf-8")
-  }
 }
