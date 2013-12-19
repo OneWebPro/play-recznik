@@ -6,10 +6,7 @@ class window.LanguageService
     'Content-Type': 'application/json; charset=utf-8',
   }};
 
-  self = undefined
-
   constructor: (@$http, $rootScope) ->
-    self = @
     rootScope = $rootScope
 
   typing: (word) ->
@@ -49,10 +46,11 @@ class window.LanguageService
       )
 
   edit: (word) ->
+    editEvent = @editEvent
     @$http.post("#{@urlBase}/save", {id:word.id,word:word.word}).then(
       (
         (results) ->
-          rootScope.$emit(self.editEvent, results.data)
+          rootScope.$emit(editEvent, results.data)
           results.data
       ),(
         (error) ->
@@ -61,10 +59,11 @@ class window.LanguageService
     )
 
   remove: (id) ->
+    removeEvent = @removeEvent
     @$http.post("#{@urlBase}/remove/#{id}",config).then(
       (
         (results) ->
-          rootScope.$emit(self.removeEvent, results.data)
+          rootScope.$emit(removeEvent, results.data)
           results.data
       ), (
         (error) ->
