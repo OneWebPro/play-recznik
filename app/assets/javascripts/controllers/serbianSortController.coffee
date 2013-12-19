@@ -61,8 +61,10 @@ class SerbianSortController
       ""
 
   save:(word) ->
+    word.word = word.editValue
     scope.serbianService.edit(word)
     word.edit = false
+    word.editValue = undefined
     @searchWord('')
 
   remove:(id) ->
@@ -71,6 +73,14 @@ class SerbianSortController
         scope.serbianService.remove(id)
         self.searchWord('')
     false
+
+  startEdit: (element) ->
+    element.editValue = element.word
+    element.edit = true
+
+  stopEdit: (element) ->
+    element.editValue = undefined
+    element.edit = false
 
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]

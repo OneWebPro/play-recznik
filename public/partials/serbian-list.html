@@ -22,7 +22,7 @@
                         {{result.word}}
                     </div>
                     <div ng-if="result.edit === true">
-                        <input type="text" ng-model="result.word">
+                        <input type="text" ng-model="result.editValue">
                     </div>
                 </span>
             </td>
@@ -30,7 +30,7 @@
                 <div ng-if="result.added">
                     <div class="btn-toolbar" role="toolbar">
                         <div ng-if="!result.edit"  class="btn-group" >
-                            <button ng-click="result.edit = true" class="btn btn-info btn-sm" type="button">
+                            <button ng-click="controller.startEdit(result)" class="btn btn-info btn-sm" type="button">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </button>
                             <button ng-click="controller.remove(result.id)" class="btn btn-danger btn-sm" type="button">
@@ -41,7 +41,7 @@
                             <button ng-click="controller.save(result)" class="btn btn-success btn-sm" type="button">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
-                            <button ng-click="result.edit = false" class="btn btn-info btn-sm" type="button">
+                            <button ng-click="controller.stopEdit(result)" class="btn btn-info btn-sm" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>

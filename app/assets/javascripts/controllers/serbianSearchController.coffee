@@ -73,8 +73,10 @@ class SerbianSearchController
           scope.serbian_hints = []
 
   save: (word) ->
+    word.word = word.editValue
     scope.polishService.edit(word)
     word.edit = false
+    word.editValue = undefined
 
   remove: (id) ->
     bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
@@ -87,6 +89,14 @@ class SerbianSearchController
       scope.addService.addTranslation(@element, searched.word)
       @add = false
       @element = ""
+
+  startEdit: (element) ->
+    element.editValue = element.word
+    element.edit = true
+
+  stopEdit: (element) ->
+    element.editValue = undefined
+    element.edit = false
 
 
 angular.module('app').controller 'SerbianSearchController',

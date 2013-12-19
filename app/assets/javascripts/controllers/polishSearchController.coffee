@@ -73,8 +73,10 @@ class PolishSearchController
           scope.polish_hints = []
 
   save: (word) ->
+    word.word = word.editValue
     scope.serbianService.edit(word)
     word.edit = false
+    word.editValue = undefined
 
   remove: (id) ->
     bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
@@ -87,6 +89,14 @@ class PolishSearchController
       scope.addService.addTranslation(searched.word, @element)
       @add = false
       @element = ""
+
+  startEdit: (element) ->
+    element.editValue = element.word
+    element.edit = true
+
+  stopEdit: (element) ->
+    element.editValue = undefined
+    element.edit = false
 
 angular.module('app').controller 'PolishSearchController',
   ['$scope', 'polishService', '$rootScope', 'addService', 'serbianService' , PolishSearchController]
