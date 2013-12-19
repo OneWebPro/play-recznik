@@ -2,7 +2,6 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import jsmessages.api.JsMessages
 import play.api.Play.current
 import scala.concurrent.Future
 import akka.pattern.ask
@@ -10,6 +9,7 @@ import database.ServiceError
 import play.api.libs.json._
 import json.JsonCodecs._
 import shared.WordRespond
+import service.TranslationService
 
 object Application extends MainController {
 
@@ -31,12 +31,6 @@ object Application extends MainController {
     }
   }
 
-  lazy val messages = new JsMessages
-
-  lazy val jsMessages = Action { implicit request =>
-    Ok(messages(Some("window.Messages"))).as(JAVASCRIPT)
-  }
-
   def addTranslation = Action.async(parse.json) {
     implicit request =>
       val json = request.body
@@ -53,5 +47,9 @@ object Application extends MainController {
             Future.successful(NotFound)
         }
       )
+  }
+
+  def cyrillic(text: String) = Action {
+    Ok(Json.toJson(TranslationService.translate(text))).as("application/json; charset=utf-8")
   }
 }

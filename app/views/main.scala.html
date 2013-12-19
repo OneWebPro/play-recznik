@@ -27,7 +27,6 @@
             </button>
         </div>
         @*Scripts*@
-        <script type="text/javascript" src="@routes.Application.jsMessages()"></script>
         <script type="text/javascript">function debounce(fn, delay) {var timer = null;return function () {var context = this, args = arguments;clearTimeout(timer);timer = setTimeout(function () {fn.apply(context, args);}, delay);};}</script>
         @helper.requireJs(core = routes.Assets.at("javascripts/require.js").url, module = routes.Assets.at("javascripts/main").url)
     </body>

@@ -4,8 +4,8 @@
 
 # Home page
 GET         /                                    controllers.Application.index
-GET         /messages.js                         controllers.Application.jsMessages
 POST        /api/add                             controllers.Application.addTranslation
+GET         /cyrillic/:text                      controllers.Application.cyrillic(text:String)
 
 
 # Serbian

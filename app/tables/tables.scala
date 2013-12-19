@@ -1,9 +1,6 @@
 package tables
 
-import org.joda.time.LocalDate
 import play.api.db.slick.Config.driver.simple._
-import com.github.tototoshi.slick.JodaSupport._
-import org.joda.time.format.DateTimeFormat
 import database._
 
 /**
