@@ -15,9 +15,9 @@ class PolishSortController
     }
     scope.polish_girdSize = 10
     scope.polishService = polishService
-    scope.$watch 'polish_sort', debounce(@search, 500)
+    scope.$watch 'polish_sort', debounce(@searchWord, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      @search('')
+      self.searchWord('')
     $rootScope.$on 'EDITED_POLISH_TRANSLATION',(event, word) ->
       find = self.findById(word.id, scope.polish_search)
       if(find?)
@@ -33,7 +33,7 @@ class PolishSortController
         return w
     null
 
-  search: (value) ->
+  searchWord: (value) ->
     if(value != "page")
       scope.polish_search.page = 0
     scope.polishService.filter(scope.polish_sort, scope.polish_search.page, scope.polish_girdSize).then (results) =>
@@ -41,15 +41,15 @@ class PolishSortController
 
   changeGridSize: (value) ->
     scope.polish_girdSize = value
-    @search('')
+    @searchWord('')
 
   nextPage: ->
     scope.polish_search.page = scope.polish_search.page + 1
-    @search('page')
+    @searchWord('page')
 
   prevPage: ->
     scope.polish_search.page = scope.polish_search.page - 1
-    @search('page')
+    @searchWord('page')
 
   translateWord: (word) ->
     rootScope.$emit('TRANSLATE_POLISH', word)
@@ -63,12 +63,13 @@ class PolishSortController
   save:(word) ->
     scope.polishService.edit(word)
     word.edit = false
-    @search('')
+    @searchWord('')
 
-  remove:(word) ->
+  remove:(id) ->
     bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
       if(result)
-        scope.polishService.remove(word.id)
-        @search('')
+        scope.polishService.remove(id)
+        self.searchWord('')
+    false
 
 angular.module('app').controller 'PolishSortController', ['$scope', 'polishService', '$rootScope', PolishSortController]

@@ -4,7 +4,7 @@ class SerbianSortController
   rootScope = undefined
   self = undefined
 
-  constructor: ($scope, serbianService,$rootScope) ->
+  constructor: ($scope, serbianService, $rootScope) ->
     scope = $scope
     rootScope = $rootScope
     self = @
@@ -15,9 +15,9 @@ class SerbianSortController
     }
     scope.serbian_girdSize = 10
     scope.serbianService = serbianService
-    scope.$watch 'serbian_sort', debounce(@search, 500)
+    scope.$watch 'serbian_sort', debounce(@searchWord, 500)
     $rootScope.$on 'ADDED_TRANSLATION',(event, word) ->
-      @search('')
+      self.searchWord('')
     $rootScope.$on 'EDITED_SERBIAN_TRANSLATION',(event, word) ->
       find = self.findById(word.id,scope.serbian_search)
       if(find?)
@@ -33,7 +33,7 @@ class SerbianSortController
         return w
     null
 
-  search: (value) ->
+  searchWord: (value) ->
     if(value != "page")
       scope.serbian_search.page = 0
     scope.serbianService.filter(scope.serbian_sort, scope.serbian_search.page, scope.serbian_girdSize).then (results) =>
@@ -41,15 +41,15 @@ class SerbianSortController
 
   changeGridSize: (value) ->
     scope.serbian_girdSize = value
-    @search('')
+    @searchWord('')
 
   nextPage: ->
     scope.serbian_search.page = scope.serbian_search.page + 1
-    @search('page')
+    @searchWord('page')
 
   prevPage: ->
     scope.serbian_search.page = scope.serbian_search.page - 1
-    @search('page')
+    @searchWord('page')
 
   translateWord: (word) ->
     rootScope.$emit('TRANSLATE_SERBIAN', word)
@@ -63,12 +63,14 @@ class SerbianSortController
   save:(word) ->
     scope.serbianService.edit(word)
     word.edit = false
-    @search('')
+    @searchWord('')
 
-  remove:(word) ->
-   bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
-     if(result)
-       scope.serbianService.remove(word.id)
-       @search('')
+  remove:(id) ->
+    bootbox.confirm "Ta zmiana jest nieodwracalna. Kontynuować?", (result)->
+      if(result)
+        scope.serbianService.remove(id)
+        self.searchWord('')
+    false
+
 
 angular.module('app').controller 'SerbianSortController', ['$scope', 'serbianService', '$rootScope', SerbianSortController]
