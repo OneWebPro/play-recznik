@@ -8,10 +8,7 @@ object ApplicationBuild extends Build {
   val appVersion      = "1.0"
 
   val appDependencies = Seq(
-    jdbc,
-    anorm,
-    "com.typesafe.slick" %% "slick" % "1.0.0",
-    "com.typesafe.play" %% "play-slick" % "0.5.0.8",
+    "onewebpro-scala-play-bootstrap" % "onewebpro-scala-play-bootstrap_2.10" % "1.0-SNAPSHOT",
     "mysql" % "mysql-connector-java" % "5.1.24",
     "com.typesafe.play" %% "play-cache" % "2.2.0"
   )

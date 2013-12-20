@@ -5,7 +5,7 @@ import play.api.mvc._
 import play.api.Play.current
 import scala.concurrent.Future
 import akka.pattern.ask
-import database.ServiceError
+import pl.onewebpro.database.ServiceError
 import play.api.libs.json._
 import json.JsonCodecs._
 import shared.WordRespond

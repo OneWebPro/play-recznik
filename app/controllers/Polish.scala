@@ -12,7 +12,7 @@ import play.api.libs.json.JsArray
 import tables.SerbianWord
 import shared.RequestWord
 import shared.FindPolishTranslation
-import database.ServiceError
+import pl.onewebpro.database.ServiceError
 import shared.SortPolishList
 import json.JsonCodecs._
 

@@ -1,7 +1,7 @@
 package tables
 
 import play.api.db.slick.Config.driver.simple._
-import database._
+import pl.onewebpro.database._
 
 /**
  * @author loki

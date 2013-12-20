@@ -1,6 +1,6 @@
 package service
 
-import database.{ServiceError, ErrorService}
+import pl.onewebpro.database._
 import shared._
 import dao._
 import tables._

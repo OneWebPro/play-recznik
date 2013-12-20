@@ -2,7 +2,7 @@ package dao
 
 import tables._
 import play.api.db.slick.Config.driver.simple._
-import database.{DatabaseDAO, Entity}
+import pl.onewebpro.database._
 
 /**
  * @author loki
