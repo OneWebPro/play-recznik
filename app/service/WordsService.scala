@@ -24,7 +24,7 @@ object WordsService extends ErrorService {
       val polish: PolishWord = getPolishWord(translation.polish)
       val serbian: SerbianWord = getSerbianWord(translation.serbian)
       WordToWordTable.findByParents(polish.id.get, serbian.id.get).firstOption match {
-        case Some(_) => throw new Exception(Messages("service.error.translationExists"))
+        case Some(_) => throw new ServiceException(Messages("service.error.translationExists"))
         case None => {
           val wordToWord = WordToWordTable.insert(WordToWord(None, serbian.id.get, polish.id.get, active = true))
           WordRespond(polish, serbian, wordToWord)
@@ -43,7 +43,7 @@ object WordsService extends ErrorService {
       case Some(id: Long) => {
         PolishWordTable.findById(id).filter(_.active == true) match {
           case Some(word: PolishWord) => word
-          case None => throw new Exception(Messages("service.error.wordNotFound", id))
+          case None => throw new ServiceException(Messages("service.error.wordNotFound", id))
         }
       }
       case None => {
@@ -58,7 +58,7 @@ object WordsService extends ErrorService {
                 active = true
               ))
             } else {
-              throw new Exception(Messages("service.error.emptyTranslation"))
+              throw new ServiceException(Messages("service.error.emptyTranslation"))
             }
           }
         }
@@ -76,7 +76,7 @@ object WordsService extends ErrorService {
       case Some(id: Long) => {
         SerbianWordTable.findById(id).filter(_.active == true) match {
           case Some(word: SerbianWord) => word
-          case None => throw new Exception(Messages("service.error.wordNotFound", id))
+          case None => throw new ServiceException(Messages("service.error.wordNotFound", id))
         }
       }
       case None => {
@@ -91,7 +91,7 @@ object WordsService extends ErrorService {
                 active = true
               ))
             } else {
-              throw new Exception(Messages("service.error.emptyTranslation"))
+              throw new ServiceException(Messages("service.error.emptyTranslation"))
             }
           }
         }
@@ -112,12 +112,12 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               PolishWordTable.update(word.copy(word = translation.word.toLowerCase))
             } else {
-              throw new Exception(Messages("service.error.emptyTranslation"))
+              throw new ServiceException(Messages("service.error.emptyTranslation"))
             }
           }
-          case None => throw new Exception(Messages("service.error.wordNotFound", translation.id))
+          case None => throw new ServiceException(Messages("service.error.wordNotFound", translation.id))
         }
-        case None => throw new Exception(Messages("service.error.notAvailable", translation.id))
+        case None => throw new ServiceException(Messages("service.error.notAvailable", translation.id))
       }
   }
 
@@ -134,12 +134,12 @@ object WordsService extends ErrorService {
             if (!translation.word.isEmpty) {
               SerbianWordTable.update(word.copy(word = TranslationService.translate(translation.word)))
             } else {
-              throw new Exception(Messages("service.error.emptyTranslation"))
+              throw new ServiceException(Messages("service.error.emptyTranslation"))
             }
           }
-          case None => throw new Exception(Messages("service.error.wordNotFound", translation.id))
+          case None => throw new ServiceException(Messages("service.error.wordNotFound", translation.id))
         }
-        case None => throw new Exception(Messages("service.error.notAvailable", translation.id))
+        case None => throw new ServiceException(Messages("service.error.notAvailable", translation.id))
       }
   }
 
@@ -158,7 +158,7 @@ object WordsService extends ErrorService {
           }
           PolishWordTable.update(word.copy(active = false))
         }
-        case None => throw new Exception(Messages("service.error.notAvailable", element.id))
+        case None => throw new ServiceException(Messages("service.error.notAvailable", element.id))
       }
   }
 
@@ -177,7 +177,7 @@ object WordsService extends ErrorService {
           }
           SerbianWordTable.update(word.copy(active = false))
         }
-        case None => throw new Exception(Messages("service.error.notAvailable", element.id))
+        case None => throw new ServiceException(Messages("service.error.notAvailable", element.id))
       }
   }
 

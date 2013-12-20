@@ -58,17 +58,17 @@ object TranslationService extends ErrorService {
         search.id match {
           case Some(id: Long) => PolishWordTable.findById(id).filter(_.active == true) match {
             case Some(word: PolishWord) => word
-            case None => throw new Exception(Messages("service.error.wordNotFound",id))
+            case None => throw new ServiceException(Messages("service.error.wordNotFound",id))
           }
           case None => PolishWordTable.findByWord(search.word.toLowerCase).firstOption.filter(_.active == true) match {
             case Some(word: PolishWord) => word
-            case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
+            case None => throw new ServiceException(Messages("service.error.wordNotFoundByWord",search.word))
           }
         }
       }
       val translations: List[SerbianWord] = WordToWordTable.findSerbianTranslations(polish.id.get).list
       if (translations.isEmpty) {
-        throw new Exception(Messages("service.error.emptyTranslations"))
+        throw new ServiceException(Messages("service.error.emptyTranslations"))
       }
       (translations, polish)
   }
@@ -84,17 +84,17 @@ object TranslationService extends ErrorService {
         search.id match {
           case Some(id: Long) => SerbianWordTable.findById(id).filter(_.active == true) match {
             case Some(word: SerbianWord) => word
-            case None => throw new Exception(Messages("service.error.wordNotFound",id))
+            case None => throw new ServiceException(Messages("service.error.wordNotFound",id))
           }
           case None => SerbianWordTable.findByWord(translate(search.word)).firstOption.filter(_.active == true) match {
             case Some(word: SerbianWord) => word
-            case None => throw new Exception(Messages("service.error.wordNotFoundByWord",search.word))
+            case None => throw new ServiceException(Messages("service.error.wordNotFoundByWord",search.word))
           }
         }
       }
       val translations: List[PolishWord] = WordToWordTable.findPolishTranslations(serbian.id.get).list
       if (translations.isEmpty) {
-        throw new Exception(Messages("service.error.emptyTranslations"))
+        throw new ServiceException(Messages("service.error.emptyTranslations"))
       }
       (translations, serbian)
   }
