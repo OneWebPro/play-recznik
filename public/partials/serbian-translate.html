@@ -3,10 +3,12 @@
         <div class="form-group">
             <input autocomplete="off" type="text" ng-model="serbian_text" class="form-control" id="serbian-translate" placeholder="Upiši reč...">
         </div>
-        <div ng-hide="!serbian_hints.length" class="hints">
+        <div ng-hide="!serbian_hints.length" id="serbian-hints" class="hints">
             <ul>
                 <li ng-repeat="hint in serbian_hints track by hint.id">
-                    <div ng-click="changeSerbian(hint.word)" class="word">{{hint.word}}</div>
+                    <div ng-click="changeSerbian(hint.word)" class="word">
+                        <button class="btn btn-link">{{hint.word}}</button>
+                    </div>
                 </li>
             </ul>
         </div>
