@@ -25,6 +25,7 @@ class PolishSearchController
         scope.polishService.translate(scope.polish_text).then (results) =>
           scope.polish_results = results.list
           searched = results.word
+          scope.serbian_hints = []
       else
         scope.polish_results = []
     $rootScope.$on 'TRANSLATE_POLISH', (event, word) ->
