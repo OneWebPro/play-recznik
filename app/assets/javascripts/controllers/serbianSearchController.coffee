@@ -19,6 +19,7 @@ class SerbianSearchController
       scope.serbian_hints = []
       scope.serbian_text = word
       scope.sr_clicked = word
+      scope.translateSerbian()
     scope.translateSerbian = ->
       if(scope.serbian_text?.length)
         scope.serbianService.translate(scope.serbian_text).then (results) =>

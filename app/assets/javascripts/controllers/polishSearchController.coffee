@@ -19,6 +19,7 @@ class PolishSearchController
       scope.polish_hints = []
       scope.polish_text = word
       scope.pl_clicked = word
+      scope.translatePolish()
     scope.translatePolish = ->
       if(scope.polish_text?.length)
         scope.polishService.translate(scope.polish_text).then (results) =>
