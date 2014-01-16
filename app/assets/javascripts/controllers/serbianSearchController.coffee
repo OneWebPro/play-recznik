@@ -67,9 +67,10 @@ class SerbianSearchController
   update: (value) ->
     scope.serbian_hints = []
     scope.$apply()
-    if(value?.length and !scope.sr_clicked? or scope.sr_clicked != value)
-      scope.serbianService.typing(scope.serbian_text).then (results) =>
-        scope.serbian_hints = results
+    if(value?.length)
+      if(!scope.sr_clicked? or scope.sr_clicked != value)
+        scope.serbianService.typing(scope.serbian_text).then (results) =>
+          scope.serbian_hints = results
 
   save: (word) ->
     word.word = word.editValue

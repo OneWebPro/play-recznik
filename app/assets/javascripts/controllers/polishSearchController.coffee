@@ -67,9 +67,10 @@ class PolishSearchController
   update: (value) ->
     scope.polish_hints = []
     scope.$apply()
-    if(value?.length and !scope.pl_clicked? or scope.pl_clicked != value)
-      scope.polishService.typing(scope.polish_text).then (results) =>
-        scope.polish_hints = results
+    if(value?.length)
+      if(!scope.pl_clicked? or scope.pl_clicked != value)
+        scope.polishService.typing(scope.polish_text).then (results) =>
+          scope.polish_hints = results
 
   save: (word) ->
     word.word = word.editValue
