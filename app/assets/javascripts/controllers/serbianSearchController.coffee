@@ -13,10 +13,12 @@ class SerbianSearchController
     scope.serbianService = serbianService
     scope.addService = addService
     scope.polishService = polishService
+    scope.sr_clicked = undefined
     scope.$watch 'serbian_text', debounce(@update, 500)
     scope.changeSerbian = (word) ->
       scope.serbian_hints = []
       scope.serbian_text = word
+      scope.sr_clicked = word
     scope.translateSerbian = ->
       if(scope.serbian_text?.length)
         scope.serbianService.translate(scope.serbian_text).then (results) =>
@@ -65,12 +67,9 @@ class SerbianSearchController
   update: (value) ->
     scope.serbian_hints = []
     scope.$apply()
-    if(value?.length)
+    if(value?.length and !scope.sr_clicked? or scope.sr_clicked != value)
       scope.serbianService.typing(scope.serbian_text).then (results) =>
-        if(results.length != 0 and results[0]? and results[0].word.toLowerCase() != scope.serbian_text.toLowerCase())
-          scope.serbian_hints = results
-        else
-          scope.serbian_hints = []
+        scope.serbian_hints = results
 
   save: (word) ->
     word.word = word.editValue

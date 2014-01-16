@@ -13,10 +13,12 @@ class PolishSearchController
     scope.polishService = polishService
     scope.addService = addService
     scope.serbianService = serbianService
+    scope.pl_clicked = undefined 
     scope.$watch 'polish_text', debounce(@update, 500)
     scope.changePolish = (word) ->
       scope.polish_hints = []
       scope.polish_text = word
+      scope.pl_clicked = word
     scope.translatePolish = ->
       if(scope.polish_text?.length)
         scope.polishService.translate(scope.polish_text).then (results) =>
@@ -65,12 +67,9 @@ class PolishSearchController
   update: (value) ->
     scope.polish_hints = []
     scope.$apply()
-    if(value?.length)
+    if(value?.length and !scope.pl_clicked? or scope.pl_clicked != value)
       scope.polishService.typing(scope.polish_text).then (results) =>
-        if(results.length != 0 and results[0]? and results[0].word.toLowerCase() != scope.polish_text.toLowerCase())
-          scope.polish_hints = results
-        else
-          scope.polish_hints = []
+        scope.polish_hints = results
 
   save: (word) ->
     word.word = word.editValue
