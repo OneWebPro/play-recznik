@@ -70,7 +70,7 @@ object TranslationService extends ErrorService {
       if (translations.isEmpty) {
         throw new ServiceException(Messages("service.error.emptyTranslations"))
       }
-      (translations, polish)
+      (translations.distinct, polish)
   }
 
   /**
@@ -96,7 +96,7 @@ object TranslationService extends ErrorService {
       if (translations.isEmpty) {
         throw new ServiceException(Messages("service.error.emptyTranslations"))
       }
-      (translations, serbian)
+      (translations.distinct, serbian)
   }
 
   /**
