@@ -109,14 +109,4 @@ object TranslationService extends ErrorService {
     }
   }
 
-  /**
-   * Reversed translate method
-   * @return
-   */
-  def reTranslate(word: String): String = {
-    translateLetters.foldLeft(word.toLowerCase) {
-      case (w, (cyrillic, latin)) => w.replace(latin.toLowerCase, cyrillic.toLowerCase)
-    }
-  }
-
 }
