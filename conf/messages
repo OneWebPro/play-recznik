@@ -35,8 +35,8 @@ error.email=Wymagany format meilowy
 
 # --- Service errors
 service.error.translationExists=Takie tłumaczenie już istnieje
-service.error.wordNotFound=Tłumaczenie o identyfikatrze {0} nie istenieje.
-service.error.wordNotFoundByWord=Tłumaczenie słowa {0} nie istenieje.
+service.error.wordNotFound=Tłumaczenie o identyfikatrze {0} nie istnieje.
+service.error.wordNotFoundByWord=Tłumaczenie słowa {0} nie istnieje.
 service.error.emptyTranslation=Tłumaczenie nie może być puste.
 service.error.notAvailable=Tłumaczenie o identyfikatrze {0} jest nieaktywne lub ma zablokowane takie działanie.
 service.error.emptyTranslations=Nie znaleziono tłumaczeń
