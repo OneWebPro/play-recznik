@@ -4,6 +4,7 @@ import pl.onewebpro.database._
 import shared._
 import dao._
 import tables._
+import play.api.db.slick.Config.driver.simple._
 
 /**
  * @author loki

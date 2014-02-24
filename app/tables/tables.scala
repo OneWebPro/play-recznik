@@ -21,54 +21,59 @@ trait Word[T <: Entity[T]] extends Entity[T] {
 
 case class PolishWord(override val id: Option[Long], override val word: String, override val added: Boolean = false, override val active: Boolean = false) extends Word[PolishWord] {
   def withId(id: Long): PolishWord = copy(id = Some(id))
+
+  def deactivate: PolishWord = copy(active = false)
 }
 
 
 case class SerbianWord(override val id: Option[Long], override val word: String, override val added: Boolean = false, override val active: Boolean = false) extends Word[SerbianWord] {
   def withId(id: Long): SerbianWord = copy(id = Some(id))
+
+  def deactivate: SerbianWord = copy(active = false)
 }
 
-abstract class WordTable[T <: Word[T]](tableName: String) extends Mapper[T](tableName) {
+abstract class WordTable[T <: Word[T]](tag: Tag, tableName: String) extends Mapper[T](tag, tableName) {
   def word = column[String]("word")
+
   def added = column[Boolean]("added")
 }
 
 trait PolishWordComponent {
 
-  val PolishWordTable: PolishWordTable
-
-  class PolishWordTable extends WordTable[PolishWord]("polish") {
-    def * = id.? ~ word ~ added ~ active <>(PolishWord, PolishWord.unapply _)
+  class PolishWordTable(tag: Tag) extends WordTable[PolishWord](tag, "polish") {
+    def * = (id.?, word, added, active) <>(PolishWord.tupled, PolishWord.unapply)
   }
 
 }
 
 trait SerbianWordComponent {
 
-  val SerbianWordTable: SerbianWordTable
-
-  class SerbianWordTable extends WordTable[SerbianWord]("serbian") {
-    def * = id.? ~ word ~ added ~ active <>(SerbianWord, SerbianWord.unapply _)
+  class SerbianWordTable(tag: Tag) extends WordTable[SerbianWord](tag, "serbian") {
+    def * = (id.?, word, added, active) <>(SerbianWord.tupled, SerbianWord.unapply)
   }
 
 }
 
 case class WordToWord(id: Option[Long], serbian: Long, polish: Long, active: Boolean = false) extends Entity[WordToWord] {
   def withId(id: Long): WordToWord = copy(id = Some(id))
+
+  def deactivate: WordToWord = copy(active = false)
 }
 
 trait WordToWordComponent {
   self: SerbianWordComponent with PolishWordComponent =>
 
-  val WordToWordTable: WordToWordTable
+  lazy val SerbianWordTable = TableQuery[SerbianWordTable]
 
-  class WordToWordTable extends Mapper[WordToWord]("word_word") {
+  lazy val PolishWordTable = TableQuery[PolishWordTable]
+
+  class WordToWordTable(tag: Tag) extends Mapper[WordToWord](tag, "word_word") {
 
     def serbian_id = column[Long]("word_serbian")
 
     def polish_id = column[Long]("word_polish")
 
-    def * = id.? ~ serbian_id ~ polish_id ~ active <>(WordToWord, WordToWord.unapply _)
+    def * = (id.?, serbian_id, polish_id, active) <>(WordToWord.tupled, WordToWord.unapply)
 
     def serbian_fk = foreignKey("serbian_fk", serbian_id, SerbianWordTable)(s => s.id)
 

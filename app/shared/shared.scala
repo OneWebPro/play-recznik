@@ -1,13 +1,8 @@
 package shared
 
-import tables.{WordToWord, PolishWord, SerbianWord}
-import play.api.libs.json.{JsPath, Format}
-import play.api.libs.functional.syntax._
 import tables.PolishWord
-import shared.SerbianTranslation
 import tables.WordToWord
 import tables.SerbianWord
-import shared.PolishTranslation
 
 /* # Word service  # */
 

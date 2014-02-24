@@ -7,7 +7,7 @@ import play.api.test.Helpers._
 import play.api.mvc._
 import play.api.mvc.Results._
 import play.mvc.Http.HeaderNames
-import services.GlobalDatabaseTests
+import tests.services.GlobalDatabaseTests
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 /**

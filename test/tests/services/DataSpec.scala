@@ -1,4 +1,4 @@
-package services
+package tests.services
 
 import org.specs2.mutable._
 

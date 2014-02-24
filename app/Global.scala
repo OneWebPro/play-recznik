@@ -21,7 +21,7 @@ object Global extends GlobalSettings {
    */
   override def onStart(app: Application) {
     DB.withSession {
-      implicit s: scala.slick.session.Session => {
+      implicit session => {
         if (MTable.getTables().list().isEmpty) {
           ddl.create
           Import.importData()
@@ -40,7 +40,7 @@ object Global extends GlobalSettings {
    */
   override def onStop(app: Application) {
     DB.withSession {
-      implicit s: scala.slick.session.Session =>
+      implicit session =>
         if (!MTable.getTables().list().isEmpty && !Play.isDev && !Play.isProd) {
           ddl.drop
         }

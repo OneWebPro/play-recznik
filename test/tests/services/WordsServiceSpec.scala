@@ -1,8 +1,9 @@
-package services
+package tests.services
 
 
 import org.specs2.mutable._
 import service.WordsService
+import play.api.db.slick.Config.driver.simple._
 
 
 /**
@@ -80,7 +81,7 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests {
             SerbianTranslation(None, serbianWord)
           )).right.get
           WordsService.editPolishTranslation(PolishTranslation(translations.polish.id, "zz")).isLeft mustEqual false
-          val changedTranslation = PolishWordTable.findById(translations.polish.id.get).get
+          val changedTranslation = PolishWordTable.findByIdActive(translations.polish.id.get).get
           changedTranslation.word mustEqual "zz"
           val default = PolishWordTable.findByLetter("Afryka".toLowerCase).first()
           WordsService.editPolishTranslation(PolishTranslation(default.id, "zz")).isLeft mustEqual true
@@ -99,7 +100,7 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests {
             SerbianTranslation(None, serbianWord)
           )).right.get
           WordsService.editSerbianTranslation(SerbianTranslation(translations.serbian.id, "zz")).isLeft mustEqual false
-          val changedTranslation = SerbianWordTable.findById(translations.serbian.id.get).get
+          val changedTranslation = SerbianWordTable.findByIdActive(translations.serbian.id.get).get
           changedTranslation.word mustEqual "zz"
           val default = SerbianWordTable.findByLetter("Afrika".toLowerCase).first()
           WordsService.editSerbianTranslation(SerbianTranslation(default.id, "zz")).isLeft mustEqual true
@@ -118,7 +119,7 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests {
             SerbianTranslation(None, serbianWord)
           )).right.get
           WordsService.removePolishTranslation(RemovePolishTranslation(translations.polish.id.get)).isLeft mustEqual false
-          val changedValue = PolishWordTable.findById(translations.polish.id.get)
+          val changedValue = PolishWordTable.findByIdActive(translations.polish.id.get)
           changedValue.isDefined mustNotEqual true
           val default = PolishWordTable.findByLetter("Afryka".toLowerCase).first()
           WordsService.removePolishTranslation(RemovePolishTranslation(default.id.get)).isLeft mustEqual true
@@ -137,7 +138,7 @@ class WordsServiceSpec extends Specification with GlobalDatabaseTests {
             SerbianTranslation(None, serbianWord)
           )).right.get
           WordsService.removeSerbianTranslation(RemoveSerbianTranslation(translations.serbian.id.get)).isLeft mustEqual false
-          val changedValue = SerbianWordTable.findById(translations.serbian.id.get)
+          val changedValue = SerbianWordTable.findByIdActive(translations.serbian.id.get)
           changedValue.isDefined mustNotEqual true
           val default = SerbianWordTable.findByLetter("Afrika".toLowerCase).first()
           WordsService.removeSerbianTranslation(RemoveSerbianTranslation(default.id.get)).isLeft mustEqual true

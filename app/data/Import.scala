@@ -6,6 +6,8 @@ import dao._
 import tables._
 import play.api._
 import play.api.Play.current
+import scala.slick.jdbc.JdbcBackend.Session
+import play.api.db.slick.Config.driver.simple._
 
 /**
  * @author loki
@@ -24,7 +26,7 @@ object Import {
   /**
    * Method read data from database
    */
-  def importData()(implicit session: scala.slick.session.Session) {
+  def importData()(implicit session: Session) {
     val loadPath: String = {
       if (Play.isTest) {
         test
@@ -49,7 +51,7 @@ object Import {
    * same structure.
    * @param elements words from xml
    */
-  private def loadDb(elements: Seq[(List[String], List[String])])(implicit session: scala.slick.session.Session) {
+  private def loadDb(elements: Seq[(List[String], List[String])])(implicit session: Session) {
     val daoElements = elements.map(element => {
       (
         element._1.map(polish => {

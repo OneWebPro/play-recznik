@@ -1,4 +1,4 @@
-package services
+package tests.services
 
 import shared._
 import org.specs2.mutable._
@@ -8,7 +8,7 @@ import play.api.db.slick.DB
 import scala.slick.jdbc.meta.MTable
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
-import scala.slick.session.Session
+import scala.slick.jdbc.JdbcBackend.Session
 import org.specs2.execute.AsResult
 
 

@@ -5,6 +5,8 @@ import shared._
 import dao._
 import tables._
 import play.api.i18n.Messages
+import play.api.db.slick.Config.driver.simple._
+import scala.slick.jdbc.JdbcBackend.Session
 
 /**
  * @author loki
@@ -38,10 +40,10 @@ object WordsService extends ErrorService {
    * @param translation Polish translation case class
    * @return
    */
-  private def getPolishWord(translation: PolishTranslation)(implicit session: scala.slick.session.Session): PolishWord = {
+  private def getPolishWord(translation: PolishTranslation)(implicit session: Session): PolishWord = {
     translation.id match {
       case Some(id: Long) => {
-        PolishWordTable.findById(id).filter(_.active == true) match {
+        PolishWordTable.findByIdActive(id).filter(_.active == true) match {
           case Some(word: PolishWord) => word
           case None => throw new ServiceException(Messages("service.error.wordNotFound", id))
         }
@@ -71,10 +73,10 @@ object WordsService extends ErrorService {
    * @param translation Serbian translation case class
    * @return
    */
-  private def getSerbianWord(translation: SerbianTranslation)(implicit session: scala.slick.session.Session): SerbianWord = {
+  private def getSerbianWord(translation: SerbianTranslation)(implicit session: Session): SerbianWord = {
     translation.id match {
       case Some(id: Long) => {
-        SerbianWordTable.findById(id).filter(_.active == true) match {
+        SerbianWordTable.findByIdActive(id).filter(_.active == true) match {
           case Some(word: SerbianWord) => word
           case None => throw new ServiceException(Messages("service.error.wordNotFound", id))
         }
@@ -107,7 +109,7 @@ object WordsService extends ErrorService {
   def editPolishTranslation(translation: PolishTranslation): Either[ServiceError, PolishWord] = withError {
     implicit session =>
       translation.id match {
-        case Some(id: Long) => PolishWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
+        case Some(id: Long) => PolishWordTable.findByIdActive(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: PolishWord) => {
             if (!translation.word.isEmpty) {
               PolishWordTable.update(word.copy(word = translation.word.toLowerCase))
@@ -129,7 +131,7 @@ object WordsService extends ErrorService {
   def editSerbianTranslation(translation: SerbianTranslation): Either[ServiceError, SerbianWord] = withError {
     implicit session =>
       translation.id match {
-        case Some(id: Long) => SerbianWordTable.findById(id).filter(_.added == true).filter(_.active == true) match {
+        case Some(id: Long) => SerbianWordTable.findByIdActive(id).filter(_.added == true).filter(_.active == true) match {
           case Some(word: SerbianWord) => {
             if (!translation.word.isEmpty) {
               SerbianWordTable.update(word.copy(word = TranslationService.translate(translation.word)))
@@ -150,7 +152,7 @@ object WordsService extends ErrorService {
    */
   def removePolishTranslation(element: RemovePolishTranslation): Either[ServiceError, PolishWord] = withError {
     implicit session =>
-      PolishWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
+      PolishWordTable.findByIdActive(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: PolishWord) => {
           val translations = WordToWordTable.findSerbianTranslations(word.id.get).list()
           for (translation <- translations) {
@@ -169,7 +171,7 @@ object WordsService extends ErrorService {
    */
   def removeSerbianTranslation(element: RemoveSerbianTranslation): Either[ServiceError, SerbianWord] = withError {
     implicit session =>
-      SerbianWordTable.findById(element.id).filter(_.added == true).filter(_.active == true) match {
+      SerbianWordTable.findByIdActive(element.id).filter(_.added == true).filter(_.active == true) match {
         case Some(word: SerbianWord) => {
           val translations = WordToWordTable.findPolishTranslations(word.id.get).list
           for (translation <- translations) {

@@ -5,6 +5,7 @@ import shared._
 import dao._
 import tables._
 import play.api.i18n.Messages
+import play.api.db.slick.Config.driver.simple._
 
 /**
  * @author loki
@@ -56,7 +57,7 @@ object TranslationService extends ErrorService {
     implicit session =>
       val polish: PolishWord = {
         search.id match {
-          case Some(id: Long) => PolishWordTable.findById(id).filter(_.active == true) match {
+          case Some(id: Long) => PolishWordTable.findByIdActive(id).filter(_.active == true) match {
             case Some(word: PolishWord) => word
             case None => throw new ServiceException(Messages("service.error.wordNotFound",id))
           }
@@ -82,7 +83,7 @@ object TranslationService extends ErrorService {
     implicit session =>
       val serbian: SerbianWord = {
         search.id match {
-          case Some(id: Long) => SerbianWordTable.findById(id).filter(_.active == true) match {
+          case Some(id: Long) => SerbianWordTable.findByIdActive(id).filter(_.active == true) match {
             case Some(word: SerbianWord) => word
             case None => throw new ServiceException(Messages("service.error.wordNotFound",id))
           }
