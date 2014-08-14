@@ -64,4 +64,4 @@ require
    "services/addService"
    "routes"
   ], (require) ->
-  require ['app-bootstrap']
+    require ['app-bootstrap']
