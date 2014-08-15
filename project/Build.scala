@@ -9,7 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     "onewebpro-scala-play-bootstrap" % "onewebpro-scala-play-bootstrap_2.10" % "1.0.41",
-    "mysql" % "mysql-connector-java" % "5.1.24",
+    "mysql" % "mysql-connector-java" % "5.1.31",
     "com.typesafe.play" %% "play-cache" % "2.2.0"
   )
 
