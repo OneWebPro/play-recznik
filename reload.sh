@@ -1,14 +1,12 @@
 #!/bin/bash
 
-play="/home/user/play/play"
-
 if [ ! -f RUNNING_PID ]; then
-    `$play start &`
+    `activator "start -Dhttp.port=8882"`
 else
 	for i in `cat RUNNING_PID`
 	do
 		echo `kill -9 $i`
 	done
 	`rm RUNNING_PID`
-	`$play start &`
+	`activator "start -Dhttp.port=8882"`
 fi
