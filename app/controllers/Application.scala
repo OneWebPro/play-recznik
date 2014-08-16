@@ -27,7 +27,7 @@ object Application extends MainController {
    * @param name Name of view ex. body or directives/tabs
    * @return
    */
-  def view(name: String) = Assets.at("public/partials/",name + ".html")
+  def view(name: String) = Assets.at("/public", "partials/" + name + ".html")
 
   def addTranslation = Action.async(parse.json) {
     implicit request =>
